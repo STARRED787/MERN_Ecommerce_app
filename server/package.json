@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "server.js",
-    "//": " 'dev' is This script runs the server in development mode using nodemon. It auto-restarts the server on file changes.",
     "dev": "nodemon server.js" 
   },
   "author": "Starred",
