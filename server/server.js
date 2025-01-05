@@ -6,13 +6,12 @@ const cors = require("cors"); //Allows your server to handle requests from diffe
 //create database connection
 const connectDB = async () => {
   const mongoose = require("mongoose");
-
-  // Connect to the MongoDB database without the deprecated options
+  // Connect to the MongoDB database
   mongoose
     .connect(
       "mongodb+srv://mern_commerce_app:fSPkS9SSs1q1GV9v@cluster0.m49qs.mongodb.net/"
     )
-    .then(() => console.log("Database connected successfully!"))
+    .then(() => console.log("MONGODb Database connected successfully!"))
     .catch((err) => console.log("Error connecting to the database:", err));
 };
 
