@@ -1,3 +1,5 @@
+import { Outlet } from "react-router-dom";
+
 function AuthLayout() {
   return (
     <div className=" flex min-h-screen w-full">
@@ -7,6 +9,9 @@ function AuthLayout() {
             Welcome Ecommerce Webapp
           </h1>
         </div>
+      </div>
+      <div className=" flex flex-1 item-center bg-bachground-primary px-4 py-12 sm:px-6 lg:px-8">
+        <Outlet />
       </div>
     </div>
   );
