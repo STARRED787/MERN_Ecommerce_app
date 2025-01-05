@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser"); // Fixed typo: "cokieParser" -> "cookieParser"
+const cors = require("cors");
 //create database connection
 // create a database connection separate file and import it here
 
@@ -12,4 +14,5 @@ then(() => console.log("Database connected successfully!")).catch((err) =>
 
 // Create an express app
 const app = express();
+// Define the port the server will run on
 const PORT = process.env.PORT || 5000;
