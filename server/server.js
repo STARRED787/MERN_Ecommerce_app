@@ -5,12 +5,18 @@ const cors = require("cors"); //Allows your server to handle requests from diffe
 //create database connection
 // create a database connection separate file and import it here
 
-mongoose.connect(
-  "mongodb+srv://mern_commerce_app:fSPkS9SSs1q1GV9v@cluster0.m49qs.mongodb.net/"
-);
-then(() => console.log("Database connected successfully!")).catch((err) =>
-  console.log(err)
-);
+try {
+  await mongoose.connect(
+    "mongodb+srv://mern_commerce_app:fSPkS9SSs1q1GV9v@cluster0.m49qs.mongodb.net/",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
+  console.log("Database connected successfully!");
+} catch (err) {
+  console.log("Error connecting to the database:", err);
+}
 
 // Create an express app
 const app = express();
