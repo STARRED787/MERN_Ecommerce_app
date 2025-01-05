@@ -42,5 +42,19 @@ app.use(
   })
 );
 
+// Middleware to parse cookies
+// This enables your app to parse and access cookies sent by the client in requests.
+// Parsed cookies will be available in `req.cookies`.
 app.use(cookieParser());
+
+// Middleware to parse JSON bodies
+// This allows your server to accept and parse JSON data sent in the body of POST, PUT, or PATCH requests.
+// The parsed data will be accessible in `req.body`.
 app.use(express.json());
+
+// Start the server
+// This tells the Express app to listen for incoming requests on the specified `PORT`.
+// The callback function is executed once the server starts, logging a message to confirm it's running.
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
