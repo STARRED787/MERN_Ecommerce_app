@@ -4,18 +4,12 @@ const cookieParser = require("cookie-parser"); //parses cookies attached to the 
 const cors = require("cors"); //Allows your server to handle requests from different origins (domains, ports, or protocols)
 
 //create database connection
-const connectDB = async () => {
-  const mongoose = require("mongoose");
-  // Connect to the MongoDB database
-  mongoose
-    .connect(
-      "mongodb+srv://mern_commerce_app:fSPkS9SSs1q1GV9v@cluster0.m49qs.mongodb.net/"
-    )
-    .then(() => console.log("MONGODb Database connected successfully!"))
-    .catch((err) => console.log("Error connecting to the database:", err));
-};
-
-connectDB(); // Call the function to connect to the database
+mongoose
+  .connect(
+    "mongodb+srv://mern_commerce_app:fSPkS9SSs1q1GV9v@cluster0.m49qs.mongodb.net/"
+  )
+  .then(() => console.log("MONGODb Database connected successfully!"))
+  .catch((err) => console.log("Error connecting to the database:", err));
 
 // Create an express app
 const app = express();
