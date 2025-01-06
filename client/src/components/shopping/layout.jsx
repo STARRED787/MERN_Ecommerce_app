@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-function UserLayout() {
+function ShoppingLayout() {
   return (
     <div className=" flex flex-col bg-white overflow-hidden">
       {/* Header */}
@@ -11,4 +11,4 @@ function UserLayout() {
   );
 }
 
-export default UserLayout;
+export default ShoppingLayout;
