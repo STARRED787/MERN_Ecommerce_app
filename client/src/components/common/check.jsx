@@ -1,10 +1,24 @@
 import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
+// CheckAuth component handles route access control based on authentication and user roles.
 function CheckAuth({ isAuthenticated, user, children }) {
-  const location = useLocation(); // Correct usage of `useLocation`
+  // Define prop types for validation to ensure proper usage of the component.
+  CheckAuth.propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired, // Indicates if the user is logged in.
+    user: PropTypes.shape({
+      role: PropTypes.string, // The role of the user (e.g., "admin" or "user").
+    }),
+    children: PropTypes.node.isRequired, // The child components (routes) to render.
+  };
 
-  // Redirect unauthenticated users to the sign-in page, except for sign-in and sign-up routes.
+  // Get the current route information using `useLocation`.
+  const location = useLocation();
+
+  /**
+   * Redirect unauthenticated users to the sign-in page.
+   * Exception: Allow access to `/auth/signin` and `/auth/signup` routes.
+   */
   if (
     !isAuthenticated &&
     !(
@@ -15,7 +29,11 @@ function CheckAuth({ isAuthenticated, user, children }) {
     return <Navigate to="/auth/signin" replace />;
   }
 
-  // Redirect authenticated users away from sign-in or sign-up pages.
+  /**
+   * Redirect authenticated users away from the sign-in or sign-up pages.
+   * - If the user is an admin, redirect them to the admin dashboard.
+   * - If the user is not an admin, redirect them to the shop home page.
+   */
   if (
     isAuthenticated &&
     (location.pathname.includes("/auth/signin") ||
@@ -28,7 +46,10 @@ function CheckAuth({ isAuthenticated, user, children }) {
     }
   }
 
-  // Restrict non-admin users from accessing admin pages.
+  /**
+   * Restrict access to admin pages for non-admin users.
+   * - Redirect them to the unauthorized access page (`/unauth`).
+   */
   if (
     isAuthenticated &&
     user?.role !== "admin" &&
@@ -37,7 +58,10 @@ function CheckAuth({ isAuthenticated, user, children }) {
     return <Navigate to="/unauth" replace />;
   }
 
-  // Restrict admin users from accessing shop pages.
+  /**
+   * Restrict access to shop pages for admin users.
+   * - Redirect them back to the admin dashboard.
+   */
   if (
     isAuthenticated &&
     user?.role === "admin" &&
@@ -46,15 +70,8 @@ function CheckAuth({ isAuthenticated, user, children }) {
     return <Navigate to="/admin/dashboard" replace />;
   }
 
-  // If all checks pass, render the children components.
+  // If no conditions are triggered, render the child components (protected routes).
   return <>{children}</>;
 }
-CheckAuth.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  user: PropTypes.shape({
-    role: PropTypes.string,
-  }),
-  children: PropTypes.node.isRequired,
-};
 
 export default CheckAuth;
