@@ -10,8 +10,35 @@ function CheckAuth(isAuthenticated, user, children) {
       location.pathname.includes("/sigup")
     )
   ) {
-    return <Navigate to="/signin" />;
+    return <Navigate to="/auth/signin" />;
   }
+
+  if (
+    (isAuthenticated && location.pathname.includes("/signin")) ||
+    location.pathname.includes("/sigup")
+  ) {
+    if (user?.role === "admin") {
+      return <Navigate to="/admin/dashboard" />;
+    } else {
+      return <Navigate to="/shop/home" />;
+    }
+  }
+  if (
+    isAuthenticated &&
+    user.role !== "admin" &&
+    location.pathname.includes("/admin")
+  ) {
+    return <Navigate to="/unauth" />;
+  }
+
+  if (
+    isAuthenticated &&
+    user.role === "admin" &&
+    location.pathname.includes("/shop")
+  ) {
+    return <Navigate to="/admin/dashboard" />;
+  }
+  return <> {children} </>;
 }
 
 export default CheckAuth;
