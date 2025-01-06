@@ -1,59 +1,58 @@
 import { Route, Routes } from "react-router-dom";
+import CheckAuth from "./components/common/check";
 import AuthLayout from "./components/auth/layout";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import AdminLayout from "./components/admin/layout";
 import AdminOrders from "./pages/admin/order";
 import AdminProducts from "./pages/admin/products";
-import Adminfetures from "./pages/admin/features";
+import AdminFeatures from "./pages/admin/features"; // Fixed typo "fetures"
 import AdminDashboard from "./pages/admin/dashboard";
 import ShoppingLayout from "./components/shopping/layout";
-import NotFound from "./pages/not found";
 import ShoppingHome from "./pages/shopping/home";
 import ShoppingListing from "./pages/shopping/listing";
 import ShoppingCheckout from "./pages/shopping/checkout";
-import ShoppingAcount from "./pages/shopping/account";
-import CheckAuth from "./components/common/check";
+import ShoppingAccount from "./pages/shopping/account"; // Fixed typo "Acount"
+import NotFound from "./pages/not found";
 
 function App() {
-  const isAuthenticated = false;
+  const isAuthenticated = false; // Replace with actual authentication logic
   const user = null;
+
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
         {/* Main authentication path */}
         <Route
-          path="/auth"
+          path="/auth/*"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AuthLayout />
             </CheckAuth>
           }
         >
-          {/* Use relative authentication paths here */}
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
         </Route>
 
-        {/* Main Admin path */}
+        {/* Admin path */}
         <Route
-          path="/admin"
+          path="/admin/*"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AdminLayout />
             </CheckAuth>
           }
         >
-          {/* Use relative Admin paths here */}
           <Route path="orders" element={<AdminOrders />} />
           <Route path="products" element={<AdminProducts />} />
-          <Route path="fetures" element={<Adminfetures />} />
+          <Route path="features" element={<AdminFeatures />} />
           <Route path="dashboard" element={<AdminDashboard />} />
         </Route>
 
-        {/* Main Shopping path */}
+        {/* Shopping path */}
         <Route
-          path="/shop"
+          path="/shop/*"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingLayout />
@@ -63,9 +62,10 @@ function App() {
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
-          <Route path="account" element={<ShoppingAcount />} />
+          <Route path="account" element={<ShoppingAccount />} />
         </Route>
-        {/* Use relative Shop paths here */}
+
+        {/* Fallback for undefined paths */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
