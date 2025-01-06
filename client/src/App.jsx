@@ -16,8 +16,8 @@ import ShoppingAccount from "./pages/shopping/account"; // Fixed typo "Acount"
 import NotFound from "./pages/not found";
 
 function App() {
-  const isAuthenticated = false; // Replace with actual authentication logic
-  const user = null;
+  const isAuthenticated = true; // Replace with actual authentication logic
+  const user = { role: "user", name: "John Doe" }; // Replace with actual user object
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
