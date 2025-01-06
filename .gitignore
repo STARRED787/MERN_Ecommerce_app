@@ -2,3 +2,4 @@
 dist/
 
 !my-folder/node_modules/
+.codegpt
