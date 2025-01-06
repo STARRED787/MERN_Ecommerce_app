@@ -1,5 +1,5 @@
-function ProdductListing() {
-  return <div>ProdductListing</div>;
+function ShoppingListing() {
+  return <div>ShoppingListing</div>;
 }
 
-export default ProdductListing;
+export default ShoppingListing;

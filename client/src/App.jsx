@@ -9,6 +9,10 @@ import Adminfetures from "./pages/admin/features";
 import AdminDashboard from "./pages/admin/dashboard";
 import ShoppingLayout from "./components/shopping/layout";
 import NotFound from "./pages/not found";
+import ShoppingHome from "./pages/shopping/home";
+import ShoppingListing from "./pages/shopping/listing";
+import ShoppingCheckout from "./pages/shopping/checkout";
+import ShoppingAcount from "./pages/shopping/account";
 
 function App() {
   return (
@@ -32,7 +36,10 @@ function App() {
 
         {/* Main Shopping path */}
         <Route path="/shop" element={<ShoppingLayout />}>
-          {" "}
+          <Route path="home" element={<ShoppingHome />} />
+          <Route path="listing" element={<ShoppingListing />} />
+          <Route path="checkout" element={<ShoppingCheckout />} />
+          <Route path="account" element={<ShoppingAcount />} />
         </Route>
         {/* Use relative Shop paths here */}
         <Route path="*" element={<NotFound />} />
