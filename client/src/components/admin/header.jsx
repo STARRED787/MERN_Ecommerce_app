@@ -1,5 +1,5 @@
 function AdminHeader() {
-  return <div></div>;
+  return <div>AdminHeader</div>;
 }
 
 export default AdminHeader;
