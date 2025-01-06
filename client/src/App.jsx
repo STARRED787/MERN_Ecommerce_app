@@ -14,6 +14,7 @@ import ShoppingListing from "./pages/shopping/listing";
 import ShoppingCheckout from "./pages/shopping/checkout";
 import ShoppingAccount from "./pages/shopping/account"; // Fixed typo "Acount"
 import NotFound from "./pages/not found";
+import UnAuth from "./pages/unauth";
 
 function App() {
   const isAuthenticated = true; // Replace with actual authentication logic
@@ -67,6 +68,7 @@ function App() {
 
         {/* Fallback for undefined paths */}
         <Route path="*" element={<NotFound />} />
+        <Route path="/unauth" element={<UnAuth />} />
       </Routes>
     </div>
   );
