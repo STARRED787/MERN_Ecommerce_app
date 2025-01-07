@@ -1,5 +1,5 @@
 function CommonForm() {
-  return <div></div>;
+  return <form action=""></form>;
 }
 
 export default CommonForm;
