@@ -17,8 +17,8 @@ import NotFound from "./pages/not found";
 import UnAuth from "./pages/unauth";
 
 function App() {
-  const isAuthenticated = true; // Replace with actual authentication logic
-  const user = { role: "user", name: "John Doe" }; // Replace with actual user object
+  const isAuthenticated = false; // Replace with actual authentication logic
+  const user = null; // Replace with actual user object
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
