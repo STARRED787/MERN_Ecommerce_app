@@ -53,7 +53,7 @@ function CommonForm({ formData, onChange, onSubmit, buttonText }) {
 
         {/* Bio Field */}
         <div className="grid w-full gap-2">
-          <Label htmlFor="bio" className="text-gray-700 text-sm font-medium">
+          <Label htmlFor="bio" className="text-white  text-sm font-medium">
             Bio
           </Label>
           <textarea
@@ -68,7 +68,7 @@ function CommonForm({ formData, onChange, onSubmit, buttonText }) {
 
         {/* Gender Field */}
         <div className="grid w-full gap-2">
-          <Label htmlFor="gender" className="text-gray-700 text-sm font-medium">
+          <Label htmlFor="gender" className="text-white text-sm font-medium">
             Gender
           </Label>
           <select
