@@ -5,8 +5,7 @@ function SignUp() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    bio: "",
-    gender: "",
+    email: "",
   });
 
   const handleChange = (event) => {
@@ -24,7 +23,7 @@ function SignUp() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-lg bg-white shadow-md rounded-lg p-8">
+      <div className="w-full max-w-lg bg-slate-400shadow-md rounded-lg p-5">
         <h1 className="text-2xl font-semibold text-center mb-4">Sign Up</h1>
         <p className="text-sm text-gray-600 text-center mb-6">
           Please fill out the form to create an account.

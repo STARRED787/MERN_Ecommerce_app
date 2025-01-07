@@ -6,8 +6,7 @@ function CommonForm({ formData, onChange, onSubmit, buttonText }) {
     formData: PropTypes.shape({
       username: PropTypes.string,
       password: PropTypes.string,
-      bio: PropTypes.string,
-      gender: PropTypes.string,
+      email: PropTypes.string,
     }).isRequired,
     onChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -16,7 +15,7 @@ function CommonForm({ formData, onChange, onSubmit, buttonText }) {
   return (
     <form
       onSubmit={onSubmit}
-      className=" bg-slate-800 shadow-lg rounded-lg p-8 w-[400px] max-w-lg mx-auto"
+      className=" bg-slate-800 shadow-lg rounded-lg p-5 w-full max-w-lg mx-auto"
     >
       <div className="flex flex-col gap-6">
         {/* Username Field */}
@@ -51,38 +50,20 @@ function CommonForm({ formData, onChange, onSubmit, buttonText }) {
           />
         </div>
 
-        {/* Bio Field */}
+        {/* email Field */}
         <div className="grid w-full gap-2">
-          <Label htmlFor="bio" className="text-white  text-sm font-medium">
-            Bio
+          <Label htmlFor="email" className="text-white  text-sm font-medium">
+            Email
           </Label>
-          <textarea
-            id="bio"
-            name="bio"
-            placeholder="Tell us about yourself"
-            className="border text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all h-32 resize-none"
-            value={formData.bio || ""}
-            onChange={onChange}
-          ></textarea>
-        </div>
-
-        {/* Gender Field */}
-        <div className="grid w-full gap-2">
-          <Label htmlFor="gender" className="text-white text-sm font-medium">
-            Gender
-          </Label>
-          <select
-            id="gender"
-            name="gender"
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            value={formData.gender || ""}
+            value={formData.email || ""}
             onChange={onChange}
-          >
-            <option value="">Select gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
+          />
         </div>
       </div>
 
