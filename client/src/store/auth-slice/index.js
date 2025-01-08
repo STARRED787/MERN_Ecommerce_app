@@ -1,5 +1,6 @@
 // Import createSlice from Redux Toolkit to create a slice of the Redux store
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // Define the initial state of the authentication
 const initialState = {
@@ -7,6 +8,12 @@ const initialState = {
   isLoading: false, // Track if a request is loading
   user: null, // Store user information
 };
+
+export registerUser = createAsyncThunk('/auth/signup',
+
+  async (formdata) => {
+const response = await axios.post('http://localhost:5000/api/auth', formdata);
+)
 
 // Create the authentication slice of the store
 const authSlice = createSlice({
