@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser"); //parses cookies attached to the client-side request object
 const cors = require("cors"); //Allows your server to handle requests from different origins (domains, ports, or protocols)
-
+const authRouter = require("./routes/auth");
 //create database connection
 mongoose
   .connect(
