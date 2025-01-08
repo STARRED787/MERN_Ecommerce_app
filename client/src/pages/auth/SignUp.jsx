@@ -19,16 +19,12 @@ function SignUp() {
   const navigate = useNavigate(); // This is the correct hook for navigation
 
   // Function to handle form submission
-  async function onSubmit(event) {
+  function onSubmit(event) {
     event.preventDefault(); // Prevent the default form submission behavior
-
-    const data = await dispatch(registerUser(formData));
-
-    // Check if the registration was successful
-    if (data?.payload?.success) {
-      console.log("Registration successful:", data.payload); // Log successful registration data
-      navigate("/auth/signin"); // Navigate to the signin page
-    }
+    dispatch(registerUser(formData)).then((data) => {
+      console.log(data); // Log the response from the registerUser action
+      if (data?.payload?.success) navigate("/auth/signin"); // Navigate to the login page after successful registration
+    }); // Dispatch the registerUser action with form data
   }
 
   // Function to handle input changes and update the form data state

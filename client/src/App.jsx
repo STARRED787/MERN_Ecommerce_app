@@ -15,6 +15,7 @@ import ShoppingCheckout from "./pages/shopping/checkout";
 import ShoppingAccount from "./pages/shopping/account"; // Fixed typo "Acount"
 import NotFound from "./pages/not found";
 import UnAuth from "./pages/unauth";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const isAuthenticated = false; // Replace with actual authentication logic
@@ -69,6 +70,8 @@ function App() {
         {/* Fallback for undefined paths */}
         <Route path="*" element={<NotFound />} />
         <Route path="/unauth" element={<UnAuth />} />
+
+        <ToastContainer />
       </Routes>
     </div>
   );
