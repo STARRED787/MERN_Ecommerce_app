@@ -1,7 +1,7 @@
 import FormSignUp from "@/components/common/formsignup"; // Importing the reusable FormSignUp component
 import { useState } from "react"; // Importing useState hook for managing component state
 import { useDispatch } from "react-redux"; // Importing useDispatch to dispatch Redux actions
-//import { data, useNavigate } from "react-router-dom"; // Importing useNavigate to navigate programmatically
+import { useNavigate } from "react-router-dom"; // Import necessary hooks and components from react-router-dom
 import { registerUser } from "@/store/auth-slice/index"; // Importing the async action for user registration
 
 function SignUp() {
@@ -15,6 +15,9 @@ function SignUp() {
   // Hook to dispatch actions to the Redux store
   const dispatch = useDispatch();
 
+  // Hook for navigation
+  const navigate = useNavigate(); // This is the correct hook for navigation
+
   // Function to handle form submission
   const onSubmit = async (event) => {
     event.preventDefault(); // Prevents page refresh on form submission
@@ -22,6 +25,12 @@ function SignUp() {
     try {
       // Dispatch the registerUser async action and handle navigation on success
       const data = await dispatch(registerUser(formData)).unwrap(); // Unwraps the resolved or rejected promise
+      if (data?.payload?.success) {
+        // Delay navigation slightly to ensure all state changes are completed
+        setTimeout(() => {
+          navigate("/auth/signin"); // Redirect to the login page on successful registration
+        }, 500);
+      }
       console.log(data); // Log the response data from the registration action
     } catch (error) {
       console.error("Registration failed:", error); // Log any registration error
@@ -36,7 +45,6 @@ function SignUp() {
       [name]: value, // Update the current field based on input name
     }));
   };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       {/* Container for the form with styling */}
