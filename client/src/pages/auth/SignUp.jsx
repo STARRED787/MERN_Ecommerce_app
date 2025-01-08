@@ -18,24 +18,13 @@ function SignUp() {
   // Hook for navigation
   const navigate = useNavigate(); // This is the correct hook for navigation
 
-  // Function to handle form submission
-  const onSubmit = async (event) => {
-    event.preventDefault(); // Prevents page refresh on form submission
-
-    try {
-      // Dispatch the registerUser async action and handle navigation on success
-      const data = await dispatch(registerUser(formData)).unwrap(); // Unwraps the resolved or rejected promise
-      if (data?.payload?.success) {
-        // Delay navigation slightly to ensure all state changes are completed
-        setTimeout(() => {
-          navigate("/auth/signin"); // Redirect to the login page on successful registration
-        }, 500);
-      }
-      console.log(data); // Log the response data from the registration action
-    } catch (error) {
-      console.error("Registration failed:", error); // Log any registration error
-    }
-  };
+  // Function to handle form submission (keeping your version)
+  function onSubmit(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    dispatch(registerUser(formData)).then((data) => {
+      if (data?.payload?.success) navigate("/auth/signin"); // Navigate to the login page on successful registration
+    });
+  }
 
   // Function to handle input changes and update the form data state
   const handleChange = (event) => {
@@ -45,6 +34,7 @@ function SignUp() {
       [name]: value, // Update the current field based on input name
     }));
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       {/* Container for the form with styling */}
