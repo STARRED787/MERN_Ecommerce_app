@@ -56,10 +56,10 @@ const authSlice = createSlice({
 
     // Handle the rejected state of registerUser
     builder.addCase(registerUser.rejected, (state, action) => {
-      state.isLoading = false; // Set loading state to false
-      state.isAuthenticated = false; // Mark the user as unauthenticated
-      state.user = null; // Clear any existing user information
-      console.error("Registration error:", action.payload); // Log the error for debugging
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = action.payload?.message || "Registration failed"; // Save error message
     });
   },
 });
