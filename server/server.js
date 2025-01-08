@@ -49,6 +49,9 @@ app.use(cookieParser());
 // This allows your server to accept and parse JSON data sent in the body of POST, PUT, or PATCH requests.
 app.use(express.json());
 
+// Middleware to handle registration and authentication routes
+// This routes all requests starting with "/api/auth" to the authRouter,
+// which handles user registration, login, and related authentication processes.
 app.use("/api/auth", authRouter);
 
 // Start the server
