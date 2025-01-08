@@ -1,4 +1,4 @@
-import CommonForm from "@/components/common/formsignup"; // Importing the reusable CommonForm component
+import FormSignUp from "@/components/common/formsignup"; // Importing the reusable CommonForm component
 import { useState } from "react"; // Importing useState hook for managing component state
 
 function SignUp() {
@@ -34,9 +34,9 @@ function SignUp() {
           Please fill out the form to create an account.
         </p>
 
-        {/* Reusable CommonForm component is used here */}
-        <CommonForm
-          formData={formData} // Passing form data to the CommonForm
+        {/* Reusable FormSignUp component is used here */}
+        <FormSignUp
+          formData={formData} // Passing form data to the FormSignUp component
           onChange={handleChange} // Handling input changes
           onSubmit={handleSubmit} // Handling form submission
           buttonText="Register" // Setting button text to "Register"
