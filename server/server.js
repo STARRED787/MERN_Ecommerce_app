@@ -51,7 +51,7 @@ app.use(express.json());
 
 // Middleware to handle registration and authentication routes
 // This routes all requests starting with "/api/auth" to the authRouter,
-// which handles user registration, login, and related authentication processes.
+// which handles user registration related authentication processes.
 app.use("/api/auth", authRouter);
 
 // Start the server
