@@ -14,7 +14,7 @@ function formSignIn({ formData, onChange, onSubmit, buttonText }) {
   return (
     <form
       onSubmit={onSubmit}
-      className=" bg-slate-800 shadow-lg rounded-lg p-5 w-full max-w-lg mx-auto"
+      className="bg-slate-800 shadow-lg rounded-lg p-5 w-full sm:w-[400px] mx-auto"
     >
       <div className="flex flex-col gap-6">
         {/* Username Field */}
