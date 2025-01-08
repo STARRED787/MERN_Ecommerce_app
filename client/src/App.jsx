@@ -25,7 +25,7 @@ function App() {
       <Routes>
         {/* Main authentication path */}
         <Route
-          path="/auth/*"
+          path="/auth"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AuthLayout />
