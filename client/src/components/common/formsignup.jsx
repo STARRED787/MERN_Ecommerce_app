@@ -1,21 +1,11 @@
 import { Label } from "@radix-ui/react-label";
 import PropTypes from "prop-types";
 
-function formSignUp({ formData, onChange, onSubmit, buttonText }) {
-  formSignUp.propTypes = {
-    formData: PropTypes.shape({
-      username: PropTypes.string,
-      password: PropTypes.string,
-      email: PropTypes.string,
-    }).isRequired,
-    onChange: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    buttonText: PropTypes.string,
-  };
+function FormSignUp({ formData, onChange, onSubmit, buttonText }) {
   return (
     <form
-      onSubmit={onSubmit}
       className="bg-slate-800 shadow-lg rounded-lg p-5 w-full sm:w-[400px] mx-auto"
+      onSubmit={onSubmit} // Trigger form submission logic
     >
       <div className="flex flex-col gap-6">
         {/* Username Field */}
@@ -30,7 +20,8 @@ function formSignUp({ formData, onChange, onSubmit, buttonText }) {
             placeholder="Enter your username"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             value={formData.username || ""}
-            onChange={onChange}
+            onChange={onChange} // Update form data on input change
+            required // Make this field required
           />
         </div>
 
@@ -46,7 +37,8 @@ function formSignUp({ formData, onChange, onSubmit, buttonText }) {
             placeholder="Enter your password"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             value={formData.password || ""}
-            onChange={onChange}
+            onChange={onChange} // Update form data on input change
+            required // Make this field required
           />
         </div>
 
@@ -62,7 +54,8 @@ function formSignUp({ formData, onChange, onSubmit, buttonText }) {
             placeholder="Enter your email"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             value={formData.email || ""}
-            onChange={onChange}
+            onChange={onChange} // Update form data on input change
+            required // Make this field required
           />
         </div>
       </div>
@@ -72,10 +65,20 @@ function formSignUp({ formData, onChange, onSubmit, buttonText }) {
         type="submit"
         className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
       >
-        {buttonText || "Submit"}
+        {buttonText || "Submit"} {/* Default button text if not provided */}
       </button>
     </form>
   );
 }
+FormSignUp.propTypes = {
+  formData: PropTypes.shape({
+    username: PropTypes.string,
+    password: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  buttonText: PropTypes.string,
+};
 
-export default formSignUp;
+export default FormSignUp;

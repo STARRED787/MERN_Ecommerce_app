@@ -51,8 +51,7 @@ const authSlice = createSlice({
     builder.addCase(registerUser.fulfilled, (state, action) => {
       state.isLoading = false; // Set loading state to false
       state.isAuthenticated = true; // Mark the user as authenticated
-      state.user = action.payload.user; // Store the user information from response
-      console.log("Registration successful:", action.payload); // Log the successful registration response
+      state.user = action.payload; // Store the user information
     });
 
     // Handle the rejected state of registerUser

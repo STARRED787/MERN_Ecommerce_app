@@ -1,52 +1,36 @@
 import FormSignUp from "@/components/common/formsignup"; // Importing the reusable FormSignUp component
-import { useState } from "react"; // Importing useState hook for managing component state
-import { useDispatch } from "react-redux"; // Importing useDispatch to dispatch Redux actions
+import { useSelector, useDispatch } from "react-redux"; // Import useSelector to access Redux state and useDispatch to dispatch actions
 import { useNavigate } from "react-router-dom"; // Import necessary hooks and components from react-router-dom
-import { registerUser } from "@/store/auth-slice/index"; // Importing the async action for user registration
-import { toast } from "react-toastify"; // Importing the toast function from react-toastify
-import "react-toastify/dist/ReactToastify.css"; // Importing the toast styles
+import { registerUser, updateFormData } from "@/store/auth-slice/index"; // Importing the async action and form data updater action
 
 function SignUp() {
-  // State to manage form data (username, password, email)
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    email: "",
-  });
+  const dispatch = useDispatch(); // Hook to dispatch actions to the Redux store
+  const navigate = useNavigate(); // Hook for navigation
 
-  // Hook to dispatch actions to the Redux store
-  const dispatch = useDispatch();
-
-  // Hook for navigation
-  const navigate = useNavigate();
+  // Access formData from Redux state
+  const formData = useSelector((state) => state.auth.formData);
 
   // Function to handle form submission
-  function onSubmit(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-    dispatch(registerUser(formData)).then((data) => {
-      console.log(data); // Log the response from the registerUser action
-      if (data?.payload?.success) {
-        // Show a success toast
-        toast.success("Registration successful! Please log in.");
+  const onSubmit = async (event) => {
+    event.preventDefault(); // Prevents page refresh on form submission
 
-        // Navigate to the login page after a short delay to let the toast display
-        setTimeout(() => {
-          navigate("/auth/signin");
-        }, 2000); // Adjust delay as necessary
-      } else {
-        // Handle errors here (you can display an error toast)
-        toast.error("Registration failed. Please try again.");
+    try {
+      // Dispatch the registerUser async action and handle navigation on success
+      const data = await dispatch(registerUser(formData)).unwrap(); // Unwrap the resolved/rejected promise
+      console.log("Your data: ", data); // Log the response data from the registration action
+
+      if (data?.success) {
+        navigate("/auth/signin"); // Use navigate() to redirect to sign-in page
       }
-    }); // Dispatch the registerUser action with form data
-  }
+    } catch (error) {
+      console.error("Registration failed:", error); // Log any registration error
+    }
+  };
 
-  // Function to handle input changes and update the form data state
+  // Function to handle input changes and update the Redux formData state
   const handleChange = (event) => {
     const { name, value } = event.target; // Extract name and value from the input field
-    setFormData((prevData) => ({
-      ...prevData, // Preserve other fields in the state
-      [name]: value, // Update the current field based on input name
-    }));
+    dispatch(updateFormData({ [name]: value })); // Dispatch action to update form data in Redux
   };
 
   return (
@@ -61,7 +45,7 @@ function SignUp() {
 
         {/* Reusable FormSignUp component for rendering the form */}
         <FormSignUp
-          formData={formData} // Passing form data to the FormSignUp component
+          formData={formData} // Passing form data from Redux to the FormSignUp component
           onChange={handleChange} // Handling input changes
           onSubmit={onSubmit} // Handling form submission
           buttonText="Register" // Setting button text to "Register"
@@ -84,4 +68,4 @@ function SignUp() {
   );
 }
 
-export default SignUp; // Exporting the SignUp component for use in other parts of the app
+export default SignUp;

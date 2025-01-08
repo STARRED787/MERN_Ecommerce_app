@@ -70,9 +70,8 @@ function App() {
         {/* Fallback for undefined paths */}
         <Route path="*" element={<NotFound />} />
         <Route path="/unauth" element={<UnAuth />} />
-
-        <ToastContainer />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }
