@@ -21,7 +21,7 @@ app.use(
   cors({
     // Specify the origin (domain) allowed to make requests to your server
     // In this case, only requests from "http://localhost:5173/" (your front-end application) are allowed
-    origin: "http://localhost:5173/",
+    origin: "http://localhost:5173",
 
     // Define the HTTP methods that are allowed for cross-origin requests
     methods: ["GET", "POST", "PUT", "DELETE"],

@@ -1,5 +1,8 @@
-import FormSignUp from "@/components/common/formsignup"; // Importing the reusable CommonForm component
+import FormSignUp from "@/components/common/formsignup"; // Importing the reusable FormSignUp component
 import { useState } from "react"; // Importing useState hook for managing component state
+import { useDispatch } from "react-redux"; // Importing useDispatch to dispatch Redux actions
+//import { data, useNavigate } from "react-router-dom"; // Importing useNavigate to navigate programmatically
+import { registerUser } from "@/store/auth-slice/index"; // Importing the async action for user registration
 
 function SignUp() {
   // State to manage form data (username, password, email)
@@ -9,19 +12,29 @@ function SignUp() {
     email: "",
   });
 
-  // Function to handle input changes and update the form data state
-  const handleChange = (event) => {
-    const { name, value } = event.target; // Extracting name and value from the input field
-    setFormData((prevData) => ({
-      ...prevData, // Keeping other fields unchanged
-      [name]: value, // Updating the current field based on input name
-    }));
-  };
+  // Hook to dispatch actions to the Redux store
+  const dispatch = useDispatch();
 
   // Function to handle form submission
-  const handleSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault(); // Prevents page refresh on form submission
-    console.log("Form submitted:", formData); // Logs the submitted form data to the console
+
+    try {
+      // Dispatch the registerUser async action and handle navigation on success
+      const data = await dispatch(registerUser(formData)).unwrap(); // Unwraps the resolved or rejected promise
+      console.log(data); // Log the response data from the registration action
+    } catch (error) {
+      console.error("Registration failed:", error); // Log any registration error
+    }
+  };
+
+  // Function to handle input changes and update the form data state
+  const handleChange = (event) => {
+    const { name, value } = event.target; // Extract name and value from the input field
+    setFormData((prevData) => ({
+      ...prevData, // Preserve other fields in the state
+      [name]: value, // Update the current field based on input name
+    }));
   };
 
   return (
@@ -34,11 +47,11 @@ function SignUp() {
           Please fill out the form to create an account.
         </p>
 
-        {/* Reusable FormSignUp component is used here */}
+        {/* Reusable FormSignUp component for rendering the form */}
         <FormSignUp
           formData={formData} // Passing form data to the FormSignUp component
           onChange={handleChange} // Handling input changes
-          onSubmit={handleSubmit} // Handling form submission
+          onSubmit={onSubmit} // Handling form submission
           buttonText="Register" // Setting button text to "Register"
         />
 

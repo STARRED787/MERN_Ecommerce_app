@@ -48,10 +48,10 @@ const authSlice = createSlice({
     });
 
     // Handle the fulfilled state of registerUser
-    builder.addCase(registerUser.fulfilled, (state, action) => {
+    builder.addCase(registerUser.fulfilled, (state) => {
       state.isLoading = false; // Set loading state to false
       state.isAuthenticated = true; // Mark the user as authenticated
-      state.user = action.payload; // Store the user information
+      state.user = null; // Store the user information
     });
 
     // Handle the rejected state of registerUser
