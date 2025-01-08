@@ -28,8 +28,6 @@ function SignUp() {
     if (data?.payload?.success) {
       console.log("Registration successful:", data.payload); // Log successful registration data
       navigate("/auth/signin"); // Navigate to the signin page
-    } else {
-      console.error("Registration failed:", data.payload); // Log the error if registration fails
     }
   }
 
