@@ -3,6 +3,8 @@ import { useState } from "react"; // Importing useState hook for managing compon
 import { useDispatch } from "react-redux"; // Importing useDispatch to dispatch Redux actions
 import { useNavigate } from "react-router-dom"; // Import necessary hooks and components from react-router-dom
 import { registerUser } from "@/store/auth-slice/index"; // Importing the async action for user registration
+import { toast } from "react-toastify"; // Importing the toast function from react-toastify
+import "react-toastify/dist/ReactToastify.css"; // Importing the toast styles
 
 function SignUp() {
   // State to manage form data (username, password, email)
@@ -16,14 +18,25 @@ function SignUp() {
   const dispatch = useDispatch();
 
   // Hook for navigation
-  const navigate = useNavigate(); // This is the correct hook for navigation
+  const navigate = useNavigate();
 
   // Function to handle form submission
   function onSubmit(event) {
     event.preventDefault(); // Prevent the default form submission behavior
     dispatch(registerUser(formData)).then((data) => {
       console.log(data); // Log the response from the registerUser action
-      if (data?.payload?.success) navigate("/auth/signin"); // Navigate to the login page after successful registration
+      if (data?.payload?.success) {
+        // Show a success toast
+        toast.success("Registration successful! Please log in.");
+
+        // Navigate to the login page after a short delay to let the toast display
+        setTimeout(() => {
+          navigate("/auth/signin");
+        }, 2000); // Adjust delay as necessary
+      } else {
+        // Handle errors here (you can display an error toast)
+        toast.error("Registration failed. Please try again.");
+      }
     }); // Dispatch the registerUser action with form data
   }
 
