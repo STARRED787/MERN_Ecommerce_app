@@ -12,7 +12,8 @@ const initialState = {
 export registerUser = createAsyncThunk('/auth/signup',
 
   async (formdata) => {
-const response = await axios.post('http://localhost:5000/api/auth', formdata);
+const response = await axios.post('http://localhost:5000/api/auth/signup', formdata);
+withCredentials: true;
 )
 
 // Create the authentication slice of the store
