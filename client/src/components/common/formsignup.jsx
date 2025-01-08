@@ -1,8 +1,8 @@
 import { Label } from "@radix-ui/react-label";
 import PropTypes from "prop-types";
 
-function formSignIn({ formData, onChange, onSubmit, buttonText }) {
-  formSignIn.propTypes = {
+function formSignUp({ formData, onChange, onSubmit, buttonText }) {
+  formSignUp.propTypes = {
     formData: PropTypes.shape({
       username: PropTypes.string,
       password: PropTypes.string,
@@ -78,4 +78,4 @@ function formSignIn({ formData, onChange, onSubmit, buttonText }) {
   );
 }
 
-export default formSignIn;
+export default formSignUp;
