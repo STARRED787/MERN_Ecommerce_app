@@ -15,7 +15,7 @@ function formSignUp({ formData, onChange, onSubmit, buttonText }) {
   return (
     <form
       onSubmit={onSubmit}
-      className=" bg-slate-800 shadow-lg rounded-lg p-5 w-full max-w-lg mx-auto"
+      className="bg-slate-800 shadow-lg rounded-lg p-5 w-full sm:w-[400px] mx-auto"
     >
       <div className="flex flex-col gap-6">
         {/* Username Field */}
@@ -36,7 +36,7 @@ function formSignUp({ formData, onChange, onSubmit, buttonText }) {
 
         {/* Password Field */}
         <div className="grid w-full gap-2">
-          <Label htmlFor="password" className="text-white  text-sm font-medium">
+          <Label htmlFor="password" className="text-white text-sm font-medium">
             Password
           </Label>
           <input
@@ -50,9 +50,9 @@ function formSignUp({ formData, onChange, onSubmit, buttonText }) {
           />
         </div>
 
-        {/* email Field */}
+        {/* Email Field */}
         <div className="grid w-full gap-2">
-          <Label htmlFor="email" className="text-white  text-sm font-medium">
+          <Label htmlFor="email" className="text-white text-sm font-medium">
             Email
           </Label>
           <input
