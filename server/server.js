@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser"); //parses cookies attached to the client-side request object
 const cors = require("cors"); //Allows your server to handle requests from different origins (domains, ports, or protocols)
-const authRouter = require("./routes/auth");
+const authRouter = require("./routes/auth/auth-routes");
 //create database connection
 mongoose
   .connect(
@@ -48,6 +48,8 @@ app.use(cookieParser());
 // Middleware to parse JSON bodies
 // This allows your server to accept and parse JSON data sent in the body of POST, PUT, or PATCH requests.
 app.use(express.json());
+
+app.use("/api/auth", authRouter);
 
 // Start the server
 // This tells the Express app to listen for incoming requests on the specified `PORT`.
