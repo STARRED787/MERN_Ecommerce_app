@@ -4,13 +4,12 @@ import { useDispatch } from "react-redux"; // Import useDispatch for dispatching
 import { useFormik } from "formik"; // Import useFormik for Formik form management
 import * as Yup from "yup"; // Import Yup for form validation schema
 import { toast } from "react-toastify"; // Import react-toastify for notifications
+import { loginUser } from "@/store/auth-slice";
 
 // FormSignIn Component for rendering the sign-in form
-function FormSignIn({ onSubmit, buttonText }) {
-  // Redux dispatch hook
+function FormSignIn({ onSubmit }) {
   const dispatch = useDispatch();
 
-  // Formik setup for form validation and submission
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -20,15 +19,20 @@ function FormSignIn({ onSubmit, buttonText }) {
       username: Yup.string().required("Username is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: (values) => {
-      // Dispatch action to Redux or send data to API
-      dispatch({ type: "USER_SIGN_IN", payload: values });
+    onSubmit: async (values) => {
+      try {
+        // Dispatch the async loginUser action and await its result
+        const data = await dispatch(loginUser(values));
 
-      // Show success toast notification
-      toast.success("Successfully signed in!");
+        // Optionally handle successful login here if needed
+        console.log(data); // You can do something with the response data if needed
 
-      // Optionally handle form submission logic here
-      onSubmit(values);
+        // Call onSubmit prop if necessary (e.g., for additional logic)
+        onSubmit(values);
+      } catch (error) {
+        console.error("Login error:", error);
+        toast.error("An error occurred while logging in.");
+      }
     },
   });
 
@@ -84,15 +88,6 @@ function FormSignIn({ onSubmit, buttonText }) {
           )}
         </div>
       </div>
-
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
-      >
-        {buttonText || "Submit"}{" "}
-        {/* Display buttonText or default to 'Submit' */}
-      </button>
     </form>
   );
 }

@@ -1,78 +1,27 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Label } from "@radix-ui/react-label";
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { registerUser } from "@/store/auth-slice/index";
-import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types"; // Import PropTypes for validation
+import { useFormik } from "formik"; // Import Formik for form handling
+import * as Yup from "yup"; // Import Yup for validation
+import { Label } from "@radix-ui/react-label"; // Radix UI for accessible labels
 
-function FormSignUp({ buttonText }) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  // Get loading state from Redux store
-  const { loading } = useSelector((state) => state.auth);
-
-  // Formik configuration
+function FormSignIn({ onSubmit, buttonText }) {
   const formik = useFormik({
     initialValues: {
       username: "",
       password: "",
-      email: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string()
-        .min(3, "Username must be at least 3 characters")
-        .required("Username is required"),
-      password: Yup.string()
-        .min(6, "Password must be at least 6 characters")
-        .required("Password is required"),
-      email: Yup.string()
-        .email("Invalid email format")
-        .required("Email is required"),
+      username: Yup.string().required("Username is required"),
+      password: Yup.string().required("Password is required"),
     }),
-    onSubmit: async (values, { setSubmitting }) => {
-      try {
-        const data = await dispatch(registerUser(values)).unwrap();
-        if (data?.success) {
-          toast.success("Registration successful! Redirecting to sign-in...", {
-            position: "top-center",
-            autoClose: 3000,
-          });
-          setTimeout(() => navigate("/auth/signin"), 2900);
-        }
-      } catch (error) {
-        console.error("Registration failed:", error);
-
-        if (error?.message.includes("Username is already taken")) {
-          toast.error(
-            "Username is already registered. Please choose a different one."
-          );
-        } else if (error?.message.includes("Email is already registered")) {
-          toast.error(
-            "Email is already registered. Please use a different email."
-          );
-        } else {
-          toast.error("Registration failed! Please try again.");
-        }
-        // Clear form fields after error
-        formik.resetForm(); // This will reset all the fields to initialValues
-      } finally {
-        setSubmitting(false); // Reset the form submission state
-      }
+    onSubmit: (values) => {
+      onSubmit(values); // Call the parent onSubmit function with form data
     },
   });
 
-  // Generate random username
-  const generateUsername = () => {
-    const randomUsername = `ecom_${Math.floor(Math.random() * 10000)}`;
-    formik.setFieldValue("username", randomUsername);
-  };
-
   return (
     <form
-      className="bg-slate-800 shadow-lg rounded-lg p-5 w-full sm:w-[400px] mx-auto"
       onSubmit={formik.handleSubmit}
+      className="bg-slate-800 shadow-lg rounded-lg p-5 w-full sm:w-[400px] mx-auto"
     >
       <div className="flex flex-col gap-6">
         {/* Username Field */}
@@ -80,28 +29,21 @@ function FormSignUp({ buttonText }) {
           <Label htmlFor="username" className="text-white text-sm font-medium">
             Username
           </Label>
-          <div className="flex gap-2 items-center">
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Enter your username"
-              className="flex-1 border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              value={formik.values.username}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            <button
-              type="button"
-              className="bg-blue-500 text-white px-4 sm:py-2  rounded-lg hover:bg-blue-600 transition-all shadow-lg"
-              onClick={generateUsername}
-            >
-              Auto Generate
-            </button>
-          </div>
-          {formik.touched.username && formik.errors.username ? (
-            <p className="text-red-500 text-sm">{formik.errors.username}</p>
-          ) : null}
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.username && formik.errors.username && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.username}
+            </div>
+          )}
         </div>
 
         {/* Password Field */}
@@ -119,29 +61,11 @@ function FormSignUp({ buttonText }) {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.password && formik.errors.password ? (
-            <p className="text-red-500 text-sm">{formik.errors.password}</p>
-          ) : null}
-        </div>
-
-        {/* Email Field */}
-        <div className="grid w-full gap-2">
-          <Label htmlFor="email" className="text-white text-sm font-medium">
-            Email
-          </Label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <p className="text-red-500 text-sm">{formik.errors.email}</p>
-          ) : null}
+          {formik.touched.password && formik.errors.password && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.password}
+            </div>
+          )}
         </div>
       </div>
 
@@ -149,18 +73,17 @@ function FormSignUp({ buttonText }) {
       <button
         type="submit"
         className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
-        disabled={formik.isSubmitting}
       >
-        {formik.isSubmitting || loading
-          ? "Registering..."
-          : buttonText || "Submit"}
+        {buttonText || "Submit"}
       </button>
     </form>
   );
 }
 
-FormSignUp.propTypes = {
+// Prop types validation
+FormSignIn.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
   buttonText: PropTypes.string,
 };
 
-export default FormSignUp;
+export default FormSignIn;
