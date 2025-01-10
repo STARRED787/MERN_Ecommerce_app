@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Label } from "@radix-ui/react-label";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { registerUser } from "@/store/auth-slice/index";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 function FormSignUp({ buttonText }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // Get loading state from Redux store
+  const { loading } = useSelector((state) => state.auth);
 
   // Formik configuration
   const formik = useFormik({
@@ -149,7 +151,9 @@ function FormSignUp({ buttonText }) {
         className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
         disabled={formik.isSubmitting}
       >
-        {formik.isSubmitting ? "Registering..." : buttonText || "Submit"}
+        {formik.isSubmitting || loading
+          ? "Registering..."
+          : buttonText || "Submit"}
       </button>
     </form>
   );
