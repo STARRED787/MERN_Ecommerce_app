@@ -88,7 +88,7 @@ const authSlice = createSlice({
       console.log("Login data:", action.payload);
       state.isLoading = false; // Set loading state to false
       state.isAuthenticated = true; // Mark the user as authenticated
-      state.user = action.payload.user; // Store the user information
+      state.user = action.payload.sucess ? null : action; // Store the user information
     });
 
     // Handle the rejected state of loginUser
@@ -96,7 +96,6 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.isAuthenticated = false;
       state.user = null;
-      state.error = action.payload?.sucess || "Login Sucessfull"; // Save sucess message
       state.error = action.payload?.message || "Login failed"; // Save error message
     });
   },
