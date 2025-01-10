@@ -46,18 +46,18 @@ const userRegister = async (req, res) => {
 const login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const checkUser = await User.findOne({ email });
+    const checkUser = await User.findOne({ username });
     if (!checkUser) {
       return res.status(400).json({
         success: false,
-        message: "Invalid credentials",
+        message: "Youre Username is incorrect",
       });
     }
     const checkPassword = await bcrypt.compare(password, checkUser.password);
     if (!checkPassword) {
       return res.status(400).json({
         success: false,
-        message: "Invalid credentials",
+        message: "Youre Password is incorrect",
       });
     }
   } catch (e) {
