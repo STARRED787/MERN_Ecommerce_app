@@ -1,22 +1,40 @@
 import { Label } from "@radix-ui/react-label"; // Importing Radix UI's Label component for accessibility
 import PropTypes from "prop-types"; // Importing PropTypes to validate the component props
+import { useDispatch } from "react-redux"; // Import useDispatch for dispatching actions to Redux
+import { useFormik } from "formik"; // Import useFormik for Formik form management
+import * as Yup from "yup"; // Import Yup for form validation schema
+import { toast } from "react-toastify"; // Import react-toastify for notifications
 
 // FormSignIn Component for rendering the sign-in form
-function FormSignIn({ formData, onChange, onSubmit, buttonText }) {
-  // Prop types for validating the props passed to the FormSignIn component
-  FormSignIn.propTypes = {
-    formData: PropTypes.shape({
-      username: PropTypes.string,
-      password: PropTypes.string,
-    }).isRequired, // Expecting formData to have 'username' and 'password' keys
-    onChange: PropTypes.func.isRequired, // onChange must be a function to handle input change
-    onSubmit: PropTypes.func.isRequired, // onSubmit must be a function for form submission
-    buttonText: PropTypes.string, // buttonText is optional, default will be 'Submit'
-  };
+function FormSignIn({ onSubmit, buttonText }) {
+  // Redux dispatch hook
+  const dispatch = useDispatch();
+
+  // Formik setup for form validation and submission
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      username: Yup.string().required("Username is required"),
+      password: Yup.string().required("Password is required"),
+    }),
+    onSubmit: (values) => {
+      // Dispatch action to Redux or send data to API
+      dispatch({ type: "USER_SIGN_IN", payload: values });
+
+      // Show success toast notification
+      toast.success("Successfully signed in!");
+
+      // Optionally handle form submission logic here
+      onSubmit(values);
+    },
+  });
 
   return (
     <form
-      onSubmit={onSubmit} // Submit the form when the user clicks the button
+      onSubmit={formik.handleSubmit} // Formik handles form submission
       className="bg-slate-800 shadow-lg rounded-lg p-5 w-full sm:w-[400px] mx-auto"
     >
       <div className="flex flex-col gap-6">
@@ -31,9 +49,16 @@ function FormSignIn({ formData, onChange, onSubmit, buttonText }) {
             name="username"
             placeholder="Enter your username"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            value={formData.username || ""} // Bind form data value to input field
-            onChange={onChange} // Trigger handleChange when input changes
+            value={formik.values.username} // Bind formik value to input field
+            onChange={formik.handleChange} // Formik handles change
+            onBlur={formik.handleBlur} // Formik handles blur
           />
+          {/* Display error message if field is invalid */}
+          {formik.touched.username && formik.errors.username && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.username}
+            </div>
+          )}
         </div>
 
         {/* Password Field */}
@@ -47,9 +72,16 @@ function FormSignIn({ formData, onChange, onSubmit, buttonText }) {
             name="password"
             placeholder="Enter your password"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            value={formData.password || ""} // Bind form data value to input field
-            onChange={onChange} // Trigger handleChange when input changes
+            value={formik.values.password} // Bind formik value to input field
+            onChange={formik.handleChange} // Formik handles change
+            onBlur={formik.handleBlur} // Formik handles blur
           />
+          {/* Display error message if field is invalid */}
+          {formik.touched.password && formik.errors.password && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.password}
+            </div>
+          )}
         </div>
       </div>
 
@@ -64,5 +96,11 @@ function FormSignIn({ formData, onChange, onSubmit, buttonText }) {
     </form>
   );
 }
+
+// Prop Types validation
+FormSignIn.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  buttonText: PropTypes.string,
+};
 
 export default FormSignIn; // Exporting the FormSignIn component for use in other files

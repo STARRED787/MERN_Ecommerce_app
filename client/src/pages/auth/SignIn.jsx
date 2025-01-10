@@ -1,29 +1,7 @@
 import FormSignIn from "@/components/common/formSignIn"; // Importing the reusable FormSignIn component
-import { useState } from "react"; // Importing useState hook for managing form state
 
 // SignIn component for handling sign-in functionality
 function SignIn() {
-  // State to manage form input values
-  const [formData, setFormData] = useState({
-    username: "", // Initial value for the username field
-    password: "", // Initial value for the password field
-  });
-
-  // Function to handle input field changes and update form data state
-  const handleChange = (event) => {
-    const { name, value } = event.target; // Extract name and value from input field
-    setFormData((prevData) => ({
-      ...prevData, // Keep the previous form data intact
-      [name]: value, // Update the value of the specific field
-    }));
-  };
-
-  // Function to handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent page refresh on form submission
-    console.log("SignIn Data:", formData); // Log form data (usually, you would send it to an API here)
-  };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       {/* Container for the form with styling */}
@@ -36,9 +14,6 @@ function SignIn() {
 
         {/* FormSignIn component to handle input fields and submission */}
         <FormSignIn
-          formData={formData} // Pass form data as a prop to FormSignIn
-          onChange={handleChange} // Pass the handleChange function to update state
-          onSubmit={handleSubmit} // Pass the handleSubmit function to handle form submission
           buttonText="Sign In" // Button text for the form's submit button
         />
 
