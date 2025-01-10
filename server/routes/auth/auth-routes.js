@@ -1,11 +1,10 @@
 const express = require("express");
-const {
-  userRegister,
-  Userlogin,
-} = require("../../controllers/auth/auth-controller");
+const app = express();
+const authRoutes = require("./routes/auth/auth-router"); // Importing the router
 
-const router = express.Router();
+app.use(express.json()); // Middleware to parse JSON requests
 
-router.post("/signup", userRegister);
+// Mount the authentication routes at '/auth'
+app.use("/auth", authRoutes);
 
-module.exports = router;
+// Add other routes and middleware as needed
