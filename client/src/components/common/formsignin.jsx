@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { loginUser } from "@/store/auth-slice";
 
 function FormSignIn({ buttonText }) {
@@ -104,6 +105,7 @@ function FormSignIn({ buttonText }) {
       >
         {buttonText || "Submit"}
       </button>
+      <ToastContainer />
     </form>
   );
 }
