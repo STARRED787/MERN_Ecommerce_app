@@ -25,16 +25,10 @@ function FormSignIn({ buttonText }) {
 
         // Check if login was successful
         if (data?.payload?.success) {
-          toast({
-            title: data?.payload?.message, // Success message
-            variant: "success",
-          });
+          toast.success(data?.payload?.message || "Login successful!"); // Success message
         } else {
           // Handle failure case when user credentials are incorrect
-          toast({
-            title: data?.payload?.message || "Invalid login credentials.", // Failure message
-            variant: "destructive",
-          });
+          toast.error(data?.payload?.message || "Invalid login credentials."); // Failure message
         }
       } catch (error) {
         console.error("Login error:", error);
