@@ -1,26 +1,27 @@
-import FormSignIn from "@/components/common/formsignIn"; // Importing the reusable CommonForm component
-import { useState } from "react"; // Importing useState hook for managing component state
+import FormSignIn from "@/components/common/formSignIn"; // Importing the reusable FormSignIn component
+import { useState } from "react"; // Importing useState hook for managing form state
 
+// SignIn component for handling sign-in functionality
 function SignIn() {
   // State to manage form input values
   const [formData, setFormData] = useState({
-    email: "", // Initial value for the email field
+    username: "", // Initial value for the username field
     password: "", // Initial value for the password field
   });
 
-  // Function to handle input field changes
+  // Function to handle input field changes and update form data state
   const handleChange = (event) => {
-    const { name, value } = event.target; // Extract the name and value from the input field
+    const { name, value } = event.target; // Extract name and value from input field
     setFormData((prevData) => ({
-      ...prevData, // Preserve existing form data
-      [name]: value, // Update the value of the specific input field
+      ...prevData, // Keep the previous form data intact
+      [name]: value, // Update the value of the specific field
     }));
   };
 
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent page refresh on form submission
-    console.log("SignIn Data:", formData); // Log the form data to the console
+    console.log("SignIn Data:", formData); // Log form data (usually, you would send it to an API here)
   };
 
   return (
