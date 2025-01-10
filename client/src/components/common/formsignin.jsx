@@ -1,13 +1,11 @@
-import { Label } from "@radix-ui/react-label"; // Importing Radix UI's Label component for accessibility
-import PropTypes from "prop-types"; // Importing PropTypes to validate the component props
-import { useDispatch } from "react-redux"; // Import useDispatch for dispatching actions to Redux
-import { useFormik } from "formik"; // Import useFormik for Formik form management
-import * as Yup from "yup"; // Import Yup for form validation schema
-import { toast } from "react-toastify"; // Import react-toastify for notifications
+import PropTypes from "prop-types";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { loginUser } from "@/store/auth-slice";
 
-// FormSignIn Component for rendering the sign-in form
-function FormSignIn({ onSubmit }) {
+function FormSignIn({ buttonText }) {
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -24,11 +22,10 @@ function FormSignIn({ onSubmit }) {
         // Dispatch the async loginUser action and await its result
         const data = await dispatch(loginUser(values));
 
-        // Optionally handle successful login here if needed
-        console.log(data); // You can do something with the response data if needed
+        // Optionally handle successful login here
+        console.log("Login successful:", data);
 
-        // Call onSubmit prop if necessary (e.g., for additional logic)
-        onSubmit(values);
+        toast.success("Successfully signed in!");
       } catch (error) {
         console.error("Login error:", error);
         toast.error("An error occurred while logging in.");
@@ -44,9 +41,9 @@ function FormSignIn({ onSubmit }) {
       <div className="flex flex-col gap-6">
         {/* Username Field */}
         <div className="grid w-full gap-2">
-          <Label htmlFor="username" className="text-white text-sm font-medium">
+          <label htmlFor="username" className="text-white text-sm font-medium">
             Username
-          </Label>
+          </label>
           <input
             type="text"
             id="username"
@@ -67,9 +64,9 @@ function FormSignIn({ onSubmit }) {
 
         {/* Password Field */}
         <div className="grid w-full gap-2">
-          <Label htmlFor="password" className="text-white text-sm font-medium">
+          <label htmlFor="password" className="text-white text-sm font-medium">
             Password
-          </Label>
+          </label>
           <input
             type="password"
             id="password"
@@ -88,14 +85,19 @@ function FormSignIn({ onSubmit }) {
           )}
         </div>
       </div>
+      <button
+        type="submit"
+        className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
+      >
+        {buttonText || "Submit"}
+      </button>
     </form>
   );
 }
 
 // Prop Types validation
 FormSignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   buttonText: PropTypes.string,
 };
 
-export default FormSignIn; // Exporting the FormSignIn component for use in other files
+export default FormSignIn;
