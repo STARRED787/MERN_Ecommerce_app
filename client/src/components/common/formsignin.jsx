@@ -23,16 +23,21 @@ function FormSignIn({ buttonText }) {
       try {
         // Dispatch the async loginUser action and await its result
         const data = await dispatch(loginUser(values)).unwrap();
+        console.log("API Response:", data);
+
+        // Access the role from the user object
+        const role = data.user.role;
 
         // Check the user's role and navigate accordingly
-        if (data.role === "user") {
+        if (role === "user") {
           toast.success("Welcome! Redirecting to the shop...");
           navigate("/shop");
-        } else if (data.role === "admin") {
+        } else if (role === "admin") {
           toast.success("Welcome Admin! Redirecting to the dashboard...");
           navigate("/dashboard");
         } else {
-          throw new Error("Invalid role.");
+          toast.error("Invalid user role. Please contact support.");
+          throw new Error(`Unexpected role: ${role}`);
         }
       } catch (error) {
         console.error("Login error:", error);
