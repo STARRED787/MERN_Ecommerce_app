@@ -42,6 +42,7 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+
 // Create the authentication slice
 const authSlice = createSlice({
   name: "auth", // Name of the slice, used in actions and reducers
@@ -75,6 +76,26 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.error = action.payload?.message || "Registration failed"; // Save error message
+    });
+
+    // Handle the pending state of loginUser
+    builder.addCase(loginUser.pending, (state) => {
+      state.isLoading = true; // Set loading state to true
+    });
+
+    // Handle the fulfilled state of loginUser
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      state.isLoading = false; // Set loading state to false
+      state.isAuthenticated = true; // Mark the user as authenticated
+      state.user = action.payload; // Store the user information
+    });
+
+    // Handle the rejected state of loginUser
+    builder.addCase(loginUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = action.payload?.message || "Login failed"; // Save error message
     });
   },
 });
