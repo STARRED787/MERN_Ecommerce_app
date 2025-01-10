@@ -50,7 +50,7 @@ const userRegister = async (req, res) => {
 };
 
 // Login controller
-const login = async (req, res) => {
+const Userlogin = async (req, res) => {
   const { username, password } = req.body;
   try {
     // Find the user by username
@@ -119,4 +119,4 @@ const logout = (req, res) => {
 
 // Middleware (For authentication) can be added here later
 
-module.exports = { userRegister, login, logout }; // Export the login controller here
+module.exports = { userRegister, Userlogin, logout }; // Export the login controller here
