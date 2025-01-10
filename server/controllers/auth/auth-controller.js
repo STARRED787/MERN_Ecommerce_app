@@ -15,14 +15,14 @@ const userRegister = async (req, res) => {
 
     await newUser.save();
     res.status(201).json({
-      //sucess: true,
-      //message: "user created successfully",
+      success: true, // Ensure this property is included
+      message: "User created successfully",
     });
   } catch (e) {
     console.log(e);
     res.status(500).json({
-      sucess: false,
-      message: "some error occured",
+      success: false,
+      message: "Some error occurred",
     });
   }
 };

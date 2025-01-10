@@ -11,18 +11,17 @@ const initialState = {
 
 // Async thunk to register a user (sign-up functionality)
 export const registerUser = createAsyncThunk(
-  "/auth/signup", // Action type
+  "/auth/signup",
   async (formData, { rejectWithValue }) => {
     try {
-      // Send POST request to register the user
       const response = await axios.post(
         "http://localhost:5000/api/auth/signup",
         formData,
-        { withCredentials: true } // Include cookies in the request
+        { withCredentials: true }
       );
-      return response.data; // Return the response data to the thunk
+      return response.data; // Ensure this data contains the `success` property
     } catch (error) {
-      return rejectWithValue(error.response.data); // Handle and return error
+      return rejectWithValue(error.response.data);
     }
   }
 );
