@@ -21,6 +21,9 @@ import { useSelector } from "react-redux";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
+  // Ensure `isAuthenticated` has a fallback value
+  const isAuthenticatedValue = isAuthenticated ?? false;
+
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
@@ -28,7 +31,7 @@ function App() {
         <Route
           path="/auth"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticatedValue} user={user}>
               <AuthLayout />
             </CheckAuth>
           }
@@ -41,7 +44,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticatedValue} user={user}>
               <AdminLayout />
             </CheckAuth>
           }
@@ -56,7 +59,7 @@ function App() {
         <Route
           path="/shop"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticatedValue} user={user}>
               <ShoppingLayout />
             </CheckAuth>
           }
