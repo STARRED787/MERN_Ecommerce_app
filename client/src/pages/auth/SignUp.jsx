@@ -26,16 +26,15 @@ function SignUp() {
       if (data?.success) {
         toast.success("Registration successful! Redirecting to sign-in...", {
           position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000,
         });
         setTimeout(() => {
           navigate("/auth/signin");
-        }, 3000); // Navigate after toast disappears
+        }, 2900); // Navigate slightly before the toast disappears
       }
-    } catch {
-      toast.error("Registration failed! Please try again.", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+    } catch (error) {
+      console.error("Registration failed:", error); // Log detailed error for debugging
+      toast.error("Registration failed! Please try again.");
     }
   };
 
