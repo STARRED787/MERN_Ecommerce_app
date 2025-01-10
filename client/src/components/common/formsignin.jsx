@@ -4,11 +4,9 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { loginUser } from "@/store/auth-slice";
-import { useNavigate } from "react-router-dom";
 
 function FormSignIn({ buttonText }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -21,35 +19,21 @@ function FormSignIn({ buttonText }) {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        // Dispatch the async loginUser action and await its result
+        // Dispatch the async loginUser action with form values
         const data = await dispatch(loginUser(values)).unwrap();
-        console.log("API Response:", data);
+        console.log("Login data:", data);
 
-        // Access the role from the user object
-        const role = data.user.role;
-
-        // Check the user's role and navigate accordingly
-        if (role === "user") {
-          toast.success("Welcome! Redirecting to the shop...");
-          navigate("/shop");
-        } else if (role === "admin") {
-          toast.success("Welcome Admin! Redirecting to the dashboard...");
-          navigate("/dashboard");
-        } else {
-          toast.error("Invalid user role. Please contact support.");
-          throw new Error(`Unexpected role: ${role}`);
-        }
+        // Optionally display a success message or perform other actions here
+        toast.success("Login successful!");
       } catch (error) {
         console.error("Login error:", error);
-        // Display toaster error notification
         toast.error("Username or password is incorrect.");
 
-        // Clear the form after showing the error notification
+        // Optionally reset the form after error
         resetForm();
       }
     },
   });
-
   return (
     <form
       onSubmit={formik.handleSubmit} // Formik handles form submission

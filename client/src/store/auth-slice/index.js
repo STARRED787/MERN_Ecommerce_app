@@ -85,6 +85,7 @@ const authSlice = createSlice({
 
     // Handle the fulfilled state of loginUser
     builder.addCase(loginUser.fulfilled, (state, action) => {
+      console.log("Login data:", action.payload);
       state.isLoading = false; // Set loading state to false
       state.isAuthenticated = true; // Mark the user as authenticated
       state.user = action.payload; // Store the user information
