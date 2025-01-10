@@ -63,6 +63,23 @@ const authSlice = createSlice({
   },
 });
 
+// Async thunk to Login a user (sign-up functionality)
+export const loginUser = createAsyncThunk(
+  "/auth/signin",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/signup",
+        formData,
+        { withCredentials: true }
+      );
+      return response.data; // Ensure this data contains the `success` property
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 // Export the setUser action so it can be dispatched to update the state
 export const { setUser } = authSlice.actions;
 
