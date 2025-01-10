@@ -58,7 +58,7 @@ const Userlogin = async (req, res) => {
     if (!checkUser)
       return res.status(400).json({
         success: false,
-        message: "user dosent exists", // Unified error message
+        message: "User doesn't exist", // Unified error message
       });
 
     const checkPassword = await bcrypt.compare(password, checkUser.password);
@@ -67,18 +67,20 @@ const Userlogin = async (req, res) => {
         success: false,
         message: "Invalid password", // Unified error message
       });
+
     const token = jwt.sign(
       {
-        id: checkUser_id,
+        id: checkUser._id, // Fixed: use _id instead of checkUser_id
         role: checkUser.role,
         username: checkUser.username,
       },
       "CLIENT_SECRET_KEY",
       { expiresIn: "60m" }
     );
+
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
-      sucess: true,
-      message: "Logged in sucessfull",
+      success: true,
+      message: "Logged in successfully", // Fixed spelling error
       user: {
         username: checkUser.username,
         role: checkUser.role,
