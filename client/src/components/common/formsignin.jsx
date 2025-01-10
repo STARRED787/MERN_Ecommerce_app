@@ -22,22 +22,26 @@ function FormSignIn({ buttonText }) {
         // Dispatch the async loginUser action with form values
         const data = await dispatch(loginUser(values)).unwrap();
 
+        // Check if login was successful
         if (data?.payload?.success) {
           toast({
-            title: data?.payload?.message,
-            variant: "success", // Adjusted the variant to "success"
+            title: data?.payload?.message, // Success message
+            variant: "success",
           });
         } else {
+          // Handle failure case when user credentials are incorrect
           toast({
-            title: data?.payload?.message,
-            variant: "destructive", // Fixed the variant spelling
+            title: data?.payload?.message, // Failure message
+            variant: "destructive",
           });
         }
       } catch (error) {
         console.error("Login error:", error);
-        toast.error("An error occurred during login.");
+
+        // If error occurs (like incorrect username/password), show error notification
+        toast.error("Username or password is incorrect.");
       } finally {
-        // Optionally reset form after submitting
+        // Reset form after submission
         resetForm();
       }
     },
