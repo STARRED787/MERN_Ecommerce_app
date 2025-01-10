@@ -21,15 +21,23 @@ function FormSignIn({ buttonText }) {
       try {
         // Dispatch the async loginUser action with form values
         const data = await dispatch(loginUser(values)).unwrap();
-        console.log("Login data:", data);
 
-        // Optionally display a success message or perform other actions here
-        toast.success("Login successful!");
+        if (data?.payload?.success) {
+          toast({
+            title: data?.payload?.message,
+            variant: "success", // Adjusted the variant to "success"
+          });
+        } else {
+          toast({
+            title: data?.payload?.message,
+            variant: "destructive", // Fixed the variant spelling
+          });
+        }
       } catch (error) {
         console.error("Login error:", error);
-        toast.error("Username or password is incorrect.");
-
-        // Optionally reset the form after error
+        toast.error("An error occurred during login.");
+      } finally {
+        // Optionally reset form after submitting
         resetForm();
       }
     },

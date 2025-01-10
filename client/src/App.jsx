@@ -16,10 +16,10 @@ import ShoppingAccount from "./pages/shopping/account"; // Fixed typo "Acount"
 import NotFound from "./pages/not found";
 import UnAuth from "./pages/unauth";
 import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function App() {
-  const isAuthenticated = false; // Replace with actual authentication logic
-  const user = null; // Replace with actual user object
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">

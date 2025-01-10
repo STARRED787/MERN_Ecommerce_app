@@ -88,7 +88,7 @@ const authSlice = createSlice({
       console.log("Login data:", action.payload);
       state.isLoading = false; // Set loading state to false
       state.isAuthenticated = true; // Mark the user as authenticated
-      state.user = action.payload; // Store the user information
+      state.user = action.payload.user; // Store the user information
     });
 
     // Handle the rejected state of loginUser
