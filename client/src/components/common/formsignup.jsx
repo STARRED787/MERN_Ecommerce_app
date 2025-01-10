@@ -57,10 +57,10 @@ function FormSignUp({ onSubmit, buttonText }) {
             />
             <button
               type="button"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
+              className="bg-blue-500 text-white px-4 sm:py-2  rounded-lg hover:bg-blue-600 transition-all shadow-lg"
               onClick={generateUsername} // Generate username on click
             >
-              Auto-Generate
+              Auto Generate
             </button>
           </div>
           {formik.touched.username && formik.errors.username ? (
