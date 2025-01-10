@@ -46,7 +46,7 @@ function SignIn() {
           <p className="text-sm text-gray-600">
             Don&apos;t have an account?
             <a
-              href="/signup" // Redirect link to the signup page
+              href="/auth/signup" // Redirect link to the signup page
               className="text-blue-500 hover:underline font-medium"
             >
               Sign up here
