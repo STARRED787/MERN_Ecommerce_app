@@ -86,25 +86,25 @@ const authSlice = createSlice({
     // Handle the fulfilled state of loginUser
     builder.addCase(loginUser.fulfilled, (state, action) => {
       console.log("Login data:", action.payload);
-      state.isLoading = false; // Set loading state to false
+      state.isLoading = false;
 
-      // Check if login was successful
       if (action.payload.success) {
         state.isAuthenticated = true;
-        state.user = action.payload.user; // Store user data
+        state.user = action.payload.user;
+        state.error = null; // Clear any previous error
       } else {
         state.isAuthenticated = false;
-        state.user = null; // Clear user data if login fails
-        state.error = action.payload.message || "Invalid credentials"; // Handle error if login fails
+        state.user = null;
+        state.error = action.payload.message || "Invalid credentials";
       }
     });
 
-    // Handle the rejected state of registerUser
-    builder.addCase(registerUser.rejected, (state, action) => {
+    // Handle the rejected state of loginUser
+    builder.addCase(loginUser.rejected, (state, action) => {
       state.isLoading = false;
       state.isAuthenticated = false;
       state.user = null;
-      state.error = action.payload?.message || "Not Registered user"; // Handle specific error message
+      state.error = action.payload?.message || "Not Registered user"; // Show error message for unregistered users
     });
   },
 });

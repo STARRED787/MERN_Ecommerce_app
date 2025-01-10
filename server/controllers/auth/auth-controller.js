@@ -49,56 +49,43 @@ const userRegister = async (req, res) => {
   }
 };
 
-// Login controller
 const Userlogin = async (req, res) => {
   const { username, password } = req.body;
   try {
-    // Find the user by username
     const checkUser = await User.findOne({ username });
-    if (!checkUser) {
+
+    // Return a generic error message for both invalid username and password
+    if (!checkUser)
       return res.status(400).json({
         success: false,
-        message: "Your Username is incorrect",
+        message: "user dosent exists", // Unified error message
       });
-    }
 
-    // Compare the provided password with the hashed password stored in the DB
     const checkPassword = await bcrypt.compare(password, checkUser.password);
-    if (!checkPassword) {
+    if (!checkPassword)
       return res.status(400).json({
         success: false,
-        message: "Your Password is incorrect",
+        message: "Invalid password", // Unified error message
       });
-    }
-
-    // Generate JWT token
     const token = jwt.sign(
       {
-        id: checkUser._id,
+        id: checkUser_id,
         role: checkUser.role,
-        email: checkUser.email,
+        username: checkUser.username,
       },
-      "CLIENT_SECRET_KEY", // Make sure to replace this with an actual secret key
-      { expiresIn: "1h" } // Token will expire in 1 hour
+      "CLIENT_SECRET_KEY",
+      { expiresIn: "60m" }
     );
-
-    // Send the token as a cookie and respond with the user info
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production" ? true : false, // Only set 'secure' to true in production
-      })
-      .json({
-        success: true,
-        message: "Login Successful",
-        user: {
-          username: checkUser.username,
-          email: checkUser.email,
-          role: checkUser.role,
-        },
-      });
+    res.cookie("token", token, { httpOnly: true, secure: false }).json({
+      sucess: true,
+      message: "Logged in sucessfull",
+      user: {
+        username: checkUser.username,
+        role: checkUser.role,
+        id: checkUser._id,
+      },
+    });
   } catch (e) {
-    // Log the error and handle specific cases if necessary
     console.log(e);
     res.status(500).json({
       success: false,
@@ -108,14 +95,6 @@ const Userlogin = async (req, res) => {
 };
 
 // Logout controller (implement later)
-const logout = (req, res) => {
-  // Clear the cookie on logout
-  res.clearCookie("token");
-  res.status(200).json({
-    success: true,
-    message: "Logged out successfully",
-  });
-};
 
 // Middleware (For authentication) can be added here later
 

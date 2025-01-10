@@ -1,10 +1,9 @@
-import PropTypes from "prop-types";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { loginUser } from "@/store/auth-slice";
+import PropTypes from "prop-types";
 
 function FormSignIn({ buttonText }) {
   const dispatch = useDispatch();
@@ -24,24 +23,23 @@ function FormSignIn({ buttonText }) {
         const data = await dispatch(loginUser(values)).unwrap();
 
         // Check if login was successful
-        if (data?.payload?.success) {
-          toast.success(data?.payload?.message || "Login successful!"); // Success message
+        if (data?.success) {
+          toast.success(data?.message || "Login successful!"); // Success message
         } else {
-          // Handle failure case when user credentials are incorrect
-          toast.error(data?.payload?.message || "Invalid login credentials."); // Failure message
+          toast.error(data?.message || "Invalid login credentials."); // Failure message
         }
       } catch (error) {
         console.error("Login error:", error);
 
         // If error occurs (like incorrect username/password), show error notification
-        toast.error("Username or password is incorrect.");
+        toast.error(error.message || "Username or password is incorrect.");
       } finally {
-        // Reset form and set submitting to false after submission
-        resetForm();
-        setSubmitting(false); // Reset the form submission state
+        resetForm(); // Reset the form after submission
+        setSubmitting(false); // Reset submitting state
       }
     },
   });
+
   return (
     <form
       onSubmit={formik.handleSubmit} // Formik handles form submission
@@ -59,11 +57,10 @@ function FormSignIn({ buttonText }) {
             name="username"
             placeholder="Enter your username"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            value={formik.values.username} // Bind formik value to input field
-            onChange={formik.handleChange} // Formik handles change
-            onBlur={formik.handleBlur} // Formik handles blur
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
-          {/* Display error message if field is invalid */}
           {formik.touched.username && formik.errors.username && (
             <div className="text-red-500 text-xs mt-1">
               {formik.errors.username}
@@ -82,11 +79,10 @@ function FormSignIn({ buttonText }) {
             name="password"
             placeholder="Enter your password"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            value={formik.values.password} // Bind formik value to input field
-            onChange={formik.handleChange} // Formik handles change
-            onBlur={formik.handleBlur} // Formik handles blur
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
-          {/* Display error message if field is invalid */}
           {formik.touched.password && formik.errors.password && (
             <div className="text-red-500 text-xs mt-1">
               {formik.errors.password}
@@ -94,18 +90,18 @@ function FormSignIn({ buttonText }) {
           )}
         </div>
       </div>
+
       <button
         type="submit"
         className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
       >
         {buttonText || "Submit"}
       </button>
+
       <ToastContainer />
     </form>
   );
 }
-
-// Prop Types validation
 FormSignIn.propTypes = {
   buttonText: PropTypes.string,
 };
