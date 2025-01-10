@@ -18,35 +18,28 @@ function FormSignIn({ buttonText }) {
       username: Yup.string().required("Username is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       try {
         // Dispatch the async loginUser action with form values
         const data = await dispatch(loginUser(values)).unwrap();
 
         // Check if login was successful
         if (data?.payload?.success) {
-          toast({
-            title: data?.payload?.message, // Success message
-            variant: "success",
-          });
+          toast.success(data?.payload?.message); // Display login success message
         } else {
           // Handle failure case when user credentials are incorrect
-          toast({
-            title: data?.payload?.message, // Failure message
-            variant: "destructive",
-          });
+          toast.error(data?.payload?.message || "Invalid login credentials.");
         }
       } catch (error) {
         console.error("Login error:", error);
-
-        // If error occurs (like incorrect username/password), show error notification
-        toast.error("Username or password is incorrect.");
+        toast.error("Username or password is incorrect."); // Display error message for login failure
       } finally {
-        // Reset form after submission
-        resetForm();
+        setSubmitting(false); // Reset the form submission state
+        resetForm(); // Optionally reset the form after submission
       }
     },
   });
+
   return (
     <form
       onSubmit={formik.handleSubmit} // Formik handles form submission
