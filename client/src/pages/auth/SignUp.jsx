@@ -25,7 +25,7 @@ function SignUp() {
       const data = await dispatch(registerUser(formData)).unwrap();
       if (data?.success) {
         toast.success("Registration successful! Redirecting to sign-in...", {
-          position: toast.POSITION.TOP_CENTER,
+          position: "top-center", // Use string directly
           autoClose: 3000,
         });
         setTimeout(() => {
