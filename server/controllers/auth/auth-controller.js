@@ -68,12 +68,12 @@ const login = async (req, res) => {
       if (e.message.includes("username")) {
         return res.status(400).json({
           success: false,
-          message: "Username is already taken.",
+          message: "Username is Wrong",
         });
       } else if (e.message.includes("email")) {
         return res.status(400).json({
           success: false,
-          message: "Email is already registered.",
+          message: "Password is Wrong",
         });
       }
     }
