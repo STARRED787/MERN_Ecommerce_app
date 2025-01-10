@@ -100,4 +100,4 @@ const Userlogin = async (req, res) => {
 
 // Middleware (For authentication) can be added here later
 
-module.exports = { userRegister, Userlogin, logout }; // Export the login controller here
+module.exports = { userRegister, Userlogin }; // Export the login controller here

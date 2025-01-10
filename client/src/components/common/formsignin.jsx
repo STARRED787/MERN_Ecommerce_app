@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 
 function FormSignIn({ buttonText }) {
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +31,6 @@ function FormSignIn({ buttonText }) {
         }
       } catch (error) {
         console.error("Login error:", error);
-
         // If error occurs (like incorrect username/password), show error notification
         toast.error(error.message || "Username or password is incorrect.");
       } finally {
@@ -94,6 +94,7 @@ function FormSignIn({ buttonText }) {
       <button
         type="submit"
         className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
+        disabled={isLoading} // Disable the button when loading
       >
         {buttonText || "Submit"}
       </button>
@@ -102,6 +103,7 @@ function FormSignIn({ buttonText }) {
     </form>
   );
 }
+
 FormSignIn.propTypes = {
   buttonText: PropTypes.string,
 };
