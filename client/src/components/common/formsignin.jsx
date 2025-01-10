@@ -18,7 +18,7 @@ function FormSignIn({ buttonText }) {
       username: Yup.string().required("Username is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       try {
         // Dispatch the async loginUser action with form values
         const data = await dispatch(loginUser(values)).unwrap();
@@ -32,7 +32,7 @@ function FormSignIn({ buttonText }) {
         } else {
           // Handle failure case when user credentials are incorrect
           toast({
-            title: data?.payload?.message, // Failure message
+            title: data?.payload?.message || "Invalid login credentials.", // Failure message
             variant: "destructive",
           });
         }
@@ -42,8 +42,9 @@ function FormSignIn({ buttonText }) {
         // If error occurs (like incorrect username/password), show error notification
         toast.error("Username or password is incorrect.");
       } finally {
-        // Reset form after submission
+        // Reset form and set submitting to false after submission
         resetForm();
+        setSubmitting(false); // Reset the form submission state
       }
     },
   });
