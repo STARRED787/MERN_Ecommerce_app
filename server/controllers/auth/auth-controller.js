@@ -48,12 +48,12 @@ const login = async (req, res) => {
   try {
     
     });
-
-    await newUser.save();
-    res.status(201).json({
-      success: true, // Ensure this property is included
-      message: "User created successfully",
-    });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid credentials",
+      });
+    }
   } catch (e) {
     // In your register controller
     console.log(e);
