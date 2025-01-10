@@ -46,11 +46,34 @@ const userRegister = async (req, res) => {
 const login = async (req, res) => {
   const { username, password } = req.body;
   try {
+    
+    });
+
+    await newUser.save();
+    res.status(201).json({
+      success: true, // Ensure this property is included
+      message: "User created successfully",
+    });
   } catch (e) {
+    // In your register controller
     console.log(e);
+    if (e.code === 11000) {
+      // MongoDB Duplicate Key Error
+      if (e.message.includes("username")) {
+        return res.status(400).json({
+          success: false,
+          message: "Username is already taken.",
+        });
+      } else if (e.message.includes("email")) {
+        return res.status(400).json({
+          success: false,
+          message: "Email is already registered.",
+        });
+      }
+    }
     res.status(500).json({
-      sucess: false,
-      message: "some error occured",
+      success: false,
+      message: "Some error occurred",
     });
   }
 };
