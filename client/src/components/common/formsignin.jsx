@@ -20,14 +20,13 @@ function FormSignIn({ buttonText }) {
     }),
     onSubmit: async (values, { resetForm, setSubmitting }) => {
       try {
-        // Dispatch the async loginUser action with form values
         const data = await dispatch(loginUser(values)).unwrap();
+        console.log("Login response:", data); // Add this line to inspect the data
 
-        // Check if login was successful
         if (data?.success) {
-          toast.success(data?.message || "Login successful!"); // Success message
+          toast.success(data?.message || "Login successful!");
         } else {
-          toast.error(data?.message || "Invalid login credentials."); // Failure message
+          toast.error(data?.message || "Invalid login credentials.");
         }
       } catch (error) {
         console.error("Login error:", error);
