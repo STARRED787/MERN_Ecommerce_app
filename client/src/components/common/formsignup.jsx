@@ -41,7 +41,20 @@ function FormSignUp({ buttonText }) {
         }
       } catch (error) {
         console.error("Registration failed:", error);
-        toast.error("Registration failed! Please try again.");
+
+        if (error?.message.includes("Username is already taken")) {
+          toast.error(
+            "Username is already registered. Please choose a different one."
+          );
+        } else if (error?.message.includes("Email is already registered")) {
+          toast.error(
+            "Email is already registered. Please use a different email."
+          );
+        } else {
+          toast.error("Registration failed! Please try again.");
+        }
+        // Clear form fields after error
+        formik.resetForm(); // This will reset all the fields to initialValues
       } finally {
         setSubmitting(false); // Reset the form submission state
       }
