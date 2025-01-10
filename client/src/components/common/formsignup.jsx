@@ -2,8 +2,15 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Label } from "@radix-ui/react-label";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { registerUser } from "@/store/auth-slice/index";
+import { useNavigate } from "react-router-dom";
 
-function FormSignUp({ onSubmit, buttonText }) {
+function FormSignUp({ buttonText }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   // Formik configuration
   const formik = useFormik({
     initialValues: {
@@ -22,21 +29,35 @@ function FormSignUp({ onSubmit, buttonText }) {
         .email("Invalid email format")
         .required("Email is required"),
     }),
-    onSubmit: (values) => {
-      onSubmit(values); // Pass form data to the parent component
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        const data = await dispatch(registerUser(values)).unwrap();
+        if (data?.success) {
+          toast.success("Registration successful! Redirecting to sign-in...", {
+            position: "top-center",
+            autoClose: 3000,
+          });
+          setTimeout(() => navigate("/auth/signin"), 2900);
+        }
+      } catch (error) {
+        console.error("Registration failed:", error);
+        toast.error("Registration failed! Please try again.");
+      } finally {
+        setSubmitting(false); // Reset the form submission state
+      }
     },
   });
 
   // Generate random username
   const generateUsername = () => {
-    const randomUsername = `user_${Math.floor(Math.random() * 10000)}`;
+    const randomUsername = `ecom_${Math.floor(Math.random() * 10000)}`;
     formik.setFieldValue("username", randomUsername);
   };
 
   return (
     <form
       className="bg-slate-800 shadow-lg rounded-lg p-5 w-full sm:w-[400px] mx-auto"
-      onSubmit={formik.handleSubmit} // Formik's submit handler
+      onSubmit={formik.handleSubmit}
     >
       <div className="flex flex-col gap-6">
         {/* Username Field */}
@@ -58,7 +79,7 @@ function FormSignUp({ onSubmit, buttonText }) {
             <button
               type="button"
               className="bg-blue-500 text-white px-4 sm:py-2  rounded-lg hover:bg-blue-600 transition-all shadow-lg"
-              onClick={generateUsername} // Generate username on click
+              onClick={generateUsername}
             >
               Auto Generate
             </button>
@@ -115,14 +136,13 @@ function FormSignUp({ onSubmit, buttonText }) {
         className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
         disabled={formik.isSubmitting}
       >
-        {buttonText || "Submit"} {/* Default button text if not provided */}
+        {formik.isSubmitting ? "Registering..." : buttonText || "Submit"}
       </button>
     </form>
   );
 }
 
 FormSignUp.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   buttonText: PropTypes.string,
 };
 
