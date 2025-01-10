@@ -4,9 +4,11 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { loginUser } from "@/store/auth-slice";
+import { useNavigate } from "react-router-dom";
 
 function FormSignIn({ buttonText }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -17,18 +19,28 @@ function FormSignIn({ buttonText }) {
       username: Yup.string().required("Username is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
         // Dispatch the async loginUser action and await its result
-        const data = await dispatch(loginUser(values));
+        const data = await dispatch(loginUser(values)).unwrap();
 
-        // Optionally handle successful login here
-        console.log("Login successful:", data);
-
-        toast.success("Successfully signed in!");
+        // Check the user's role and navigate accordingly
+        if (data.role === "user") {
+          toast.success("Welcome! Redirecting to the shop...");
+          navigate("/shop");
+        } else if (data.role === "admin") {
+          toast.success("Welcome Admin! Redirecting to the dashboard...");
+          navigate("/dashboard");
+        } else {
+          throw new Error("Invalid role.");
+        }
       } catch (error) {
         console.error("Login error:", error);
-        toast.error("An error occurred while logging in.");
+        // Display toaster error notification
+        toast.error("Username or password is incorrect.");
+
+        // Clear the form after showing the error notification
+        resetForm();
       }
     },
   });
