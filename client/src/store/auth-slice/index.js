@@ -71,28 +71,41 @@ const authSlice = createSlice({
     });
 
     // Handle the rejected state of registerUser
-    builder
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        if (action.payload.success) {
-          state.isAuthenticated = true;
-          state.user = action.payload.user;
-          state.error = null;
-        } else {
-          state.isAuthenticated = false;
-          state.user = null;
-          state.error = action.payload.message || "Invalid credentials";
-        }
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false;
+    builder.addCase(registerUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = action.payload?.message || "Not Registerd user "; // Save error message
+    });
+
+    // Handle the pending state of loginUser
+    builder.addCase(loginUser.pending, (state) => {
+      state.isLoading = true; // Set loading state to true
+    });
+
+    // Handle the fulfilled state of loginUser
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      console.log("Login data:", action.payload);
+      state.isLoading = false;
+
+      if (action.payload.success) {
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        state.error = null; // Clear any previous error
+      } else {
         state.isAuthenticated = false;
         state.user = null;
-        state.error = action.payload?.message || "Not Registered user";
-      });
+        state.error = action.payload.message || "Invalid credentials";
+      }
+    });
+
+    // Handle the rejected state of loginUser
+    builder.addCase(loginUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = action.payload?.message || "Not Registered user"; // Show error message for unregistered users
+    });
   },
 });
 
