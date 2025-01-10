@@ -37,7 +37,7 @@ function FormSignUp({ buttonText }) {
         if (data?.success) {
           toast.success("Registration successful! Redirecting to sign-in...", {
             position: "top-center",
-            varient: "success",
+            variant: "success", // Corrected spelling from 'varient' to 'variant'
             autoClose: 3000,
           });
           setTimeout(() => navigate("/auth/signin"), 2900);
@@ -49,21 +49,20 @@ function FormSignUp({ buttonText }) {
           toast.error(
             "Username is already registered. Please choose a different one.",
             {
-              varient: "destructive",
+              variant: "destructive", // Corrected spelling from 'varient' to 'variant'
             }
           );
         } else if (error?.message.includes("Email is already registered")) {
           toast.error(
             "Email is already registered. Please use a different email.",
             {
-              varient: "destructive",
+              variant: "destructive", // Corrected spelling from 'varient' to 'variant'
             }
           );
         } else {
-          toast.error("Registration failed! Please try again."),
-            {
-              varient: "destructive",
-            };
+          toast.error("Registration failed! Please try again.", {
+            variant: "destructive", // Corrected spelling from 'varient' to 'variant'
+          });
         }
         // Clear form fields after error
         formik.resetForm(); // This will reset all the fields to initialValues
