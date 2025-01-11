@@ -5,7 +5,6 @@ import {
   ShoppingBasket,
   BadgeCent,
   ChartNoAxesCombined,
-  Sheet,
 } from "lucide-react";
 
 function AdminSidebar({ open, setOpen }) {
