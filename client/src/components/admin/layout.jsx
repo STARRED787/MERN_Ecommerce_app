@@ -8,12 +8,14 @@ function AdminLayout() {
       {/* Admin Header */}
       <AdminHeader />
 
-      {/* Admin Sidebar */}
+      {/* Admin Sidebar and Main Content */}
       <div className="flex flex-1">
+        {/* Sidebar */}
         <AdminSidebar />
 
+        {/* Main Content */}
         <main className="flex-1 bg-muted p-4 md:p-6">
-          <h1>content</h1>
+          <h1>Content</h1>
           <Outlet />
         </main>
       </div>

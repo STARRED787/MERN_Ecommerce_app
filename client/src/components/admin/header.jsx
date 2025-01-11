@@ -8,6 +8,9 @@ function AdminHeader() {
         <AlignJustify />
         <span className="sr-only">Toggle Menu</span>
       </Button>
+
+      <div className="hidden lg:flex flex-1 justify-start">LOGO</div>
+
       <div className=" flex flex-1 justify-end">
         <Button className="inline-flex gap-2 items-center rounded-md px-4 py-2 font-medium shadow ">
           <LogOut />
