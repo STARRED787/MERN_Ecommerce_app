@@ -5,7 +5,7 @@ import axios from "axios";
 // Define the initial state of the authentication slice
 const initialState = {
   isAuthenticated: false, // Track if the user is authenticated or not
-  isLoading: false, // Track if an async request is in progress
+  isLoading: true, // Track if an async request is in progress
   user: null, // Store user information
 };
 

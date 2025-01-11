@@ -14,6 +14,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
 
   // Get the current route information using `useLocation`.
   const location = useLocation();
+  console.log(location.pathname);
 
   /**
    * Redirect unauthenticated users to the sign-in page.
