@@ -33,7 +33,7 @@ function FormSignUp({ buttonText }) {
       try {
         const data = await dispatch(registerUser(values)).unwrap();
         if (data?.success) {
-          toast.success("Registration successful! Redirecting to sign-in...", {
+          toast.success("Registration successful!", {
             position: "top-center",
             autoClose: 3000,
           });
