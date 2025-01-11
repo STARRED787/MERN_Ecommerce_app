@@ -6,8 +6,9 @@ import {
   BadgeCent,
   ChartNoAxesCombined,
 } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 
-function AdminSidebar({ open, setOpen }) {
+function AdminSidebar(open, setOpen) {
   const navigate = useNavigate();
 
   // Menu items array
@@ -34,7 +35,19 @@ function AdminSidebar({ open, setOpen }) {
 
   return (
     <Fragment>
-      <Sheet open={open} onOpen></Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent side="left" class="w-64">
+          <div className="flex-col h-full">
+            <SheetHeader className="border-b">
+              <SheetTitle>
+                <ChartNoAxesCombined className="text-white" />
+                Admin Panel
+              </SheetTitle>
+            </SheetHeader>
+            <adminMenuBar />
+          </div>
+        </SheetContent>
+      </Sheet>
       <aside className="bg-slate-950 hidden flex-col w-64 border-r bg-background p-6 lg:flex">
         {/* Sidebar Header */}
         <div
