@@ -50,9 +50,7 @@ function AdminSidebar() {
             <div
               onClick={() => navigate(item.path)} // Navigate to the item's path
               key={item.id} // Unique key for each menu item
-              className="text-muted-foreground flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-800 cursor-pointer
-              
-              "
+              className="text-muted-foreground flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-800 cursor-pointer"
             >
               {item.icons} {/* Display icon */}
               <span className="text-muted-foreground font-bold">

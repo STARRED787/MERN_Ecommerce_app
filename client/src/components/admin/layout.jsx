@@ -4,11 +4,11 @@ import AdminHeader from "./header";
 
 function AdminLayout() {
   return (
-    <div className="flex flex-col min-h-screen w-full">
+    <div className="flex flex-col min-h-screen">
       {/* Admin Header */}
       <AdminHeader />
 
-      {/* Admin Sidebar and Main Content */}
+      {/* Sidebar and Main Content */}
       <div className="flex flex-1">
         {/* Sidebar */}
         <AdminSidebar />
