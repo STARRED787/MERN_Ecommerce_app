@@ -16,13 +16,10 @@ import ShoppingAccount from "./pages/shopping/account"; // Fixed typo "Acount"
 import NotFound from "./pages/not found";
 import UnAuth from "./pages/unauth";
 import { ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
 
 function App() {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
-
-  // Ensure `isAuthenticated` has a fallback value
-  const isAuthenticatedValue = isAuthenticated ?? false;
+  const isAuthenticated = false; // Replace with actual authentication logic
+  const user = null; // Replace with actual user object
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -31,7 +28,7 @@ function App() {
         <Route
           path="/auth"
           element={
-            <CheckAuth isAuthenticated={isAuthenticatedValue} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AuthLayout />
             </CheckAuth>
           }
@@ -44,7 +41,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <CheckAuth isAuthenticated={isAuthenticatedValue} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AdminLayout />
             </CheckAuth>
           }
@@ -59,7 +56,7 @@ function App() {
         <Route
           path="/shop"
           element={
-            <CheckAuth isAuthenticated={isAuthenticatedValue} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingLayout />
             </CheckAuth>
           }
