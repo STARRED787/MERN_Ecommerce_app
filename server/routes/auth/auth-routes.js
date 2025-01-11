@@ -2,7 +2,7 @@ const express = require("express"); // Importing express library
 const {
   userRegister, // Importing the user registration controller
   Userlogin, // Importing the user login controller
-  logout, // Importing the logout controller
+  userLogout, // Importing the logout controller
   authMiddleware, // Importing the authentication middleware
 } = require("../../controllers/auth/auth-controller"); // Importing controllers from the 'auth-controller' file
 
@@ -17,7 +17,7 @@ router.post("/signin", Userlogin);
 // When a POST request is made to the /signin endpoint, the 'Userlogin' controller will handle it
 
 // Define the route for user logout
-router.get("/logout", logout);
+router.get("/logout", userLogout);
 // When a GET request is made to the /logout endpoint, the 'logout' controller will handle it
 
 // Define the route for user authentication
