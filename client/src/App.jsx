@@ -21,13 +21,18 @@ import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
 
 function App() {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, isLoading } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
 
   //trigger cheAuth action on component mount
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
+
+  if (isLoading) return <div>Loading...</div>;
+  console.log(isAuthenticated, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
