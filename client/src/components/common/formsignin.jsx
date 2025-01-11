@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { loginUser } from "@/store/auth-slice";
 import PropTypes from "prop-types";
 
-function FormSignIn({ buttonText }) {
+function FormSignIn() {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
 
@@ -92,12 +92,39 @@ function FormSignIn({ buttonText }) {
 
       <button
         type="submit"
-        className="mt-6 w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-all shadow-lg"
-        disabled={isLoading} // Disable the button when loading
+        className={`mt-6 w-full ${
+          isLoading ? "bg-blue-400" : "bg-blue-500 hover:bg-blue-600"
+        } text-white font-semibold py-3 rounded-lg transition-all shadow-lg flex items-center justify-center`}
+        disabled={isLoading}
       >
-        {buttonText || "Submit"}
+        {isLoading ? (
+          <>
+            <svg
+              className="animate-spin h-5 w-5 mr-3 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+            Loading...
+          </>
+        ) : (
+          "SignIn"
+        )}
       </button>
-
       <ToastContainer />
     </form>
   );
