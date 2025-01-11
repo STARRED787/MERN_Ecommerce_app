@@ -5,9 +5,10 @@ import {
   ShoppingBasket,
   BadgeCent,
   ChartNoAxesCombined,
+  Sheet,
 } from "lucide-react";
 
-function AdminSidebar() {
+function AdminSidebar({ open, setOpen }) {
   const navigate = useNavigate();
 
   // Menu items array
@@ -34,6 +35,7 @@ function AdminSidebar() {
 
   return (
     <Fragment>
+      <Sheet open={open} onOpen></Sheet>
       <aside className="bg-slate-950 hidden flex-col w-64 border-r bg-background p-6 lg:flex">
         {/* Sidebar Header */}
         <div
