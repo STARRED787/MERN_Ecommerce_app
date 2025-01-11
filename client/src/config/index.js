@@ -1,25 +1,31 @@
-export const registerFormControls = [
+import { LayoutDashboard } from "lucide-react";
+
+export const adminMenuBar = [
   {
-    name: "username",
-    label: "User name",
-    placeholder: "Enter your user name",
-    componentType: "input",
-    type: "text",
+    id: "dashboard",
+    label: "Dashboard",
+    path: "/admin/dashboard",
+    icons: <LayoutDashboard />,
   },
 
   {
-    name: "email",
-    label: "User Email",
-    placeholder: "Enter your email",
-    componentType: "input",
-    type: "email",
+    id: "dashboard",
+    label: "Dashboard",
+    path: "/admin/dashboard",
+    icons: <LayoutDashboard />,
   },
 
   {
-    name: "password",
-    label: "Password",
-    placeholder: "Enter your password",
-    componentType: "input",
-    type: "password",
+    id: "dashboard",
+    label: "Dashboard",
+    path: "/admin/dashboard",
+    icons: <LayoutDashboard />,
+  },
+
+  {
+    id: "dashboard",
+    label: "Dashboard",
+    path: "/admin/dashboard",
+    icons: <LayoutDashboard />,
   },
 ];

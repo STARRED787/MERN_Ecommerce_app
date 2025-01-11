@@ -8,7 +8,7 @@ function AdminSidebar() {
     <Fragment>
       <aside className=" bg-slate-950 hidden flex-col w-64  border-r bg-background p-6 lg:flex">
         <div
-          onClick={() => navigate("/admin")}
+          onClick={() => navigate("/admin/dashboard")}
           className=" cursor-pointer flex items-center gap-2 text-wh"
         >
           <ChartNoAxesCombined className="text-white" />
