@@ -105,6 +105,7 @@ const userLogout = (req, res) => {
   });
 };
 
+//Auth middleware
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
 
