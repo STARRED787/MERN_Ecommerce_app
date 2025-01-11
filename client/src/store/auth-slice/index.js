@@ -130,11 +130,10 @@ const authSlice = createSlice({
     });
 
     // Handle the rejected state of checkAuth
-    builder.addCase(checkAuth.rejected, (state, action) => {
+    builder.addCase(checkAuth.rejected, (state) => {
       state.isLoading = false;
       state.isAuthenticated = false;
       state.user = null;
-      state.error = action.payload?.message || "Not Registered user"; // Show error message for unregistered users
     });
   },
 });

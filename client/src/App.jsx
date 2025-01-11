@@ -16,10 +16,17 @@ import ShoppingAccount from "./pages/shopping/account"; // Fixed typo "Acount"
 import NotFound from "./pages/not found";
 import UnAuth from "./pages/unauth";
 import { ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./store/auth-slice";
 
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
