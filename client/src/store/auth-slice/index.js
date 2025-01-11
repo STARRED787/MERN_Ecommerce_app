@@ -43,6 +43,22 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// Async thunk to chech a user
+export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
+  const response = await axios.get(
+    "http://localhost:5000/api/auth/checkauth",
+
+    {
+      withCredentials: true,
+      headers: {
+        "Cache-Control": "no-cache, no store, must-revalidate proxy-revalidate",
+        Expires: "0",
+      },
+    }
+  );
+  return response.data; // Ensure this data contains the `success` property
+});
+
 // Create the authentication slice
 const authSlice = createSlice({
   name: "auth", // Name of the slice, used in actions and reducers
@@ -94,6 +110,27 @@ const authSlice = createSlice({
 
     // Handle the rejected state of loginUser
     builder.addCase(loginUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = action.payload?.message || "Not Registered user"; // Show error message for unregistered users
+    });
+
+    //checkAuth
+    // Handle the pending state of authCheck
+    builder.addCase(checkAuth.pending, (state) => {
+      state.isLoading = true; // Set loading state to true
+    });
+
+    // Handle the fulfilled state of authCheck
+    builder.addCase(checkAuth.fulfilled, (state, action) => {
+      state.isLoading = true; // Set loading state to false
+      state.isAuthenticated = action.payload.success; // Mark the user as authenticated
+      state.user = action.payload.success ? action.payload.user : null; // Store the user information
+    });
+
+    // Handle the rejected state of checkAuth
+    builder.addCase(checkAuth.rejected, (state, action) => {
       state.isLoading = false;
       state.isAuthenticated = false;
       state.user = null;

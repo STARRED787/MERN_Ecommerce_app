@@ -17,15 +17,16 @@ router.post("/signin", Userlogin);
 // When a POST request is made to the /signin endpoint, the 'Userlogin' controller will handle it
 
 // Define the route for user logout
-router.get("/logout", userLogout);
-// When a GET request is made to the /logout endpoint, the 'logout' controller will handle it
+router.post("/logout", userLogout);
+// When a post request is made to the /logout endpoint, the 'logout' controller will handle it
 
 // Define the route for user authentication
-router.get("/auth", authMiddleware, (req, res) => {
-  res.json({
+router.get("/checkauth", authMiddleware, (req, res) => {
+  const user = req.user;
+  res.status(200)({
     success: true,
-    message: "Authorized User",
-    user: req.user,
+    message: "User is authenticated",
+    user,
   });
 });
 
