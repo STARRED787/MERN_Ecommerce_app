@@ -106,6 +106,23 @@ const logout = (req, res) => {
 };
 
 // Middleware (For authentication)
-const authMiddleware = async (req, res, next) => {};
+const authMiddleware = async (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token)
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized Uaser",
+    });
+  try {
+    jwt.decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized User",
+    });
+  }
+};
 
 module.exports = { userRegister, Userlogin, logout }; // Export the login controller here
