@@ -43,7 +43,12 @@ function AdminSidebar({ open, setOpen }) {
             <SheetHeader className="border-b border-gray-700 pb-4">
               <div className="flex items-center gap-2">
                 <ChartNoAxesCombined className="text-white" />
-                <SheetTitle className="text-white font-extrabold text-xl">
+                <SheetTitle
+                  onClick={() => {
+                    navigate("/admin/dashboard");
+                  }}
+                  className="text-white font-extrabold text-xl cursor-pointer"
+                >
                   Admin Panel
                 </SheetTitle>
               </div>
