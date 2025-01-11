@@ -68,7 +68,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
     user?.role === "admin" &&
     location.pathname.includes("/shop")
   ) {
-    return <Navigate to="/admin/dashboard" replace />;
+    return <Navigate to="/unauth" replace />;
   }
 
   // If no conditions are triggered, render the child components (protected routes).

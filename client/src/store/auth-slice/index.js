@@ -52,7 +52,7 @@ export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
         withCredentials: true, // Send cookies
         headers: {
           "Cache-Control": "no-cache, no-store, must-revalidate",
-          Expires: "0",
+          Expires: "60m",
         },
       }
     );

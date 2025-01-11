@@ -53,8 +53,6 @@ function FormSignUp({ buttonText }) {
         } else {
           toast.error("Registration failed! Please try again.");
         }
-        // Clear form fields after error
-        formik.resetForm(); // This will reset all the fields to initialValues
       } finally {
         setSubmitting(false); // Reset the form submission state
       }
