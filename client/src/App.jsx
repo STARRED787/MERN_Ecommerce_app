@@ -24,6 +24,7 @@ function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  //trigger cheAuth action on component mount
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);

@@ -105,22 +105,24 @@ const userLogout = (req, res) => {
   });
 };
 
-// Middleware (For authentication)
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
-  if (!token)
+
+  if (!token) {
     return res.status(401).json({
       success: false,
-      message: "Unauthorized Uaser",
+      message: "Unauthorized User",
     });
+  }
+
   try {
-    jwt.decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
-    req.user = decoded;
+    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY"); // Corrected this line
+    req.user = decoded; // Assign the decoded user data to `req.user`
     next();
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: "Unauthorized User",
+      message: "Invalid Token",
     });
   }
 };
