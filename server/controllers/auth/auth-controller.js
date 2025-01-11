@@ -49,6 +49,7 @@ const userRegister = async (req, res) => {
   }
 };
 
+// Login controller
 const Userlogin = async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -96,8 +97,14 @@ const Userlogin = async (req, res) => {
   }
 };
 
-// Logout controller (implement later)
+// Logout controller
+const logout = (req, res) => {
+  res.clearCookie("token").json({
+    success: true,
+    message: "Logged out successfully",
+  });
+};
 
-// Middleware (For authentication) can be added here later
+// Middleware (For authentication)
 
-module.exports = { userRegister, Userlogin }; // Export the login controller here
+module.exports = { userRegister, Userlogin, logout }; // Export the login controller here
