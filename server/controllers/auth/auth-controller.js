@@ -106,5 +106,6 @@ const logout = (req, res) => {
 };
 
 // Middleware (For authentication)
+const authMiddleware = async (req, res, next) => {};
 
 module.exports = { userRegister, Userlogin, logout }; // Export the login controller here
