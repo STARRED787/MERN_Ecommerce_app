@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -8,7 +9,7 @@ import {
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 
-function AdminSidebar(open, setOpen) {
+function AdminSidebar({ open, setOpen }) {
   const navigate = useNavigate();
 
   // Menu items array
@@ -35,20 +36,40 @@ function AdminSidebar(open, setOpen) {
 
   return (
     <Fragment>
+      {/* Mobile Sidebar with Sheet */}
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="left" class="w-64">
-          <div className="flex-col h-full">
-            <SheetHeader className="border-b">
-              <SheetTitle>
+        <SheetContent side="left" className="w-64 bg-slate-950 text-white">
+          <div className="flex flex-col h-full">
+            <SheetHeader className="border-b border-gray-700 pb-4">
+              <div className="flex items-center gap-2">
                 <ChartNoAxesCombined className="text-white" />
-                Admin Panel
-              </SheetTitle>
+                <SheetTitle className="text-white font-extrabold text-xl">
+                  Admin Panel
+                </SheetTitle>
+              </div>
             </SheetHeader>
-            <adminMenuBar />
+
+            <nav className="mt-8 flex flex-col gap-2">
+              {adminMenuBar.map((item) => (
+                <div
+                  onClick={() => {
+                    navigate(item.path);
+                    setOpen(false); // Close the sheet after navigation
+                  }}
+                  key={item.id}
+                  className="flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-800 cursor-pointer"
+                >
+                  {item.icons}
+                  <span className="font-bold">{item.label}</span>
+                </div>
+              ))}
+            </nav>
           </div>
         </SheetContent>
       </Sheet>
-      <aside className="bg-slate-950 hidden flex-col w-64 border-r bg-background p-6 lg:flex">
+
+      {/* Desktop Sidebar */}
+      <aside className="bg-slate-950 hidden lg:flex flex-col w-64 border-r p-6">
         {/* Sidebar Header */}
         <div
           onClick={() => navigate("/admin/dashboard")}
@@ -62,15 +83,14 @@ function AdminSidebar(open, setOpen) {
         <nav className="mt-8 flex flex-col gap-2">
           {adminMenuBar.map((item) => (
             <div
-              onClick={() => navigate(item.path)} // Navigate to the item's path
-              key={item.id} // Unique key for each menu item
+              onClick={() => navigate(item.path)}
+              key={item.id}
               className="text-muted-foreground flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-800 cursor-pointer"
             >
-              {item.icons} {/* Display icon */}
+              {item.icons}
               <span className="text-muted-foreground font-bold">
                 {item.label}
-              </span>{" "}
-              {/* Display label */}
+              </span>
             </div>
           ))}
         </nav>
@@ -78,5 +98,9 @@ function AdminSidebar(open, setOpen) {
     </Fragment>
   );
 }
+AdminSidebar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+};
 
 export default AdminSidebar;
