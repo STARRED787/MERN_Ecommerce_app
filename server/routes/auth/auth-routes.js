@@ -22,11 +22,11 @@ router.post("/logout", userLogout);
 
 // Define the route for user authentication
 router.get("/checkauth", authMiddleware, (req, res) => {
-  const user = req.user;
-  res.status(200)({
+  const user = req.user; // Retrieved from `authMiddleware`
+  res.status(200).json({
     success: true,
     message: "User is authenticated",
-    user,
+    user, // Send the user information
   });
 });
 

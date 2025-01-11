@@ -45,18 +45,21 @@ export const loginUser = createAsyncThunk(
 
 // Async thunk to chech a user
 export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
-  const response = await axios.get(
-    "http://localhost:5000/api/auth/checkauth",
-
-    {
-      withCredentials: true,
-      headers: {
-        "Cache-Control": "no-cache, no store, must-revalidate proxy-revalidate",
-        Expires: "0",
-      },
-    }
-  );
-  return response.data; // Ensure this data contains the `success` property
+  try {
+    const response = await axios.get(
+      "http://localhost:5000/api/auth/checkauth",
+      {
+        withCredentials: true, // Send cookies
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Expires: "0",
+        },
+      }
+    );
+    return response.data; // Return the server response
+  } catch (error) {
+    throw error.response?.data || new Error("Failed to authenticate user");
+  }
 });
 
 // Create the authentication slice
@@ -122,18 +125,16 @@ const authSlice = createSlice({
       state.isLoading = true; // Set loading state to true
     });
 
-    // Handle the fulfilled state of authCheck
     builder.addCase(checkAuth.fulfilled, (state, action) => {
-      state.isLoading = true; // Set loading state to false
-      state.isAuthenticated = action.payload.success; // Mark the user as authenticated
-      state.user = action.payload.success ? action.payload.user : null; // Store the user information
+      state.isLoading = false; // Set loading state to false
+      state.isAuthenticated = action.payload.success; // Check the success flag
+      state.user = action.payload.success ? action.payload.user : null; // Store user info
     });
 
-    // Handle the rejected state of checkAuth
     builder.addCase(checkAuth.rejected, (state) => {
-      state.isLoading = false;
-      state.isAuthenticated = false;
-      state.user = null;
+      state.isLoading = false; // Set loading state to false
+      state.isAuthenticated = false; // Mark the user as not authenticated
+      state.user = null; // Clear user data
     });
   },
 });
