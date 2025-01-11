@@ -1,13 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginUser } from "@/store/auth-slice";
+import { useToast } from "react-toastify";
 import PropTypes from "prop-types";
 
 function FormSignIn({ buttonText }) {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
+  const { toast } = useToast();
 
   const formik = useFormik({
     initialValues: {
@@ -18,16 +20,20 @@ function FormSignIn({ buttonText }) {
       username: Yup.string().required("Username is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: async (values, { resetForm, setSubmitting }) => {
+    onSubmit: async (formData, { resetForm, setSubmitting }) => {
       try {
-        const data = await dispatch(loginUser(values)).unwrap();
-        console.log("Login response:", data); // Add this line to inspect the data
-
-        if (data?.success) {
-          toast.success(data?.message || "Login successful!");
-        } else {
-          toast.error(data?.message || "Invalid login credentials.");
-        }
+        dispatch(loginUser(formData)).then((data) => {
+          if (data?.payload?.success) {
+            toast({
+              title: data?.payload?.message,
+            });
+          } else {
+            toast({
+              title: data?.payload?.message,
+              variant: "destructive",
+            });
+          }
+        });
       } catch (error) {
         console.error("Login error:", error);
         // If error occurs (like incorrect username/password), show error notification

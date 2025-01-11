@@ -56,6 +56,7 @@ const authSlice = createSlice({
     },
   },
 
+  //register
   // Extra reducers to handle the lifecycle of async actions
   extraReducers: (builder) => {
     // Handle the pending state of registerUser
@@ -78,6 +79,7 @@ const authSlice = createSlice({
       state.error = action.payload?.message || "Not Registerd user "; // Save error message
     });
 
+    //Login
     // Handle the pending state of loginUser
     builder.addCase(loginUser.pending, (state) => {
       state.isLoading = true; // Set loading state to true
