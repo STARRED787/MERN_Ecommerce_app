@@ -1,15 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginUser } from "@/store/auth-slice";
-import { useToast } from "react-toastify";
+
 import PropTypes from "prop-types";
 
 function FormSignIn({ buttonText }) {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
-  const { toast } = useToast();
 
   const formik = useFormik({
     initialValues: {
