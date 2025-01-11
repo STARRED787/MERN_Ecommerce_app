@@ -87,18 +87,9 @@ const authSlice = createSlice({
 
     // Handle the fulfilled state of loginUser
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      console.log("Login data:", action.payload);
-      state.isLoading = false;
-
-      if (action.payload.success) {
-        state.isAuthenticated = true;
-        state.user = action.payload.user;
-        state.error = null; // Clear any previous error
-      } else {
-        state.isAuthenticated = false;
-        state.user = null;
-        state.error = action.payload.message || "Invalid credentials";
-      }
+      state.isLoading = false; // Set loading state to false
+      state.isAuthenticated = true; // Mark the user as authenticated
+      state.user = !action.payload.success ? null : action.payload.success; // Store the user information
     });
 
     // Handle the rejected state of loginUser

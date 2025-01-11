@@ -3,7 +3,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginUser } from "@/store/auth-slice";
-
 import PropTypes from "prop-types";
 
 function FormSignIn({ buttonText }) {
@@ -19,20 +18,16 @@ function FormSignIn({ buttonText }) {
       username: Yup.string().required("Username is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: async (formData, { resetForm, setSubmitting }) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       try {
-        dispatch(loginUser(formData)).then((data) => {
-          if (data?.payload?.success) {
-            toast({
-              title: data?.payload?.message,
-            });
-          } else {
-            toast({
-              title: data?.payload?.message,
-              variant: "destructive",
-            });
-          }
-        });
+        const data = await dispatch(loginUser(values)).unwrap();
+        console.log("Login response:", data); // Add this line to inspect the data
+
+        if (data?.success) {
+          toast.success(data?.message || "Login successful!");
+        } else {
+          toast.error(data?.message || "Invalid login credentials.");
+        }
       } catch (error) {
         console.error("Login error:", error);
         // If error occurs (like incorrect username/password), show error notification
