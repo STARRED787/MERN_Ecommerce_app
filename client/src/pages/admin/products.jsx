@@ -24,7 +24,7 @@ function AdminProducts() {
   const [openCreateProductDialog, setOpenCreateProductDialog] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
-  const [uplodedImgeUrl, setUplodedImgeUrl] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // Corrected state name
 
   function onSubmit() {
     // Your submit logic here
@@ -50,12 +50,12 @@ function AdminProducts() {
             <SheetHeader>
               <SheetTitle>Add New Product</SheetTitle>
             </SheetHeader>
-            {/* Corrected component name */}
+            {/* Corrected component name and prop names */}
             <AdminProductImageUpload
-              file={imageFile}
-              setFile={setImageFile}
-              uplodedImgeUrl={uplodedImgeUrl}
-              setUplodedImgeUrl={setUplodedImgeUrl}
+              imageFile={imageFile} // Ensure imageFile is passed correctly
+              setImageFile={setImageFile} // Ensure setImageFile is passed correctly
+              uploadedImageUrl={uploadedImageUrl} // Corrected prop name
+              setUploadedImageUrl={setUploadedImageUrl} // Corrected prop name
             />
             <div className="py-6">
               <AddProductsForm
