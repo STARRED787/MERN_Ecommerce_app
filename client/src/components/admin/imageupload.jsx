@@ -21,10 +21,25 @@ function AdminProductImageUpload({
     }
   }
 
+  function handleDragOver(event) {
+    event.preventDefault();
+  }
+
+  function handleDrop(event) {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files?.[0];
+    if (droppedFile) {
+      setImageFile(droppedFile);
+    }
+  }
   return (
     <div className="w-full max-w-md mx-auto">
       <Label className="text-lg font-semibold mb-2 block">Upload</Label>
-      <div className=" border-2 border-dashed rounded-lg p-4 ">
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        className=" border-2 border-dashed rounded-lg p-4 "
+      >
         <Input
           type="file"
           id="imageUpload"
@@ -35,7 +50,7 @@ function AdminProductImageUpload({
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
-            className=" flex flex-col items-center justify-center h-32 cursor-pointer"
+            className=" flex flex-col items-center justify-center h-32 cursor-pointer mt-2"
           >
             <UploadCloudIcon
               size={32}
