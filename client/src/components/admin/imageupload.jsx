@@ -24,20 +24,25 @@ function AdminProductImageUpload({
   return (
     <div className="w-full max-w-md mx-auto">
       <Label className="text-lg font-semibold mb-2 block">Upload</Label>
-      <div>
+      <div className=" border-2 border-dashed rounded-lg p-4 ">
         <Input
           type="file"
           id="imageUpload"
           ref={inputRef}
           onChange={handleImageFileChange}
-          className=""
+          className="hidden"
         />
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
             className=" flex flex-col items-center justify-center h-32 cursor-pointer"
           >
-            <UploadCloudIcon size={32} text-muted />
+            <UploadCloudIcon
+              size={32}
+              className=" text-muted-foreground mb-2"
+            />
+
+            <span>Drag & drop or click to upload image</span>
           </Label>
         ) : (
           <div></div>
