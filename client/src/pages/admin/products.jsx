@@ -1,6 +1,7 @@
 // AdminProducts.jsx
 import { Button } from "@/components/ui/button";
 import AddProductsForm from "@/components/admin/addproductsform"; // Import default directly
+
 import {
   Sheet,
   SheetContent,
@@ -48,6 +49,7 @@ function AdminProducts() {
             <SheetHeader>
               <SheetTitle>Add New Product</SheetTitle>
             </SheetHeader>
+            <productImageUpload />
             <div className="py-6">
               <AddProductsForm
                 formData={formData}
