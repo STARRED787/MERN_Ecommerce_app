@@ -2,7 +2,8 @@ import { Label } from "@radix-ui/react-label";
 import { useRef } from "react";
 import { Input } from "../ui/input";
 import PropTypes from "prop-types";
-import { UploadCloudIcon } from "lucide-react";
+import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
+import { Button } from "../ui/button";
 
 function AdminProductImageUpload({
   imageFile,
@@ -30,6 +31,13 @@ function AdminProductImageUpload({
     const droppedFile = event.dataTransfer.files?.[0];
     if (droppedFile) {
       setImageFile(droppedFile);
+    }
+  }
+
+  function handleRemoveImage() {
+    setImageFile(null);
+    if (inputRef.current) {
+      inputRef.current.value = "";
     }
   }
   return (
@@ -60,7 +68,22 @@ function AdminProductImageUpload({
             <span>Drag & drop or click to upload image</span>
           </Label>
         ) : (
-          <div></div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <FileIcon size={32} className="text-muted-foreground mr-2 h-8" />
+            </div>
+            <p className="text-sm font-medium">{imageFile.name}</p>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground hover:text-foreground"
+              onClick={handleRemoveImage}
+            >
+              <XIcon className="w-4 h-4 " />
+              <span className="sr-only">Remove File</span>
+            </Button>
+          </div>
         )}
       </div>
     </div>
