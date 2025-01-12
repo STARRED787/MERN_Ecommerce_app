@@ -1,4 +1,3 @@
-// AdminProducts.jsx
 import { Button } from "@/components/ui/button";
 import AddProductsForm from "@/components/admin/addproductsform"; // Import default directly
 import AdminProductImageUpload from "@/components/admin/imageupload"; // Correct the name to uppercase
@@ -24,7 +23,7 @@ const initialFormData = {
 function AdminProducts() {
   const [openCreateProductDialog, setOpenCreateProductDialog] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-
+  const [imageFile, setImageFile] = useState(null);
   function onSubmit() {
     // Your submit logic here
     console.log(formData);
