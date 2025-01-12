@@ -53,7 +53,7 @@ function AdminProducts() {
                 formData={formData}
                 setFormData={setFormData}
                 onSubmit={onSubmit}
-                buttonText="Add Product"
+                buttonText="Add"
               />
             </div>
           </SheetContent>
