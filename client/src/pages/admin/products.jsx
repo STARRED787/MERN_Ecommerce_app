@@ -1,7 +1,7 @@
 // AdminProducts.jsx
 import { Button } from "@/components/ui/button";
 import AddProductsForm from "@/components/admin/addproductsform"; // Import default directly
-
+import AdminProductImageUpload from "@/components/admin/imageupload"; // Correct the name to uppercase
 import {
   Sheet,
   SheetContent,
@@ -49,7 +49,8 @@ function AdminProducts() {
             <SheetHeader>
               <SheetTitle>Add New Product</SheetTitle>
             </SheetHeader>
-            <productImageUpload />
+            {/* Corrected component name */}
+            <AdminProductImageUpload />
             <div className="py-6">
               <AddProductsForm
                 formData={formData}
