@@ -1,6 +1,6 @@
 // AdminProducts.jsx
 import { Button } from "@/components/ui/button";
-import AddProductsForm from "@/components/common/addproductsform"; // Import default directly
+import AddProductsForm from "@/components/admin/addproductsform"; // Import default directly
 import {
   Sheet,
   SheetContent,
