@@ -1,7 +1,6 @@
+// AdminProducts.jsx
 import { Button } from "@/components/ui/button";
-import AddProductsForm, {
-  addProductFormElements,
-} from "@/components/common/addproductsform";
+import AddProductsForm from "@/components/common/addproductsform"; // Import default directly
 import {
   Sheet,
   SheetContent,
@@ -17,8 +16,8 @@ const initialFormData = {
   category: "",
   brand: "",
   price: "",
-  saleprice: "",
-  totalstock: "",
+  salePrice: "",
+  totalStock: "",
 };
 
 function AdminProducts() {
@@ -26,10 +25,8 @@ function AdminProducts() {
   const [formData, setFormData] = useState(initialFormData);
 
   function onSubmit() {
-    // Handle form submission (e.g., send formData to API)
-    console.log("Product submitted:", formData);
-    // Close the dialog after submitting
-    setOpenCreateProductDialog(false);
+    // Your submit logic here
+    console.log(formData);
   }
 
   return (
@@ -53,11 +50,10 @@ function AdminProducts() {
             </SheetHeader>
             <div className="py-6">
               <AddProductsForm
-                onSubmit={onSubmit}
                 formData={formData}
                 setFormData={setFormData}
+                onSubmit={onSubmit}
                 buttonText="Add Product"
-                formControls={addProductFormElements}
               />
             </div>
           </SheetContent>

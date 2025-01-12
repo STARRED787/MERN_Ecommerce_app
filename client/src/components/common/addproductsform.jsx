@@ -1,12 +1,7 @@
+// AddProductsForm.jsx
 import PropTypes from "prop-types";
 
-function AddProductsForm({
-  formData,
-  setFormData,
-  formControls,
-  onSubmit,
-  buttonText,
-}) {
+function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -14,6 +9,64 @@ function AddProductsForm({
       [name]: value,
     });
   };
+
+  // Form fields defined directly inside the component
+  const formControls = [
+    {
+      label: "Title",
+      name: "title",
+      componentType: "Input",
+      type: "text",
+      placeholder: "Enter product title",
+    },
+    {
+      label: "Description",
+      name: "description",
+      componentType: "Textarea",
+      placeholder: "Enter product description",
+    },
+    {
+      label: "Category",
+      name: "category",
+      componentType: "Select",
+      options: [
+        { value: "", label: "Select a category" },
+        { value: "electronics", label: "Electronics" },
+        { value: "clothing", label: "Clothing" },
+        { value: "home", label: "Home" },
+        { value: "sports", label: "Sports" },
+        { value: "beauty", label: "Beauty" },
+      ],
+    },
+    {
+      label: "Brand",
+      name: "brand",
+      componentType: "Input",
+      type: "text",
+      placeholder: "Enter product brand",
+    },
+    {
+      label: "Price",
+      name: "price",
+      componentType: "Input",
+      type: "number",
+      placeholder: "Enter product price",
+    },
+    {
+      label: "Sale Price",
+      name: "salePrice",
+      componentType: "Input",
+      type: "number",
+      placeholder: "Enter sale price (optional)",
+    },
+    {
+      label: "Total Stock",
+      name: "totalStock",
+      componentType: "Input",
+      type: "number",
+      placeholder: "Enter total stock",
+    },
+  ];
 
   return (
     <form
@@ -85,22 +138,6 @@ function AddProductsForm({
 AddProductsForm.propTypes = {
   formData: PropTypes.object.isRequired,
   setFormData: PropTypes.func.isRequired,
-  formControls: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      componentType: PropTypes.oneOf(["Input", "Textarea", "Select"])
-        .isRequired,
-      type: PropTypes.string,
-      placeholder: PropTypes.string,
-      options: PropTypes.arrayOf(
-        PropTypes.shape({
-          value: PropTypes.string.isRequired,
-          label: PropTypes.string.isRequired,
-        })
-      ),
-    })
-  ).isRequired,
   onSubmit: PropTypes.func.isRequired,
   buttonText: PropTypes.string,
 };
