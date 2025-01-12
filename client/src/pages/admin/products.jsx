@@ -1,9 +1,37 @@
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import AddProductsForm, {
+  addProductFormElements,
+} from "@/components/common/addproductsform";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Fragment, useState } from "react";
+
+const initialFormData = {
+  image: null,
+  title: "",
+  description: "",
+  category: "",
+  brand: "",
+  price: "",
+  saleprice: "",
+  totalstock: "",
+};
 
 function AdminProducts() {
   const [openCreateProductDialog, setOpenCreateProductDialog] = useState(false);
+  const [formData, setFormData] = useState(initialFormData);
+
+  function onSubmit() {
+    // Handle form submission (e.g., send formData to API)
+    console.log("Product submitted:", formData);
+    // Close the dialog after submitting
+    setOpenCreateProductDialog(false);
+  }
+
   return (
     <Fragment>
       <div className="mb-5 w-full flex justify-end">
@@ -14,12 +42,25 @@ function AdminProducts() {
           Add New Product
         </Button>
       </div>
-      <div className="grid gap-4 md:grid-cols3 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
         <Sheet
           open={openCreateProductDialog}
           onOpenChange={() => setOpenCreateProductDialog(false)}
         >
-          <SheetContent side="right" className="overflow-auto"></SheetContent>
+          <SheetContent side="right" className="overflow-auto">
+            <SheetHeader>
+              <SheetTitle>Add New Product</SheetTitle>
+            </SheetHeader>
+            <div className="py-6">
+              <AddProductsForm
+                onSubmit={onSubmit}
+                formData={formData}
+                setFormData={setFormData}
+                buttonText="Add Product"
+                formControls={addProductFormElements}
+              />
+            </div>
+          </SheetContent>
         </Sheet>
       </div>
     </Fragment>
