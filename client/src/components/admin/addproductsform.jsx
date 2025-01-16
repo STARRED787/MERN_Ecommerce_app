@@ -1,35 +1,37 @@
 // AddProductsForm.jsx
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"; // PropTypes is used for type-checking props
 
 function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
+  // Handles input changes for form fields
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; // Destructure name and value from event target
     setFormData({
-      ...formData,
-      [name]: value,
+      ...formData, // Keep previous form data
+      [name]: value, // Update only the field that changed
     });
   };
 
-  // Form fields defined directly inside the component
+  // Define form fields in an array for reusability and cleaner code
   const formControls = [
     {
-      label: "Title",
-      name: "title",
-      componentType: "Input",
-      type: "text",
-      placeholder: "Enter product title",
+      label: "Title", // Field label
+      name: "title", // Field name (used as key in formData)
+      componentType: "Input", // Component type (input field)
+      type: "text", // Input type
+      placeholder: "Enter product title", // Placeholder for the input field
     },
     {
       label: "Description",
       name: "description",
-      componentType: "Textarea",
+      componentType: "Textarea", // Textarea for multi-line input
       placeholder: "Enter product description",
     },
     {
       label: "Category",
       name: "category",
-      componentType: "Select",
+      componentType: "Select", // Dropdown menu for selecting a category
       options: [
+        // Dropdown options
         { value: "", label: "Select a category" },
         { value: "electronics", label: "Electronics" },
         { value: "clothing", label: "Clothing" },
@@ -49,7 +51,7 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
       label: "Price",
       name: "price",
       componentType: "Input",
-      type: "number",
+      type: "number", // Number input for price
       placeholder: "Enter product price",
     },
     {
@@ -69,19 +71,22 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
   ];
 
   return (
+    // Form container
     <form
       onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit();
+        e.preventDefault(); // Prevent default form submission behavior
+        onSubmit(); // Call the provided onSubmit function
       }}
-      className="space-y-4"
+      className="space-y-4" // Tailwind CSS classes for spacing between fields
     >
+      {/* Map over formControls to dynamically render form fields */}
       {formControls.map((element, index) => {
         const { label, name, componentType, type, placeholder, options } =
           element;
 
         return (
           <div key={index} className="flex flex-col">
+            {/* Label for the form field */}
             <label
               htmlFor={name}
               className="block text-sm font-medium text-gray-700"
@@ -89,15 +94,16 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
               {label}
             </label>
 
+            {/* Render input, textarea, or select based on componentType */}
             {componentType === "Input" ? (
               <input
-                id={name}
-                name={name}
-                type={type}
-                placeholder={placeholder}
-                value={formData[name]}
-                onChange={handleInputChange}
-                className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                id={name} // Unique identifier for the field
+                name={name} // Name used for formData key
+                type={type} // Input type (text, number, etc.)
+                placeholder={placeholder} // Placeholder text
+                value={formData[name]} // Value from formData state
+                onChange={handleInputChange} // Call handleInputChange on change
+                className="mt-1 p-2 border border-gray-300 rounded-md w-full" // Styling for input
               />
             ) : componentType === "Textarea" ? (
               <textarea
@@ -116,6 +122,7 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
                 onChange={handleInputChange}
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               >
+                {/* Render dropdown options */}
                 {options?.map((option, idx) => (
                   <option key={idx} value={option.value}>
                     {option.label}
@@ -126,23 +133,25 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
           </div>
         );
       })}
+      {/* Submit button */}
       <div className="flex justify-end mt-4">
         <button
-          type="submit"
+          type="submit" // Submit button
           className="bg-orange-500 text-white p-2 rounded-md"
         >
-          {buttonText || "Submit"}
+          {buttonText || "Submit"} {/* Default button text is "Submit" */}
         </button>
       </div>
     </form>
   );
 }
 
+// Define prop types for better validation and debugging
 AddProductsForm.propTypes = {
-  formData: PropTypes.object.isRequired,
-  setFormData: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  buttonText: PropTypes.string,
+  formData: PropTypes.object.isRequired, // formData object is required
+  setFormData: PropTypes.func.isRequired, // setFormData function is required
+  onSubmit: PropTypes.func.isRequired, // onSubmit function is required
+  buttonText: PropTypes.string, // Optional button text
 };
 
-export default AddProductsForm;
+export default AddProductsForm; // Export the component
