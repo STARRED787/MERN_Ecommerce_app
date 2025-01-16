@@ -4,6 +4,8 @@ const cookieParser = require("cookie-parser"); //parses cookies attached to the 
 const cors = require("cors"); //Allows your server to handle requests from different origins (domains, ports, or protocols)
 const authRouter = require("./routes/auth/auth-routes");
 //create database connection
+const adminProductsRouter = require("./routes/admin/products-routes");
+
 mongoose
   .connect(
     "mongodb+srv://mern_commerce_app:fSPkS9SSs1q1GV9v@cluster0.m49qs.mongodb.net/"
@@ -53,6 +55,8 @@ app.use(express.json());
 // This routes all requests starting with "/api/auth" to the authRouter,
 // which handles user registration related authentication processes.
 app.use("/api/auth", authRouter);
+
+app.use("/api/admin/products", adminProductsRouter);
 
 // Start the server
 // This tells the Express app to listen for incoming requests on the specified `PORT`.
