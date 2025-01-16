@@ -7,7 +7,7 @@ import {
   SheetHeader, // Header section of the panel
   SheetTitle, // Title in the panel header
 } from "@/components/ui/sheet";
-import { Fragment, useState } from "react"; // React hooks and wrapper component
+import { Fragment, useState } from "react"; // React hooks for state management and Fragment as a wrapper component
 
 // Initial form data structure
 const initialFormData = {
@@ -21,63 +21,72 @@ const initialFormData = {
   totalStock: "", // Total available stock
 };
 
+// Main AdminProducts component
 function AdminProducts() {
   // State to manage the visibility of the "Add Product" sliding panel
   const [openCreateProductDialog, setOpenCreateProductDialog] = useState(false);
 
-  // State for managing form data
+  // State for managing form data (used to capture product details)
   const [formData, setFormData] = useState(initialFormData);
 
-  // State for handling uploaded image file
+  // State for handling the uploaded image file (raw file object)
   const [imageFile, setImageFile] = useState(null);
 
-  // State for storing the URL of the uploaded image
+  // State for storing the URL of the uploaded image (used for preview purposes)
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
-  // State to track the image loading state
-  const [imageLoadingState, setImageLoadingState] = useState(false); // Changed to boolean
+  // State to track whether the image is being uploaded
+  const [imageLoadingState, setImageLoadingState] = useState(false);
 
   // Function to handle form submission
   function onSubmit() {
-    console.log(formData); // Logs the form data to the console
+    // Log the form data to the console (to be replaced with API call)
+    console.log(formData);
   }
 
   return (
     <Fragment>
+      {/* Add New Product Button */}
       <div className="mb-5 w-full flex justify-end">
         <Button
-          onClick={() => setOpenCreateProductDialog(true)}
-          className="bg-orange-500 hover:bg-orange-400"
+          onClick={() => setOpenCreateProductDialog(true)} // Open the sliding panel
+          className="bg-orange-500 hover:bg-orange-400" // Button styles
         >
           Add New Product
         </Button>
       </div>
 
+      {/* Grid layout for displaying components */}
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {/* Sliding panel component */}
         <Sheet
-          open={openCreateProductDialog}
-          onOpenChange={() => setOpenCreateProductDialog(false)}
+          open={openCreateProductDialog} // Manage panel visibility
+          onOpenChange={() => setOpenCreateProductDialog(false)} // Close panel on change
         >
+          {/* Panel content */}
           <SheetContent side="right" className="overflow-auto">
+            {/* Panel header */}
             <SheetHeader>
-              <SheetTitle>Add New Product</SheetTitle>
+              <SheetTitle>Add New Product</SheetTitle>{" "}
+              {/* Title in the panel */}
             </SheetHeader>
 
             {/* Image upload component */}
             <AdminProductImageUpload
-              imageFile={imageFile}
-              setImageFile={setImageFile}
-              uploadedImageUrl={uploadedImageUrl}
-              setUploadedImageUrl={setUploadedImageUrl}
-              setImageLoadingState={setImageLoadingState} // Pass function
+              imageFile={imageFile} // Current selected image file
+              setImageFile={setImageFile} // Function to update image file state
+              uploadedImageUrl={uploadedImageUrl} // URL of the uploaded image
+              setUploadedImageUrl={setUploadedImageUrl} // Function to update uploaded image URL
+              setImageLoadingState={setImageLoadingState} // Function to set the loading state
             />
 
+            {/* Form component for product details */}
             <div className="py-6">
               <AddProductsForm
-                formData={formData}
-                setFormData={setFormData}
-                onSubmit={onSubmit}
-                buttonText="Add"
+                formData={formData} // Current form data (product details)
+                setFormData={setFormData} // Function to update form data state
+                onSubmit={onSubmit} // Submit function for the form
+                buttonText="Add" // Text for the submit button
               />
             </div>
           </SheetContent>
@@ -87,4 +96,4 @@ function AdminProducts() {
   );
 }
 
-export default AdminProducts;
+export default AdminProducts; // Export the AdminProducts component
