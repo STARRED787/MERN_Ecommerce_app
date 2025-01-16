@@ -34,55 +34,50 @@ function AdminProducts() {
   // State for storing the URL of the uploaded image
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
-  const [setImageLoadingState] = useState("false");
+  // State to track the image loading state
+  const [imageLoadingState, setImageLoadingState] = useState(false); // Changed to boolean
+
   // Function to handle form submission
   function onSubmit() {
-    // Your submit logic here
     console.log(formData); // Logs the form data to the console
   }
 
   return (
     <Fragment>
-      {/* Button to open the "Add New Product" sliding panel */}
       <div className="mb-5 w-full flex justify-end">
         <Button
-          onClick={() => setOpenCreateProductDialog(true)} // Opens the sliding panel
-          className="bg-orange-500 hover:bg-orange-400" // Styling for the button
+          onClick={() => setOpenCreateProductDialog(true)}
+          className="bg-orange-500 hover:bg-orange-400"
         >
           Add New Product
         </Button>
       </div>
 
-      {/* Grid layout for displaying the panel and other components */}
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {/* Sliding panel (Sheet) */}
         <Sheet
-          open={openCreateProductDialog} // Controls whether the panel is open
-          onOpenChange={() => setOpenCreateProductDialog(false)} // Closes the panel
+          open={openCreateProductDialog}
+          onOpenChange={() => setOpenCreateProductDialog(false)}
         >
-          {/* Panel content */}
           <SheetContent side="right" className="overflow-auto">
-            {/* Panel header */}
             <SheetHeader>
-              <SheetTitle>Add New Product</SheetTitle> {/* Panel title */}
+              <SheetTitle>Add New Product</SheetTitle>
             </SheetHeader>
 
             {/* Image upload component */}
             <AdminProductImageUpload
-              imageFile={imageFile} // Passes the image file state
-              setImageFile={setImageFile} // Allows updating the image file state
-              uploadedImageUrl={uploadedImageUrl} // Passes the uploaded image URL state
-              setUploadedImageUrl={setUploadedImageUrl} // Allows updating the image URL state
-              setImageLoadingState={setImageLoadingState}
+              imageFile={imageFile}
+              setImageFile={setImageFile}
+              uploadedImageUrl={uploadedImageUrl}
+              setUploadedImageUrl={setUploadedImageUrl}
+              setImageLoadingState={setImageLoadingState} // Pass function
             />
 
-            {/* Product form */}
             <div className="py-6">
               <AddProductsForm
-                formData={formData} // Passes the form data state
-                setFormData={setFormData} // Allows updating the form data state
-                onSubmit={onSubmit} // Handles the form submission
-                buttonText="Add" // Button text for the form submission
+                formData={formData}
+                setFormData={setFormData}
+                onSubmit={onSubmit}
+                buttonText="Add"
               />
             </div>
           </SheetContent>
@@ -92,4 +87,4 @@ function AdminProducts() {
   );
 }
 
-export default AdminProducts; // Exports the component for use in other parts of the application
+export default AdminProducts;

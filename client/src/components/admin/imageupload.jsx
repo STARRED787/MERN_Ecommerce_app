@@ -1,17 +1,18 @@
-import { Label } from "@radix-ui/react-label";
-import { useEffect, useRef } from "react";
-import { Input } from "../ui/input";
-import PropTypes from "prop-types";
-import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
-import { Button } from "../ui/button";
-import axios from "axios";
+import { Label } from "@radix-ui/react-label"; // For accessible labels
+import { useEffect, useRef } from "react"; // React hooks for state management and references
+import { Input } from "../ui/input"; // Custom Input component
+import PropTypes from "prop-types"; // Prop types for runtime validation
+import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react"; // Icons for UI
+import { Button } from "../ui/button"; // Custom Button component
+import axios from "axios"; // Library for making HTTP requests
 
+// AdminProductImageUpload component
 function AdminProductImageUpload({
-  imageFile,
-  setImageFile,
-  uploadedImageUrl, // Corrected prop name
-  setUploadedImageUrl, // Corrected prop name
-  setImageLoadingState,
+  imageFile, // Current selected image file
+  setImageFile, // Function to update the image file state
+  uploadedImageUrl, // URL of the uploaded image
+  setUploadedImageUrl, // Function to update the uploaded image URL
+  setImageLoadingState, // Function to manage the loading state
 }) {
   const inputRef = useRef(null); // Reference to the file input element
 
@@ -56,20 +57,20 @@ function AdminProductImageUpload({
     data.append("image", imageFile); // Append the image file to the form data
 
     try {
+      setImageLoadingState(true); // Set loading state to true
       const response = await axios.post(
-        setImageLoadingState("true"),
-        "http://localhost:5000/api/admin/products/upload-image",
-        data
-      ); // Send a POST request to upload the image
+        "http://localhost:5000/api/admin/products/upload-image", // API endpoint for image upload
+        data // Form data containing the image file
+      );
 
-      if (response.data?.sucess) {
+      if (response.data?.success) {
         setUploadedImageUrl(response.data.result.url); // Update the uploaded image URL state with the response
         console.log(response.data); // Log the response for debugging
-        setImageLoadingState("false"),
       }
-
     } catch (error) {
       console.error("Image upload failed:", error); // Log errors if the upload fails
+    } finally {
+      setImageLoadingState(false); // Set loading state to false
     }
   }
 
@@ -78,44 +79,58 @@ function AdminProductImageUpload({
     if (imageFile !== null) {
       uploadImageToCloudinary(); // Trigger the upload when the file changes
     }
-  }, [imageFile]); // Dependency array ensures this runs only when `imageFile` changes
+  }, [imageFile]); // Dependency array ensures this effect runs when `imageFile` changes
+
   return (
     <div className="w-full max-w-md mx-auto">
-      <Label className="text-lg font-semibold mb-2 block">Upload</Label>
+      {" "}
+      {/* Center the container */}
+      <Label className="text-lg font-semibold mb-2 block">Upload</Label>{" "}
+      {/* Label for the upload section */}
       <div
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        className="border-2 border-dashed rounded-lg p-4 cursor-pointer"
+        onDragOver={handleDragOver} // Allow drag-over behavior
+        onDrop={handleDrop} // Handle file drop
+        className="border-2 border-dashed rounded-lg p-4 cursor-pointer" // Styling for the drop area
       >
+        {/* File input (hidden) */}
         <Input
           type="file"
-          id="imageUpload" // Ensure this matches with htmlFor in Label
-          ref={inputRef}
-          onChange={handleImageFileChange}
-          className="hidden"
+          id="imageUpload" // Input element ID
+          ref={inputRef} // Reference for resetting the input
+          onChange={handleImageFileChange} // Handle file selection
+          className="hidden" // Hide the input visually
         />
+
+        {/* Conditionally render content based on whether an image file is selected */}
         {!imageFile ? (
           <Label
-            htmlFor="imageUpload" // This must be the same as the input's id
+            htmlFor="imageUpload" // Associate label with the input
             className="flex flex-col items-center justify-center h-32"
           >
-            <UploadCloudIcon size={32} className="text-muted-foreground mb-2" />
-            <span>Drag & drop or click to upload image</span>
+            <UploadCloudIcon size={32} className="text-muted-foreground mb-2" />{" "}
+            {/* Upload icon */}
+            <span>Drag & drop or click to upload image</span>{" "}
+            {/* Instructional text */}
           </Label>
         ) : (
           <div className="flex items-center justify-between">
+            {" "}
+            {/* Preview section */}
             <div className="flex items-center">
-              <FileIcon size={32} className="text-muted-foreground mr-2 h-8" />
+              <FileIcon size={32} className="text-muted-foreground mr-2 h-8" />{" "}
+              {/* File icon */}
             </div>
-            <p className="text-sm font-medium">{imageFile.name}</p>
+            <p className="text-sm font-medium">{imageFile.name}</p>{" "}
+            {/* File name */}
             <Button
               variant="ghost"
               size="icon"
               className="text-muted-foreground hover:text-foreground"
-              onClick={handleRemoveImage}
+              onClick={handleRemoveImage} // Remove the selected file
             >
-              <XIcon className="w-4 h-4" />
-              <span className="sr-only">Remove File</span>
+              <XIcon className="w-4 h-4" /> {/* Close icon */}
+              <span className="sr-only">Remove File</span>{" "}
+              {/* Screen reader text */}
             </Button>
           </div>
         )}
@@ -126,11 +141,11 @@ function AdminProductImageUpload({
 
 // PropTypes validation
 AdminProductImageUpload.propTypes = {
-  imageFile: PropTypes.object,
-  setImageFile: PropTypes.func.isRequired,
-  uploadedImageUrl: PropTypes.string, // Correct prop name
-  setUploadedImageUrl: PropTypes.func.isRequired, // Correct prop validation
-  setImageLoadingState: PropTypes.func.isRequired, // Add prop validation for setImageLoadingState
+  imageFile: PropTypes.object, // The selected image file
+  setImageFile: PropTypes.func.isRequired, // Function to update the image file state
+  uploadedImageUrl: PropTypes.string, // URL of the uploaded image
+  setUploadedImageUrl: PropTypes.func.isRequired, // Function to update the uploaded image URL
+  setImageLoadingState: PropTypes.func.isRequired, // Function to manage the loading state
 };
 
-export default AdminProductImageUpload;
+export default AdminProductImageUpload; // Export the component
