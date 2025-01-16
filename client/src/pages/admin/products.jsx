@@ -1,68 +1,86 @@
-import { Button } from "@/components/ui/button";
-import AddProductsForm from "@/components/admin/addproductsform"; // Import default directly
-import AdminProductImageUpload from "@/components/admin/imageupload"; // Correct the name to uppercase
+import { Button } from "@/components/ui/button"; // UI Button for user interaction
+import AddProductsForm from "@/components/admin/addproductsform"; // Form component for adding product details
+import AdminProductImageUpload from "@/components/admin/imageupload"; // Image upload component
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
+  Sheet, // Main sliding panel component
+  SheetContent, // Content area of the panel
+  SheetHeader, // Header section of the panel
+  SheetTitle, // Title in the panel header
 } from "@/components/ui/sheet";
-import { Fragment, useState } from "react";
+import { Fragment, useState } from "react"; // React hooks and wrapper component
 
+// Initial form data structure
 const initialFormData = {
-  image: null,
-  title: "",
-  description: "",
-  category: "",
-  brand: "",
-  price: "",
-  salePrice: "",
-  totalStock: "",
+  image: null, // To store the uploaded image
+  title: "", // Product title
+  description: "", // Product description
+  category: "", // Product category
+  brand: "", // Product brand
+  price: "", // Product price
+  salePrice: "", // Discounted price
+  totalStock: "", // Total available stock
 };
 
 function AdminProducts() {
+  // State to manage the visibility of the "Add Product" sliding panel
   const [openCreateProductDialog, setOpenCreateProductDialog] = useState(false);
-  const [formData, setFormData] = useState(initialFormData);
-  const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // Corrected state name
 
+  // State for managing form data
+  const [formData, setFormData] = useState(initialFormData);
+
+  // State for handling uploaded image file
+  const [imageFile, setImageFile] = useState(null);
+
+  // State for storing the URL of the uploaded image
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+
+  // Function to handle form submission
   function onSubmit() {
     // Your submit logic here
-    console.log(formData);
+    console.log(formData); // Logs the form data to the console
   }
 
   return (
     <Fragment>
+      {/* Button to open the "Add New Product" sliding panel */}
       <div className="mb-5 w-full flex justify-end">
         <Button
-          onClick={() => setOpenCreateProductDialog(true)}
-          className="bg-orange-500 hover:bg-orange-400"
+          onClick={() => setOpenCreateProductDialog(true)} // Opens the sliding panel
+          className="bg-orange-500 hover:bg-orange-400" // Styling for the button
         >
           Add New Product
         </Button>
       </div>
+
+      {/* Grid layout for displaying the panel and other components */}
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {/* Sliding panel (Sheet) */}
         <Sheet
-          open={openCreateProductDialog}
-          onOpenChange={() => setOpenCreateProductDialog(false)}
+          open={openCreateProductDialog} // Controls whether the panel is open
+          onOpenChange={() => setOpenCreateProductDialog(false)} // Closes the panel
         >
+          {/* Panel content */}
           <SheetContent side="right" className="overflow-auto">
+            {/* Panel header */}
             <SheetHeader>
-              <SheetTitle>Add New Product</SheetTitle>
+              <SheetTitle>Add New Product</SheetTitle> {/* Panel title */}
             </SheetHeader>
-            {/* Corrected component name and prop names */}
+
+            {/* Image upload component */}
             <AdminProductImageUpload
-              imageFile={imageFile} // Ensure imageFile is passed correctly
-              setImageFile={setImageFile} // Ensure setImageFile is passed correctly
-              uploadedImageUrl={uploadedImageUrl} // Corrected prop name
-              setUploadedImageUrl={setUploadedImageUrl} // Corrected prop name
+              imageFile={imageFile} // Passes the image file state
+              setImageFile={setImageFile} // Allows updating the image file state
+              uploadedImageUrl={uploadedImageUrl} // Passes the uploaded image URL state
+              setUploadedImageUrl={setUploadedImageUrl} // Allows updating the image URL state
             />
+
+            {/* Product form */}
             <div className="py-6">
               <AddProductsForm
-                formData={formData}
-                setFormData={setFormData}
-                onSubmit={onSubmit}
-                buttonText="Add"
+                formData={formData} // Passes the form data state
+                setFormData={setFormData} // Allows updating the form data state
+                onSubmit={onSubmit} // Handles the form submission
+                buttonText="Add" // Button text for the form submission
               />
             </div>
           </SheetContent>
@@ -72,4 +90,4 @@ function AdminProducts() {
   );
 }
 
-export default AdminProducts;
+export default AdminProducts; // Exports the component for use in other parts of the application
