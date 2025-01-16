@@ -11,6 +11,7 @@ function AdminProductImageUpload({
   setImageFile,
   uploadedImageUrl, // Corrected prop name
   setUploadedImageUrl, // Corrected prop name
+  setImageLoadingState,
 }) {
   const inputRef = useRef(null); // Reference to the file input element
 
@@ -56,6 +57,7 @@ function AdminProductImageUpload({
 
     try {
       const response = await axios.post(
+        setImageLoadingState("true"),
         "http://localhost:5000/api/admin/products/upload-image",
         data
       ); // Send a POST request to upload the image
@@ -63,7 +65,9 @@ function AdminProductImageUpload({
       if (response.data?.sucess) {
         setUploadedImageUrl(response.data.result.url); // Update the uploaded image URL state with the response
         console.log(response.data); // Log the response for debugging
+        setImageLoadingState("false"),
       }
+
     } catch (error) {
       console.error("Image upload failed:", error); // Log errors if the upload fails
     }
@@ -126,6 +130,7 @@ AdminProductImageUpload.propTypes = {
   setImageFile: PropTypes.func.isRequired,
   uploadedImageUrl: PropTypes.string, // Correct prop name
   setUploadedImageUrl: PropTypes.func.isRequired, // Correct prop validation
+  setImageLoadingState: PropTypes.func.isRequired, // Add prop validation for setImageLoadingState
 };
 
 export default AdminProductImageUpload;

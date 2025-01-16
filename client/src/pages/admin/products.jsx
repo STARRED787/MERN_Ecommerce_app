@@ -34,6 +34,7 @@ function AdminProducts() {
   // State for storing the URL of the uploaded image
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
+  const [setImageLoadingState] = useState("false");
   // Function to handle form submission
   function onSubmit() {
     // Your submit logic here
@@ -72,6 +73,7 @@ function AdminProducts() {
               setImageFile={setImageFile} // Allows updating the image file state
               uploadedImageUrl={uploadedImageUrl} // Passes the uploaded image URL state
               setUploadedImageUrl={setUploadedImageUrl} // Allows updating the image URL state
+              setImageLoadingState={setImageLoadingState}
             />
 
             {/* Product form */}
