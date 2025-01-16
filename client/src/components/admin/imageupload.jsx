@@ -1,9 +1,10 @@
 import { Label } from "@radix-ui/react-label";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Input } from "../ui/input";
 import PropTypes from "prop-types";
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import axios from "axios";
 
 function AdminProductImageUpload({
   imageFile,
@@ -11,40 +12,69 @@ function AdminProductImageUpload({
   uploadedImageUrl, // Corrected prop name
   setUploadedImageUrl, // Corrected prop name
 }) {
-  const inputRef = useRef(null);
+  const inputRef = useRef(null); // Reference to the file input element
 
-  // Handle file change when a user selects a file
+  // Handle file selection when a user selects a file via the file input
   function handleImageFileChange(event) {
-    const selectedFile = event.target.files?.[0];
+    const selectedFile = event.target.files?.[0]; // Get the selected file
     if (selectedFile) {
-      setImageFile(selectedFile);
-      setUploadedImageUrl(URL.createObjectURL(selectedFile)); // Create URL for preview
+      setImageFile(selectedFile); // Update the selected image file state
+      setUploadedImageUrl(URL.createObjectURL(selectedFile)); // Generate a local preview URL for the file
     }
   }
 
-  // Handle dragging over the drop area
+  // Handle drag-over event to allow file dropping
   function handleDragOver(event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevent default behavior to enable dropping
   }
 
-  // Handle dropping a file into the drop area
+  // Handle drop event when a file is dropped into the drop area
   function handleDrop(event) {
-    event.preventDefault();
-    const droppedFile = event.dataTransfer.files?.[0];
+    event.preventDefault(); // Prevent default behavior
+    const droppedFile = event.dataTransfer.files?.[0]; // Get the dropped file
     if (droppedFile) {
-      setImageFile(droppedFile);
-      setUploadedImageUrl(URL.createObjectURL(droppedFile)); // Create URL for preview
+      setImageFile(droppedFile); // Update the selected image file state
+      setUploadedImageUrl(URL.createObjectURL(droppedFile)); // Generate a local preview URL for the dropped file
     }
   }
 
-  // Handle removing the selected image
+  // Handle the removal of the currently selected image
   function handleRemoveImage() {
-    setImageFile(null);
+    setImageFile(null); // Clear the selected image file state
+    setUploadedImageUrl(""); // Clear the uploaded image preview
     if (inputRef.current) {
-      inputRef.current.value = "";
+      inputRef.current.value = ""; // Reset the file input element
     }
   }
 
+  // Upload the image to Cloudinary or your backend
+  async function uploadImageToCloudinary() {
+    if (!imageFile) return; // Return early if no file is selected
+
+    const data = new FormData(); // Create a new FormData object
+    data.append("image", imageFile); // Append the image file to the form data
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/admin/products/upload-image",
+        data
+      ); // Send a POST request to upload the image
+
+      if (response.data?.sucess) {
+        setUploadedImageUrl(response.data.result.url); // Update the uploaded image URL state with the response
+        console.log(response.data); // Log the response for debugging
+      }
+    } catch (error) {
+      console.error("Image upload failed:", error); // Log errors if the upload fails
+    }
+  }
+
+  // Automatically upload the image whenever the `imageFile` changes
+  useEffect(() => {
+    if (imageFile !== null) {
+      uploadImageToCloudinary(); // Trigger the upload when the file changes
+    }
+  }, [imageFile]); // Dependency array ensures this runs only when `imageFile` changes
   return (
     <div className="w-full max-w-md mx-auto">
       <Label className="text-lg font-semibold mb-2 block">Upload</Label>

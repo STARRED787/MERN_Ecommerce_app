@@ -4,13 +4,13 @@ const multer = require("multer"); // Multer library for handling file uploads
 
 // Configure Cloudinary with your account credentials
 cloudinary.config({
-  clud_name: "dyphvszup", // Your Cloudinary cloud name
+  cloud_name: "dyphvszup", // Your Cloudinary cloud name
   api_key: "774861489475243", // Your Cloudinary API key
   api_secret: "uHLqfc_e_mCgB5O_E91tiRBCCuU", // Your Cloudinary API secret
 });
 
 // Set up Multer storage to handle files in memory (not saving to disk)
-const storage = new multer.memoryStorage(); // Stores file in memory buffer
+const storage = multer.memoryStorage(); // Stores file in memory buffer
 
 // Function to handle image uploads to Cloudinary
 async function ImageUploadUtil(file) {

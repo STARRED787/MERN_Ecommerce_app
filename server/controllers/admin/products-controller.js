@@ -1,3 +1,5 @@
+const { ImageUploadUtil } = require("../../config/cloudinary");
+
 // Handle image upload function
 const handleImageUpload = async (req, res) => {
   try {
