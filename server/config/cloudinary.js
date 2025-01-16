@@ -13,7 +13,7 @@ cloudinary.config({
 const storage = new multer.memoryStorage(); // Stores file in memory buffer
 
 // Function to handle image uploads to Cloudinary
-async function handleImageUpload(file) {
+async function ImageUploadUtil(file) {
   // Upload file to Cloudinary with the specified options
   const result = await cloudinary.uploader.upload(file, {
     resource_type: "auto", // Automatically detects the file type (e.g., image, video)
@@ -28,5 +28,5 @@ const upload = multer({ storage });
 // Export the upload middleware and the image upload handler
 module.exports = {
   upload, // For handling file uploads via Multer
-  handleImageUpload, // For uploading files to Cloudinary
+  ImageUploadUtil, // For uploading files to Cloudinary
 };
