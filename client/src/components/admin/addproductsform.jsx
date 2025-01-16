@@ -134,10 +134,10 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
         );
       })}
       {/* Submit button */}
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end mt-4 ">
         <button
           type="submit" // Submit button
-          className="bg-orange-500 text-white p-2 rounded-md"
+          className="bg-orange-500 w-full text-white p-2 rounded-md"
         >
           {buttonText || "Submit"} {/* Default button text is "Submit" */}
         </button>
