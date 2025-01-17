@@ -38,16 +38,44 @@ const addProduct = async (req, res) => {
     console.log(e);
     res.status(500).json({
       sucess: false,
-      message: "Server error",
+      message: "Error Add Product",
     });
   }
 };
 
 // fetch all products
-
+const fetchroduct = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(e);
+    res.status(500).json({
+      sucess: false,
+      message: "Error fetch Product",
+    });
+  }
+};
 //edit product
-
+const editProduct = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(e);
+    res.status(500).json({
+      sucess: false,
+      message: "Error edit Product",
+    });
+  }
+};
 // delete product
+const deleteProduct = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(e);
+    res.status(500).json({
+      sucess: false,
+      message: "Error Add Product",
+    });
+  }
+};
 
 // Export the function so it can be used in other parts of the application
 module.exports = { handleImageUpload };
