@@ -1,40 +1,39 @@
 const { ImageUploadUtil } = require("../../config/cloudinary");
 const product = require("../../models/product");
 
-// Handle image upload function
+// **Handle image upload function**
+// This function handles the uploading of images to a cloud storage service.
 const handleImageUpload = async (req, res) => {
   try {
-    // Convert the uploaded image file buffer into a Base64-encoded string
+    // Convert uploaded image file buffer to Base64-encoded string
     const b64 = Buffer.from(req.file.buffer).toString("base64");
 
-    // Create a data URL for the image using its MIME type and the Base64-encoded string
+    // Create a data URL using the MIME type and Base64-encoded string
     const url = "data:" + req.file.mimetype + ";base64," + b64;
 
-    // Call the utility function (ImageUploadUtil) to upload the image
-    // The URL (Base64-encoded image data) is passed as input
+    // Upload the Base64-encoded image data using the utility function
     const result = await ImageUploadUtil(url);
 
-    // Send a successful response with the result from the upload utility
+    // Send a success response with the uploaded image data
     res.json({
-      success: true, // Indicate the operation was successful
-      result, // The result contains the response from the image upload utility
+      success: true,
+      result,
     });
   } catch (error) {
-    // Log the error for debugging purposes
+    // Handle any errors during the image upload process
     console.log(error);
-
-    // Send an error response if the image upload fails
     res.json({
-      success: false, // Indicate the operation failed
-      message: "Image upload failed", // Provide an error message
+      success: false,
+      message: "Image upload failed",
     });
   }
 };
 
-//add new product
-
+// **Add new product**
+// This function adds a new product to the database.
 const addProduct = async (req, res) => {
   try {
+    // Extract product details from the request body
     const {
       title,
       description,
@@ -45,7 +44,7 @@ const addProduct = async (req, res) => {
       totalStock,
     } = req.body;
 
-    // Create a new product object with the data received
+    // Create a new product object
     const newAddProduct = new product({
       title,
       description,
@@ -56,40 +55,54 @@ const addProduct = async (req, res) => {
       totalStock,
     });
 
+    // Save the new product to the database
     await newAddProduct.save();
+
+    // Send a success response after the product is added
     res.status(201).json({
       success: true,
       message: "Product Added Successfully",
     });
   } catch (error) {
-    console.log(e);
+    // Handle errors during product addition
+    console.log(error);
     res.status(500).json({
-      sucess: false,
+      success: false,
       message: "Error Add Product",
     });
   }
 };
 
-// fetch all products
+// **Fetch all products**
+// This function retrieves all products from the database.
 const fetchProduct = async (req, res) => {
   try {
+    // Fetch all products from the database
     const listOfProducts = await product.find({});
+
+    // Send the list of products as a response
     res.status(200).json({
       success: true,
       data: listOfProducts,
     });
   } catch (error) {
-    console.log(e);
+    // Handle errors during product retrieval
+    console.log(error);
     res.status(500).json({
-      sucess: false,
+      success: false,
       message: "Error fetch Product",
     });
   }
 };
-//edit product
+
+// **Edit product**
+// This function edits an existing product based on the provided ID.
 const editProduct = async (req, res) => {
   try {
+    // Extract product ID from the request parameters
     const { id } = req.params;
+
+    // Extract updated product details from the request body
     const {
       image,
       title,
@@ -101,41 +114,56 @@ const editProduct = async (req, res) => {
       totalStock,
     } = req.body;
 
+    // Find the product by ID
     const findProduct = await product.findById(id);
+
+    // If the product is not found, return a 404 response
     if (!findProduct) {
       return res.status(404).json({
         success: false,
         message: "Product not found",
       });
     }
-    findProduct.image || findProduct.image;
-    findProduct.title || findProduct.title;
-    findProduct.description || findProduct.description;
-    findProduct.category || findProduct.category;
-    findProduct.brand || findProduct.brand;
-    findProduct.price || findProduct.price;
-    findProduct.salePrice || findProduct.salePrice;
-    findProduct.totalStock || findProduct.totalStock;
 
+    // Update the product details if provided
+    findProduct.image = image || findProduct.image;
+    findProduct.title = title || findProduct.title;
+    findProduct.description = description || findProduct.description;
+    findProduct.category = category || findProduct.category;
+    findProduct.brand = brand || findProduct.brand;
+    findProduct.price = price || findProduct.price;
+    findProduct.salePrice = salePrice || findProduct.salePrice;
+    findProduct.totalStock = totalStock || findProduct.totalStock;
+
+    // Save the updated product details
     await findProduct.save();
 
+    // Send a success response with the updated product
     res.status(200).json({
-      sucess: true,
+      success: true,
       data: findProduct,
     });
   } catch (error) {
-    console.log(e);
+    // Handle errors during product update
+    console.log(error);
     res.status(500).json({
-      sucess: false,
+      success: false,
       message: "Error edit Product",
     });
   }
 };
-// delete product
+
+// **Delete product**
+// This function deletes a product based on the provided ID.
 const deleteProduct = async (req, res) => {
   try {
+    // Extract product ID from the request parameters
     const { id } = req.params;
-    const Product = await product.findByIdDelete(id);
+
+    // Find and delete the product by ID
+    const Product = await product.findByIdAndDelete(id);
+
+    // If the product is not found, return a 404 response
     if (!Product) {
       return res.status(404).json({
         success: false,
@@ -143,20 +171,23 @@ const deleteProduct = async (req, res) => {
       });
     }
 
+    // Send a success response after the product is deleted
     res.status(200).json({
-      sucess: true,
-      message: "product delete sucessfully",
+      success: true,
+      message: "Product deleted successfully",
     });
   } catch (error) {
-    console.log(e);
+    // Handle errors during product deletion
+    console.log(error);
     res.status(500).json({
-      sucess: false,
-      message: "Error Add Product",
+      success: false,
+      message: "Error delete Product",
     });
   }
 };
 
-// Export the function so it can be used in other parts of the application
+// **Export the functions**
+// Export the functions so they can be used in other parts of the application
 module.exports = {
   handleImageUpload,
   addProduct,
