@@ -78,4 +78,10 @@ const deleteProduct = async (req, res) => {
 };
 
 // Export the function so it can be used in other parts of the application
-module.exports = { handleImageUpload };
+module.exports = {
+  handleImageUpload,
+  addProduct,
+  fetchroduct,
+  editProduct,
+  deleteProduct,
+};
