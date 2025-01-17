@@ -1,4 +1,5 @@
 const { ImageUploadUtil } = require("../../config/cloudinary");
+const product = require("../../models/product");
 
 // Handle image upload function
 const handleImageUpload = async (req, res) => {
@@ -34,6 +35,26 @@ const handleImageUpload = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
+    const {
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+    } = req.body;
+
+    // Create a new product object with the data received
+    const newAddProduct = new product({
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+    });
   } catch (error) {
     console.log(e);
     res.status(500).json({
