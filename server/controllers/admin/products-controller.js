@@ -134,6 +134,14 @@ const editProduct = async (req, res) => {
 // delete product
 const deleteProduct = async (req, res) => {
   try {
+    const { id } = req.params;
+    const Product = await product.findByIdDelete(id);
+    if (!Product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
   } catch (error) {
     console.log(e);
     res.status(500).json({
