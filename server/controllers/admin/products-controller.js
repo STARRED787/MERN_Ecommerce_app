@@ -55,6 +55,12 @@ const addProduct = async (req, res) => {
       salePrice,
       totalStock,
     });
+
+    await newAddProduct.save();
+    res.status(201).json({
+      success: true,
+      message: "Product Added Successfully",
+    });
   } catch (error) {
     console.log(e);
     res.status(500).json({
@@ -67,6 +73,11 @@ const addProduct = async (req, res) => {
 // fetch all products
 const fetchroduct = async (req, res) => {
   try {
+    const listOfProducts = await product.find({});
+    res.status(200).json({
+      success: true,
+      data: listOfProducts,
+    });
   } catch (error) {
     console.log(e);
     res.status(500).json({
