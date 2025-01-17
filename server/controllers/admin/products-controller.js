@@ -89,6 +89,32 @@ const fetchroduct = async (req, res) => {
 //edit product
 const editProduct = async (req, res) => {
   try {
+    const { id } = req.params;
+    const {
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+    } = req.body;
+
+    const findProduct = await product.findById(id);
+    if (!findProduct) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    findProduct.title || findProduct.title;
+    findProduct.description || findProduct.description;
+    findProduct.category || findProduct.category;
+    findProduct.brand || findProduct.brand;
+    findProduct.price || findProduct.price;
+    findProduct.salePrice || findProduct.salePrice;
+    findProduct.totalStock || findProduct.totalStock;
   } catch (error) {
     console.log(e);
     res.status(500).json({
