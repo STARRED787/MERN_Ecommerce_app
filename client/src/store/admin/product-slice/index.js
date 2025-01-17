@@ -94,7 +94,7 @@ export const deleteProduct = createAsyncThunk(
 
 // **Create a slice to manage product state**
 // A slice combines actions, reducers, and the initial state in one object
-const AdminproductSlice = createSlice({
+const adminproductSlice = createSlice({
   name: "adminProduct", // Name of the slice
   initialState, // Initial state for this slice
   reducers: {}, // Synchronous reducers (if needed in the future)
@@ -120,4 +120,4 @@ const AdminproductSlice = createSlice({
 });
 
 // Export the reducer to integrate it into the Redux store
-export default AdminproductSlice.reducer;
+export default adminproductSlice.reducer;
