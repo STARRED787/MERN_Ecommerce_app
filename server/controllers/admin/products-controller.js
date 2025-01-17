@@ -36,7 +36,10 @@ const addProduct = async (req, res) => {
   try {
   } catch (error) {
     console.log(e);
-    res.status;
+    res.status(500).json({
+      sucess: false,
+      message: "Server error",
+    });
   }
 };
 
