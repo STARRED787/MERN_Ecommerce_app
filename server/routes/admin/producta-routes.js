@@ -37,12 +37,12 @@ router.get("/fetch-product", fetchProduct);
 // **Define a PUT route to edit an existing product**
 // Route: "/edit-product/id"
 // The `editProduct` function updates the details of a product identified by its ID
-router.put("/edit-product/id", editProduct);
+router.put("/edit-product/:id", editProduct);
 
 // **Define a DELETE route to remove a product**
 // Route: "/delete-product/id"
 // The `deleteProduct` function deletes a product identified by its ID from the database
-router.delete("/delete-product/id", deleteProduct);
+router.delete("/delete-product/:id", deleteProduct);
 
 // **Export the router instance**
 // This allows the defined routes to be used in other parts of the application
