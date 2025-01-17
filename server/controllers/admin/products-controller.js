@@ -30,5 +30,21 @@ const handleImageUpload = async (req, res) => {
   }
 };
 
+//add new product
+
+const addProduct = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(e);
+    res.status;
+  }
+};
+
+// fetch all products
+
+//edit product
+
+// delete product
+
 // Export the function so it can be used in other parts of the application
 module.exports = { handleImageUpload };
