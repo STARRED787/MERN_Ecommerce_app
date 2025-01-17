@@ -91,6 +91,7 @@ const editProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const {
+      image,
       title,
       description,
       category,
@@ -107,7 +108,7 @@ const editProduct = async (req, res) => {
         message: "Product not found",
       });
     }
-
+    findProduct.image || findProduct.image;
     findProduct.title || findProduct.title;
     findProduct.description || findProduct.description;
     findProduct.category || findProduct.category;
@@ -115,6 +116,13 @@ const editProduct = async (req, res) => {
     findProduct.price || findProduct.price;
     findProduct.salePrice || findProduct.salePrice;
     findProduct.totalStock || findProduct.totalStock;
+
+    await findProduct.save();
+
+    res.status(200).json({
+      sucess: true,
+      data: findProduct,
+    });
   } catch (error) {
     console.log(e);
     res.status(500).json({
