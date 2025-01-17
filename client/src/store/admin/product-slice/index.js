@@ -94,7 +94,7 @@ export const deleteProduct = createAsyncThunk(
 
 // **Create a slice to manage product state**
 // A slice combines actions, reducers, and the initial state in one object
-const productSlice = createSlice({
+const AdminproductSlice = createSlice({
   name: "adminProduct", // Name of the slice
   initialState, // Initial state for this slice
   reducers: {}, // Synchronous reducers (if needed in the future)
@@ -107,15 +107,17 @@ const productSlice = createSlice({
       })
       // **Add case for fulfilled state of fetching products**
       .addCase(fetchProduct.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.isLoading = false; // Reset loading state
         state.productList = action.payload; // Update the product list
       })
       // **Add case for rejected state of fetching products**
       .addCase(fetchProduct.rejected, (state) => {
         state.isLoading = false; // Reset loading state
+        state.productList = []; // Reset the product list
       });
   },
 });
 
 // Export the reducer to integrate it into the Redux store
-export default productSlice.reducer;
+export default AdminproductSlice.reducer;
