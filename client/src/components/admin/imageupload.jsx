@@ -11,7 +11,7 @@ import { Skeleton } from "../ui/skeleton";
 function AdminProductImageUpload({
   imageFile, // Current selected image file
   setImageFile, // Function to update the image file state
-  uploadedImageUrl, // URL of the uploaded image
+  //uploadedImageUrl, // URL of the uploaded image
   imageLoadingState, // Loading state for image upload
   setUploadedImageUrl, // Function to update the uploaded image URL
   setImageLoadingState, // Function to manage the loading state
