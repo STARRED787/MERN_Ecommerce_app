@@ -115,7 +115,7 @@ function AdminProductImageUpload({
             {/* Instructional text */}
           </Label>
         ) : imageLoadingState ? (
-          <Skeleton className=" h-10 bg-slate-900" />
+          <Skeleton className=" h-10 bg-gray-300" />
         ) : (
           <div className="flex items-center justify-between">
             {" "}
