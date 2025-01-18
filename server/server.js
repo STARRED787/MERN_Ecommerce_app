@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config(); // Load .env file
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser"); // Parses cookies attached to the client-side request object
 const cors = require("cors"); // Allows your server to handle requests from different origins (domains, ports, or protocols)
@@ -7,9 +8,7 @@ const adminProductsRouter = require("./routes/admin/producta-routes"); // Routes
 
 // Create a connection to the MongoDB database
 mongoose
-  .connect(
-    "mongodb+srv://mern_commerce_app:fSPkS9SSs1q1GV9v@cluster0.m49qs.mongodb.net/"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB Database connected successfully!"))
   .catch((err) => console.error("Error connecting to the database:", err));
 
