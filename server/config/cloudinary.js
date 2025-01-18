@@ -8,7 +8,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
 // Set up Multer storage to handle files in memory (not saving to disk)
 const storage = multer.memoryStorage(); // Stores file in memory buffer
 

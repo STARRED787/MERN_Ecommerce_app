@@ -150,7 +150,7 @@ AdminProductImageUpload.propTypes = {
   uploadedImageUrl: PropTypes.string, // URL of the uploaded image
   setUploadedImageUrl: PropTypes.func.isRequired, // Function to update the uploaded image URL
   setImageLoadingState: PropTypes.func.isRequired, // Function to manage the loading state
-  imageLoadingState: PropTypes.func.isRequired, // Loading state for image upload
+  imageLoadingState: PropTypes.bool.isRequired,
 };
 
 export default AdminProductImageUpload; // Export the component
