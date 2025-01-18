@@ -1,4 +1,4 @@
-function adminViewProduct() {
+function adminViewProduct({ product }) {
   return <div>viewProduct</div>;
 }
 

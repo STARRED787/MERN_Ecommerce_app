@@ -70,7 +70,6 @@ function AdminProducts() {
   console.log(productList); // Log the form data to the console (to be replaced with API call)
   return (
     <Fragment>
-      <adminViewProduct />
       {/* Add New Product Button */}
       <div className="mb-5 w-full flex justify-end">
         <Button
