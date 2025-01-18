@@ -23,9 +23,11 @@ function AdminViewProduct({ product }) {
                 product?.salePrice > 0 ? "line-through" : ""
               } text-lg font-semibold text-primary`}
             >
-              ${product?.price}
+              Rs.{product?.price}
             </span>
-            <span className="text-sm font-bold">${product?.salePrice}</span>
+            {product?.salePrice > 0 ? (
+              <span className="text-sm font-bold">Rs.{product?.salePrice}</span>
+            ) : null}
           </div>
         </CardContent>
 

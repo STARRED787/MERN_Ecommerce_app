@@ -74,7 +74,7 @@ function AdminSidebar({ open, setOpen }) {
       </Sheet>
 
       {/* Desktop Sidebar */}
-      <aside className="bg-slate-950 hidden lg:flex flex-col w-64 border-r p-6">
+      <aside className="bg-slate-950 hidden lg:flex flex-col w-64 border-r p-6 h-screen overflow-y-auto">
         {/* Sidebar Header */}
         <div
           onClick={() => navigate("/admin/dashboard")}
