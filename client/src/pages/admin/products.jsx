@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/sheet";
 import { Fragment, useEffect, useState } from "react"; // React hooks for state management and Fragment as a wrapper component
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "@/store/admin/product-slice";
+import { addNewProduct, fetchProduct } from "@/store/admin/product-slice";
+import { toast } from "react-toastify";
 
 // Initial form data structure
 const initialFormData = {
@@ -45,12 +46,27 @@ function AdminProducts() {
 
   // Function to handle form submission
   function onSubmit(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); // Prevent default form submission
+    dispatch(
+      addNewProduct({
+        ...formData,
+        image: uploadedImageUrl,
+      })
+    ).then((data) => {
+      console.log(data);
+      if (data?.payload?.success) {
+        dispatch(fetchProduct());
+        setImageFile(null);
+        setFormData(initialFormData);
+        toast.success("Product added successfully");
+        setOpenCreateProductDialog(false);
+      }
+    });
   }
-  useEffect(() => {
-    dispatch(fetchProduct()); // Dispatch the fetchProduct action
-  }, [dispatch]); // Empty dependency array to run the effect only once
 
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, [dispatch]);
   console.log(productList); // Log the form data to the console (to be replaced with API call)
   return (
     <Fragment>

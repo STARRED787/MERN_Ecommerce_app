@@ -75,7 +75,7 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
     <form
       onSubmit={(e) => {
         e.preventDefault(); // Prevent default form submission behavior
-        onSubmit(); // Call the provided onSubmit function
+        onSubmit(e); // Pass the event object to the parent onSubmit function
       }}
       className="space-y-4" // Tailwind CSS classes for spacing between fields
     >
