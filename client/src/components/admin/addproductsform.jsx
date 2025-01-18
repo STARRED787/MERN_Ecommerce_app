@@ -4,19 +4,43 @@ import * as Yup from "yup"; // Import Yup for validation
 
 // Define validation schema with Yup
 const validationSchema = Yup.object({
-  title: Yup.string().required("Title is required"),
-  description: Yup.string().required("Description is required"),
-  category: Yup.string().required("Category is required"),
-  brand: Yup.string().required("Brand is required"),
+  title: Yup.string()
+    .required("Title is required")
+    .min(3, "Title must be at least 3 characters")
+    .max(100, "Title must not exceed 100 characters"), // Title length validation
+
+  description: Yup.string()
+    .required("Description is required")
+    .min(10, "Description must be at least 10 characters")
+    .max(500, "Description must not exceed 500 characters"), // Description length validation
+
+  category: Yup.string().required("Category is required").oneOf(
+    ["electronics", "clothing", "home", "sports", "beauty"],
+    "Invalid category" // Validate that the category is one of the predefined options
+  ),
+
+  brand: Yup.string()
+    .required("Brand is required")
+    .min(2, "Brand must be at least 2 characters")
+    .max(50, "Brand must not exceed 50 characters"), // Brand length validation
+
   price: Yup.number()
     .required("Price is required")
-    .positive("Price must be a positive number"),
+    .positive("Price must be a positive number")
+    .min(1, "Price must be at least 1") // Price should be positive and minimum of 1
+    .lessThan(
+      Yup.ref("salePrice"),
+      "Sale price must be less than the original price"
+    ), // Ensure salePrice is less than price if provided
   salePrice: Yup.number()
-    .optional()
+    .optional() // Allow it to be optional
     .positive("Sale price must be a positive number"),
+
   totalStock: Yup.number()
     .required("Total stock is required")
-    .positive("Total stock must be a positive number"),
+    .positive("Total stock must be a positive number")
+    .integer("Total stock must be an integer") // Ensure stock is an integer
+    .min(1, "Total stock must be at least 1"), // Minimum stock should be 1
 });
 
 function AddProductsForm({ onSubmit, buttonText }) {
