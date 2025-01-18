@@ -7,7 +7,9 @@ import {
   SheetHeader, // Header section of the panel
   SheetTitle, // Title in the panel header
 } from "@/components/ui/sheet";
-import { Fragment, useState } from "react"; // React hooks for state management and Fragment as a wrapper component
+import { Fragment, useEffect, useState } from "react"; // React hooks for state management and Fragment as a wrapper component
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "@/store/admin/product-slice";
 
 // Initial form data structure
 const initialFormData = {
@@ -38,12 +40,18 @@ function AdminProducts() {
   // State to track whether the image is being uploaded
   const [imageLoadingState, setImageLoadingState] = useState(false);
 
-  // Function to handle form submission
-  function onSubmit() {
-    // Log the form data to the console (to be replaced with API call)
-    console.log(formData);
-  }
+  const { productList } = useSelector((state) => state.adminProduct); // Extract the productList from the state
+  const dispatch = useDispatch(); // Dispatch function to call actions
 
+  // Function to handle form submission
+  function onSubmit(event) {
+    event.preventDefault(); // Prevent the default form submission
+  }
+  useEffect(() => {
+    dispatch(fetchProduct()); // Dispatch the fetchProduct action
+  }, [dispatch]); // Empty dependency array to run the effect only once
+
+  console.log(productList); // Log the form data to the console (to be replaced with API call)
   return (
     <Fragment>
       {/* Add New Product Button */}
