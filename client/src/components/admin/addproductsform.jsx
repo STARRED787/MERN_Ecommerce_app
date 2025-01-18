@@ -1,37 +1,93 @@
-// AddProductsForm.jsx
-import PropTypes from "prop-types"; // PropTypes is used for type-checking props
+import PropTypes from "prop-types";
+import { useFormik } from "formik";
+import * as Yup from "yup"; // Yup for validation schema
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
-function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
-  // Handles input changes for form fields
-  const handleInputChange = (e) => {
-    const { name, value } = e.target; // Destructure name and value from event target
-    setFormData({
-      ...formData, // Keep previous form data
-      [name]: value, // Update only the field that changed
-    });
-  };
+function AddProductsForm({ onSubmit, buttonText }) {
+  // Validation schema using Yup
+  const validationSchema = Yup.object({
+    title: Yup.string()
+      .required("Title is required")
+      .max(50, "Title cannot exceed 50 characters"),
+    description: Yup.string()
+      .required("Description is required")
+      .max(200, "Description cannot exceed 200 characters"),
+    category: Yup.string().required("Category is required"),
+    brand: Yup.string().required("Brand is required"),
+    price: Yup.number()
+      .required("Price is required")
+      .positive("Price must be greater than zero"),
+    salePrice: Yup.number()
+      .optional()
+      .positive("Sale price must be greater than zero")
+      .max(Yup.ref("price"), "Sale price must be less than price"),
+    totalStock: Yup.number()
+      .required("Total stock is required")
+      .min(0, "Stock cannot be negative"),
+  });
 
-  // Define form fields in an array for reusability and cleaner code
+  // Initialize Formik
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      category: "",
+      brand: "",
+      price: "",
+      salePrice: "",
+      totalStock: "",
+    },
+    validationSchema, // Attach validation schema
+    onSubmit: (values, { resetForm }) => {
+      if (!formik.isValid) {
+        toast.error("Please fill out all required fields!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        return;
+      }
+
+      onSubmit(values); // Trigger the parent component's onSubmit function
+      resetForm(); // Reset the form after submission
+      toast.success("Product added successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    },
+  });
+
+  // Form fields array
   const formControls = [
     {
-      label: "Title", // Field label
-      name: "title", // Field name (used as key in formData)
-      componentType: "Input", // Component type (input field)
-      type: "text", // Input type
-      placeholder: "Enter product title", // Placeholder for the input field
+      label: "Title",
+      name: "title",
+      type: "text",
+      placeholder: "Enter product title",
     },
     {
       label: "Description",
       name: "description",
-      componentType: "Textarea", // Textarea for multi-line input
+      type: "textarea",
       placeholder: "Enter product description",
     },
     {
       label: "Category",
       name: "category",
-      componentType: "Select", // Dropdown menu for selecting a category
+      type: "select",
       options: [
-        // Dropdown options
         { value: "", label: "Select a category" },
         { value: "electronics", label: "Electronics" },
         { value: "clothing", label: "Clothing" },
@@ -43,115 +99,103 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
     {
       label: "Brand",
       name: "brand",
-      componentType: "Input",
       type: "text",
       placeholder: "Enter product brand",
     },
     {
       label: "Price",
       name: "price",
-      componentType: "Input",
-      type: "number", // Number input for price
+      type: "number",
       placeholder: "Enter product price",
     },
     {
       label: "Sale Price",
       name: "salePrice",
-      componentType: "Input",
       type: "number",
       placeholder: "Enter sale price (optional)",
     },
     {
       label: "Total Stock",
       name: "totalStock",
-      componentType: "Input",
       type: "number",
       placeholder: "Enter total stock",
     },
   ];
 
   return (
-    // Form container
-    <form
-      onSubmit={(e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        onSubmit(e); // Pass the event object to the parent onSubmit function
-      }}
-      className="space-y-4" // Tailwind CSS classes for spacing between fields
-    >
-      {/* Map over formControls to dynamically render form fields */}
-      {formControls.map((element, index) => {
-        const { label, name, componentType, type, placeholder, options } =
-          element;
+    <div>
+      {/* Toast Container for showing notifications */}
+      <ToastContainer />
 
-        return (
+      <form onSubmit={formik.handleSubmit} className="space-y-4">
+        {formControls.map((field, index) => (
           <div key={index} className="flex flex-col">
-            {/* Label for the form field */}
             <label
-              htmlFor={name}
+              htmlFor={field.name}
               className="block text-sm font-medium text-gray-700"
             >
-              {label}
+              {field.label}
             </label>
-
-            {/* Render input, textarea, or select based on componentType */}
-            {componentType === "Input" ? (
-              <input
-                id={name} // Unique identifier for the field
-                name={name} // Name used for formData key
-                type={type} // Input type (text, number, etc.)
-                placeholder={placeholder} // Placeholder text
-                value={formData[name]} // Value from formData state
-                onChange={handleInputChange} // Call handleInputChange on change
-                className="mt-1 p-2 border border-gray-300 rounded-md w-full" // Styling for input
-              />
-            ) : componentType === "Textarea" ? (
+            {field.type === "textarea" ? (
               <textarea
-                id={name}
-                name={name}
-                placeholder={placeholder}
-                value={formData[name]}
-                onChange={handleInputChange}
+                id={field.name}
+                name={field.name}
+                placeholder={field.placeholder}
+                value={formik.values[field.name]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               />
-            ) : componentType === "Select" ? (
+            ) : field.type === "select" ? (
               <select
-                id={name}
-                name={name}
-                value={formData[name]}
-                onChange={handleInputChange}
+                id={field.name}
+                name={field.name}
+                value={formik.values[field.name]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               >
-                {/* Render dropdown options */}
-                {options?.map((option, idx) => (
+                {field.options.map((option, idx) => (
                   <option key={idx} value={option.value}>
                     {option.label}
                   </option>
                 ))}
               </select>
-            ) : null}
+            ) : (
+              <input
+                id={field.name}
+                name={field.name}
+                type={field.type}
+                placeholder={field.placeholder}
+                value={formik.values[field.name]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+              />
+            )}
+            {formik.touched[field.name] && formik.errors[field.name] && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors[field.name]}
+              </p>
+            )}
           </div>
-        );
-      })}
-      {/* Submit button */}
-      <div className="flex justify-end mt-4 ">
-        <button
-          type="submit" // Submit button
-          className="bg-orange-500 w-full text-white p-2 rounded-md"
-        >
-          {buttonText || "Submit"} {/* Default button text is "Submit" */}
-        </button>
-      </div>
-    </form>
+        ))}
+        <div className="flex justify-end mt-4">
+          <button
+            type="submit"
+            className="bg-orange-500 w-full text-white p-2 rounded-md"
+          >
+            {buttonText || "Submit"}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 
-// Define prop types for better validation and debugging
 AddProductsForm.propTypes = {
-  formData: PropTypes.object.isRequired, // formData object is required
-  setFormData: PropTypes.func.isRequired, // setFormData function is required
-  onSubmit: PropTypes.func.isRequired, // onSubmit function is required
-  buttonText: PropTypes.string, // Optional button text
+  onSubmit: PropTypes.func.isRequired,
+  buttonText: PropTypes.string,
 };
 
-export default AddProductsForm; // Export the component
+export default AddProductsForm;
