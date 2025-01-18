@@ -46,15 +46,13 @@ function AdminProducts() {
   const dispatch = useDispatch(); // Dispatch function to call actions
 
   // Function to handle form submission
-  function onSubmit(event) {
-    event.preventDefault(); // Prevent default form submission
+  function onSubmit(values) {
     dispatch(
       addNewProduct({
-        ...formData,
-        image: uploadedImageUrl,
+        ...values, // Pass the form values
+        image: uploadedImageUrl, // Include image URL
       })
     ).then((data) => {
-      console.log(data);
       if (data?.payload?.success) {
         dispatch(fetchProduct());
         setImageFile(null);
