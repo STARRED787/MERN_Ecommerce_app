@@ -74,7 +74,7 @@ function AdminSidebar({ open, setOpen }) {
       </Sheet>
 
       {/* Desktop Sidebar */}
-      <aside className="bg-slate-950 hidden lg:flex flex-col w-64 border-r p-6 h-screen overflow-y-auto">
+      <aside className="hidden lg:flex flex-col w-64 border-r p-6 h-screen ">
         {/* Sidebar Header */}
         <div
           onClick={() => navigate("/admin/dashboard")}
@@ -90,7 +90,7 @@ function AdminSidebar({ open, setOpen }) {
             <div
               onClick={() => navigate(item.path)}
               key={item.id}
-              className="text-muted-foreground flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-800 cursor-pointer"
+              className="text-muted-foreground flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-800 cursor-pointer "
             >
               {item.icons}
               <span className="text-muted-foreground font-bold">

@@ -9,10 +9,12 @@ function AdminLayout() {
   return (
     <div className="flex min-h-screen w-full">
       {/* Sidebar */}
-      <AdminSidebar open={openSideBar} setOpen={setOpenSideBar} />
+      <div className="bg-slate-950 -m-4">
+        <AdminSidebar open={openSideBar} setOpen={setOpenSideBar} />
+      </div>
 
       {/* Sidebar and Main Content */}
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col ">
         {/* Admin Header */}
         <AdminHeader setOpen={setOpenSideBar} />
 
