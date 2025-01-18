@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"; // UI Button for user interaction
-import AddProductsForm from "@/components/admin/addproductsform"; // Form component for adding product details
+import AddProductsForm from "@/components/admin/addproducts"; // Form component for adding product details
 import AdminProductImageUpload from "@/components/admin/imageupload"; // Image upload component
 import {
   Sheet, // Main sliding panel component

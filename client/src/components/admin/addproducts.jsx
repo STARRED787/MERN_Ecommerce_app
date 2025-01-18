@@ -27,14 +27,15 @@ const validationSchema = Yup.object({
   price: Yup.number()
     .required("Price is required")
     .positive("Price must be a positive number")
-    .min(1, "Price must be at least 1") // Price should be positive and minimum of 1
-    .max(Yup.ref("salePrice"), " Price must be less than the Sale price"), // Ensure salePrice is less than price if provided,
+    .min(1, "Price must be at least 1"), // Price should be positive and minimum of 1
 
   salePrice: Yup.number()
-    .positive("Price must be a positive number")
-    .min(1, "Price must be at least 1") // Price should be positive and minimum of 1
-    .required("Sale Price is required")
-    .positive("Sale price must be a positive number"),
+    .optional() // Allow it to be optional
+    .positive("Sale price must be a positive number")
+    .lessThan(
+      Yup.ref("price"),
+      "Sale price must be less than the original price"
+    ), // Ensure salePrice is less than price if provided
 
   totalStock: Yup.number()
     .required("Total stock is required")
