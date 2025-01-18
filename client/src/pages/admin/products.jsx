@@ -78,6 +78,7 @@ function AdminProducts() {
               uploadedImageUrl={uploadedImageUrl} // URL of the uploaded image
               setUploadedImageUrl={setUploadedImageUrl} // Function to update uploaded image URL
               setImageLoadingState={setImageLoadingState} // Function to set the loading state
+              imageLoadingState={imageLoadingState} // Loading state of the image
             />
 
             {/* Form component for product details */}
