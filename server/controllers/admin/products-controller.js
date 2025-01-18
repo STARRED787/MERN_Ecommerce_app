@@ -35,6 +35,7 @@ const addProduct = async (req, res) => {
   try {
     // Extract product details from the request body
     const {
+      image,
       title,
       description,
       category,
@@ -46,6 +47,7 @@ const addProduct = async (req, res) => {
 
     // Create a new product object
     const newAddProduct = new product({
+      image,
       title,
       description,
       category,
