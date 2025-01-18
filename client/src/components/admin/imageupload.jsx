@@ -5,12 +5,14 @@ import PropTypes from "prop-types"; // Prop types for runtime validation
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react"; // Icons for UI
 import { Button } from "../ui/button"; // Custom Button component
 import axios from "axios"; // Library for making HTTP requests
+import { Skeleton } from "../ui/skeleton";
 
 // AdminProductImageUpload component
 function AdminProductImageUpload({
   imageFile, // Current selected image file
   setImageFile, // Function to update the image file state
   uploadedImageUrl, // URL of the uploaded image
+  imageLoadingState, // Loading state for image upload
   setUploadedImageUrl, // Function to update the uploaded image URL
   setImageLoadingState, // Function to manage the loading state
 }) {
@@ -112,6 +114,8 @@ function AdminProductImageUpload({
             <span>Drag & drop or click to upload image</span>{" "}
             {/* Instructional text */}
           </Label>
+        ) : imageLoadingState ? (
+          <Skeleton className=" h-10 bg-slate-900" />
         ) : (
           <div className="flex items-center justify-between">
             {" "}
@@ -146,6 +150,7 @@ AdminProductImageUpload.propTypes = {
   uploadedImageUrl: PropTypes.string, // URL of the uploaded image
   setUploadedImageUrl: PropTypes.func.isRequired, // Function to update the uploaded image URL
   setImageLoadingState: PropTypes.func.isRequired, // Function to manage the loading state
+  ImageLoadingState: PropTypes.func.isRequired, // Loading state for image upload
 };
 
 export default AdminProductImageUpload; // Export the component
