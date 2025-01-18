@@ -107,9 +107,8 @@ const adminProductReducer = createSlice({
       })
       // **Add case for fulfilled state of fetching products**
       .addCase(fetchProduct.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false; // Reset loading state
-        state.productList = action.payload; // Update the product list
+        state.productList = action.payload.data; // Update the product list
       })
       // **Add case for rejected state of fetching products**
       .addCase(fetchProduct.rejected, (state) => {
