@@ -2,7 +2,12 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import PropTypes from "prop-types";
 
-function AdminViewProduct({ product }) {
+function AdminViewProduct({
+  product,
+  setFormData,
+  setOpenCreateProductDialog,
+  setCurrentEditedId,
+}) {
   return (
     <div>
       <Card className="w-full max-w-sm mx-auto">
@@ -32,7 +37,15 @@ function AdminViewProduct({ product }) {
         </CardContent>
 
         <CardFooter className="flex justify-between items-center">
-          <Button>Edit</Button>
+          <Button
+            onClick={() => {
+              setOpenCreateProductDialog(true);
+              setCurrentEditedId(product?._id);
+              setFormData(product);
+            }}
+          >
+            Edit
+          </Button>
           <Button>Delete</Button>
         </CardFooter>
       </Card>
@@ -41,12 +54,16 @@ function AdminViewProduct({ product }) {
 }
 AdminViewProduct.propTypes = {
   product: PropTypes.shape({
+    _id: PropTypes.string,
     image: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     price: PropTypes.number,
     salePrice: PropTypes.number,
   }).isRequired,
+  setFormData: PropTypes.func.isRequired,
+  setOpenCreateProductDialog: PropTypes.func.isRequired,
+  setCurrentEditedId: PropTypes.func.isRequired,
 };
 
 export default AdminViewProduct;

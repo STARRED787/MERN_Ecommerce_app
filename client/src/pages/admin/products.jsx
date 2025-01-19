@@ -43,6 +43,9 @@ function AdminProducts() {
   const [imageLoadingState, setImageLoadingState] = useState(false);
 
   const { productList } = useSelector((state) => state.adminProduct); // Extract the productList from the state
+
+  const [currentEditedId, setCurrentEditedId] = useState(null);
+
   const dispatch = useDispatch(); // Dispatch function to call actions
 
   // Function to handle form submission
@@ -83,7 +86,13 @@ function AdminProducts() {
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
         {productList && productList.length > 0
           ? productList.map((productItem) => (
-              <AdminViewProduct key={productItem.id} product={productItem} />
+              <AdminViewProduct
+                setOpenCreateProductDialog={setOpenCreateProductDialog}
+                setFormData={setFormData}
+                setCurrentEditedId={setCurrentEditedId}
+                key={productItem.id}
+                product={productItem}
+              />
             ))
           : null}
       </div>
