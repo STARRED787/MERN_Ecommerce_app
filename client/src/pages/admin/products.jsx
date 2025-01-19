@@ -121,7 +121,6 @@ function AdminProducts() {
           {/* Form component for product details */}
           <div className="py-6">
             <AddProductsForm
-              initialValues={formData} // Pass the current form data as initial values
               formData={formData} // Current form data (product details)
               setFormData={setFormData} // Function to update form data state
               onSubmit={onSubmit} // Submit function for the form
