@@ -70,8 +70,8 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
   return (
     <form
       onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit(formData); // Pass formData instead of event
+        e.preventDefault(); // Prevent default form submission
+        onSubmit(); // Call the parent function without passing formData
       }}
       className="space-y-4"
     >

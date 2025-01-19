@@ -54,40 +54,40 @@ function AdminProducts() {
   const dispatch = useDispatch(); // Dispatch function to call actions
 
   // Function to handle form submission
-  function onSubmit(values) {
-    //Dispatch the Edit Product action with the form data
-    dispatch(
-      editProduct({
-        id: currentEditedId,
-        formData,
-      })
-    ).then((data) => {
-      console.log(data, "Update Product");
-      if (data?.payload?.success) {
-        dispatch(fetchProduct());
-        setImageFile(null);
-        setFormData(initialFormData);
-        toast.success("Product updated successfully");
-        setOpenCreateProductDialog(false);
-        setCurrentEditedId(null);
-      }
-    });
-
-    // Dispatch the addNewProduct action with the form data
-    dispatch(
-      addNewProduct({
-        ...values, // Pass the form values
-        image: uploadedImageUrl, // Include image URL
-      })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(fetchProduct());
-        setImageFile(null);
-        setFormData(initialFormData);
-        toast.success("Product added successfully");
-        setOpenCreateProductDialog(false);
-      }
-    });
+  function onSubmit() {
+    if (currentEditedId !== null) {
+      // Edit Product
+      dispatch(
+        editProduct({
+          id: currentEditedId,
+          formData, // Use the state directly
+        })
+      ).then((data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchProduct());
+          setFormData(initialFormData);
+          toast.success("Product updated successfully");
+          setOpenCreateProductDialog(false);
+          setCurrentEditedId(null);
+        }
+      });
+    } else {
+      // Add New Product
+      dispatch(
+        addNewProduct({
+          ...formData, // Pass the form values
+          image: uploadedImageUrl, // Include image URL
+        })
+      ).then((data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchProduct());
+          setImageFile(null);
+          setFormData(initialFormData);
+          toast.success("Product added successfully");
+          setOpenCreateProductDialog(false);
+        }
+      });
+    }
   }
 
   useEffect(() => {
