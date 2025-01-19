@@ -27,7 +27,7 @@ const ProductSchema = new mongoose.Schema(
     salePrice: Number, // Data type: Number (numeric values only)
 
     // Field to store the total stock available for this product
-    totatlStock: Number, // Data type: Number (numeric values only)
+    totalStock: Number, // Data type: Number (numeric values only)
     // Note: "totatlStock" has a typo; it should be corrected to "totalStock"
   },
   {
