@@ -16,7 +16,6 @@ import {
 } from "@/store/admin/product-slice";
 import { toast } from "react-toastify";
 import AdminViewProduct from "@/components/admin/viewProduct";
-import { data } from "react-router-dom";
 
 // Initial form data structure
 const initialFormData = {
