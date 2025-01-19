@@ -69,6 +69,7 @@ function AdminProducts() {
         setFormData(initialFormData);
         toast.success("Product updated successfully");
         setOpenCreateProductDialog(false);
+        setCurrentEditedId(null);
       }
     });
 
