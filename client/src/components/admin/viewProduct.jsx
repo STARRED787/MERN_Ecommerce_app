@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 
 function AdminViewProduct({
   product,
-  setFormData,
   setOpenCreateProductDialog,
+  setFormData,
   setCurrentEditedId,
 }) {
   return (
@@ -39,9 +39,10 @@ function AdminViewProduct({
         <CardFooter className="flex justify-between items-center">
           <Button
             onClick={() => {
+              console.log("Editing Product: ", product);
               setOpenCreateProductDialog(true);
-              setCurrentEditedId(product?._id);
               setFormData(product);
+              setCurrentEditedId(product?._id);
             }}
           >
             Edit
@@ -61,8 +62,8 @@ AdminViewProduct.propTypes = {
     price: PropTypes.number,
     salePrice: PropTypes.number,
   }).isRequired,
-  setFormData: PropTypes.func.isRequired,
   setOpenCreateProductDialog: PropTypes.func.isRequired,
+  setFormData: PropTypes.func.isRequired,
   setCurrentEditedId: PropTypes.func.isRequired,
 };
 
