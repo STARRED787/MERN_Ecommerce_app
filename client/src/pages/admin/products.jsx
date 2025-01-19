@@ -9,7 +9,11 @@ import {
 } from "@/components/ui/sheet";
 import { Fragment, useEffect, useState } from "react"; // React hooks for state management and Fragment as a wrapper component
 import { useDispatch, useSelector } from "react-redux";
-import { addNewProduct, fetchProduct } from "@/store/admin/product-slice";
+import {
+  addNewProduct,
+  editProduct,
+  fetchProduct,
+} from "@/store/admin/product-slice";
 import { toast } from "react-toastify";
 import AdminViewProduct from "@/components/admin/viewProduct";
 
@@ -50,6 +54,15 @@ function AdminProducts() {
 
   // Function to handle form submission
   function onSubmit(values) {
+    //Dispatch the Edit Product action with the form data
+    dispatch(
+      editProduct({
+        id: currentEditedId,
+        formData,
+      })
+    );
+
+    // Dispatch the addNewProduct action with the form data
     dispatch(
       addNewProduct({
         ...values, // Pass the form values
@@ -109,7 +122,10 @@ function AdminProducts() {
         <SheetContent side="right" className="overflow-auto">
           {/* Panel header */}
           <SheetHeader>
-            <SheetTitle>Add New Product</SheetTitle> {/* Title in the panel */}
+            <SheetTitle>
+              {currentEditedId !== null ? "Edit Product" : "Add Product"}
+            </SheetTitle>{" "}
+            {/* Title in the panel */}
           </SheetHeader>
 
           {/* Image upload component */}
@@ -129,7 +145,7 @@ function AdminProducts() {
               formData={formData} // Current form data (product details)
               setFormData={setFormData} // Function to update form data state
               onSubmit={onSubmit} // Submit function for the form
-              buttonText="Add" // Text for the submit button
+              buttonText={currentEditedId !== null ? "Update" : "Add"} // Text for the submit button
             />
           </div>
         </SheetContent>
