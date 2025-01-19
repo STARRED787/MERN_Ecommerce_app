@@ -11,6 +11,7 @@ import { Fragment, useEffect, useState } from "react"; // React hooks for state 
 import { useDispatch, useSelector } from "react-redux";
 import {
   addNewProduct,
+  deleteProduct,
   editProduct,
   fetchProduct,
 } from "@/store/admin/product-slice";
@@ -95,7 +96,15 @@ function AdminProducts() {
   }
 
   function handleDeleteProduct(getCurrentProductId) {
-    console.log(getCurrentProductId);
+    console.log("Deleting product ID:", getCurrentProductId);
+
+    dispatch(deleteProduct(getCurrentProductId)).then((data) => {
+      console.log("Delete response:", data); // Debugging
+      if (data?.payload?.success) {
+        dispatch(fetchProduct());
+        toast.success("Product deleted successfully");
+      }
+    });
   }
 
   useEffect(() => {
