@@ -94,6 +94,10 @@ function AdminProducts() {
       .every((item) => item);
   }
 
+  function handleDeleteProduct(getCurrentProductId) {
+    console.log(getCurrentProductId);
+  }
+
   useEffect(() => {
     dispatch(fetchProduct());
   }, [dispatch]);
@@ -121,6 +125,7 @@ function AdminProducts() {
                 setCurrentEditedId={setCurrentEditedId}
                 key={productItem.id}
                 product={productItem}
+                handleDeleteProduct={handleDeleteProduct}
               />
             ))
           : null}

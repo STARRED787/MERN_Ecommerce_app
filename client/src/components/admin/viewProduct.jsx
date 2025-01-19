@@ -7,6 +7,7 @@ function AdminViewProduct({
   setOpenCreateProductDialog,
   setFormData,
   setCurrentEditedId,
+  handleDeleteProduct,
 }) {
   return (
     <div>
@@ -47,7 +48,9 @@ function AdminViewProduct({
           >
             Edit
           </Button>
-          <Button>Delete</Button>
+          <Button onClick={() => handleDeleteProduct(product._id)}>
+            Delete
+          </Button>
         </CardFooter>
       </Card>
     </div>
@@ -65,6 +68,7 @@ AdminViewProduct.propTypes = {
   setOpenCreateProductDialog: PropTypes.func.isRequired,
   setFormData: PropTypes.func.isRequired,
   setCurrentEditedId: PropTypes.func.isRequired,
+  handleDeleteProduct: PropTypes.func.isRequired,
 };
 
 export default AdminViewProduct;
