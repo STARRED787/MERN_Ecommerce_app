@@ -16,6 +16,7 @@ import {
 } from "@/store/admin/product-slice";
 import { toast } from "react-toastify";
 import AdminViewProduct from "@/components/admin/viewProduct";
+import { data } from "react-router-dom";
 
 // Initial form data structure
 const initialFormData = {
@@ -60,7 +61,16 @@ function AdminProducts() {
         id: currentEditedId,
         formData,
       })
-    );
+    ).then((data) => {
+      console.log(data, "Update Product");
+      if (data?.payload?.success) {
+        dispatch(fetchProduct());
+        setImageFile(null);
+        setFormData(initialFormData);
+        toast.success("Product updated successfully");
+        setOpenCreateProductDialog(false);
+      }
+    });
 
     // Dispatch the addNewProduct action with the form data
     dispatch(
