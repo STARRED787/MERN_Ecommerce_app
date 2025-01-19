@@ -118,7 +118,9 @@ function AdminProductImageUpload({
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className="border-2 border-dashed rounded-lg p-4 cursor-pointer"
+        className={`${
+          isEditMode ? "opacity-60" : ""
+        }border-2 border-dashed rounded-lg p-4 cursor-pointer`}
       >
         <Input
           type="file"
@@ -137,7 +139,9 @@ function AdminProductImageUpload({
         {!imageFile ? (
           <Label
             htmlFor="imageUpload"
-            className="flex flex-col items-center justify-center h-32"
+            className={`${
+              isEditMode ? "items-center justify-center cursor-not-allowed" : ""
+            }flex flex-col items-center justify-center h-32`}
           >
             <UploadCloudIcon size={32} className="text-muted-foreground mb-2" />
             <span>Drag & drop or click to upload image</span>

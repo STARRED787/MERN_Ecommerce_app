@@ -99,7 +99,11 @@ function AdminProducts() {
       {/* Sliding panel component */}
       <Sheet
         open={openCreateProductDialog} // Manage panel visibility
-        onOpenChange={() => setOpenCreateProductDialog(false)} // Close panel on change
+        onOpenChange={() => {
+          setOpenCreateProductDialog(false);
+          setCurrentEditedId(null);
+          setFormData(initialFormData);
+        }} // Close panel on change
       >
         {/* Panel content */}
         <SheetContent side="right" className="overflow-auto">
