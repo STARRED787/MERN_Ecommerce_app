@@ -14,6 +14,7 @@ function AdminProductImageUpload({
   imageLoadingState, // Loading state for image upload
   setImageLoadingState, // Function to manage the loading state
   setUploadedImageUrl, // Function to update the uploaded image URL
+  isEditMode, // Flag to determine if the component is in edit mode
 }) {
   const inputRef = useRef(null); // Reference to the file input element
   const [validationError, setValidationError] = useState(""); // State to hold validation errors
@@ -125,6 +126,7 @@ function AdminProductImageUpload({
           ref={inputRef}
           onChange={handleImageFileChange}
           className="hidden"
+          disabled={isEditMode}
         />
 
         {/* Display error message if validation fails */}
@@ -171,6 +173,7 @@ AdminProductImageUpload.propTypes = {
   setUploadedImageUrl: PropTypes.func.isRequired,
   setImageLoadingState: PropTypes.func.isRequired,
   imageLoadingState: PropTypes.bool.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
 };
 
 export default AdminProductImageUpload;

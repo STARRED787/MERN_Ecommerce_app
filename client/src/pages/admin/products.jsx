@@ -116,6 +116,7 @@ function AdminProducts() {
             setUploadedImageUrl={setUploadedImageUrl} // Function to update uploaded image URL
             setImageLoadingState={setImageLoadingState} // Function to set the loading state
             imageLoadingState={imageLoadingState} // Loading state of the image
+            isEditMode={currentEditedId !== null} // Check if the image is being edited
           />
 
           {/* Form component for product details */}
