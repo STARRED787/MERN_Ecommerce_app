@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
 
-function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
+function AddProductsForm({
+  formData,
+  setFormData,
+  onSubmit,
+  buttonText,
+  isButtonDisabled,
+}) {
   // Handles input changes for form fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -127,8 +133,11 @@ function AddProductsForm({ formData, setFormData, onSubmit, buttonText }) {
       })}
       <div className="flex justify-end mt-4">
         <button
+          disabled={isButtonDisabled}
           type="submit"
-          className="bg-orange-500 w-full text-white p-2 rounded-md"
+          className={`bg-orange-500 w-full text-white p-2 rounded-md ${
+            isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
           {buttonText || "Submit"}
         </button>
@@ -151,6 +160,7 @@ AddProductsForm.propTypes = {
   setFormData: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   buttonText: PropTypes.string,
+  isButtonDisabled: PropTypes.bool.isRequired,
 };
 
 export default AddProductsForm;

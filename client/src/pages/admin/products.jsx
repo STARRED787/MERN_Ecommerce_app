@@ -88,11 +88,17 @@ function AdminProducts() {
       });
     }
   }
+  function isFormValid() {
+    return Object.keys(formData)
+      .map((key) => formData[key] !== "")
+      .every((item) => item);
+  }
 
   useEffect(() => {
     dispatch(fetchProduct());
   }, [dispatch]);
   console.log(productList); // Log the form data to the console (to be replaced with API call)
+
   return (
     <Fragment>
       {/* Add New Product Button */}
@@ -156,6 +162,7 @@ function AdminProducts() {
               setFormData={setFormData} // Function to update form data state
               onSubmit={onSubmit} // Submit function for the form
               buttonText={currentEditedId !== null ? "Update" : "Add"} // Text for the submit button
+              isButtonDisabled={!isFormValid()}
             />
           </div>
         </SheetContent>
