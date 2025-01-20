@@ -131,19 +131,19 @@ const authSlice = createSlice({
 
     //***LogOut***//
     // Handle the pending state of loginUser
-    builder.addCase(loginUser.pending, (state) => {
+    builder.addCase(logOutUser.pending, (state) => {
       state.isLoading = true; // Set loading state to true
     });
 
-    // Handle the fulfilled state of loginUser
-    builder.addCase(loginUser.fulfilled, (state, action) => {
+    // Handle the fulfilled state of logOutUser
+    builder.addCase(logOutUser.fulfilled, (state, action) => {
       state.isLoading = true; // Set loading state to false
       state.isAuthenticated = action.payload.success; // Mark the user as authenticated
       state.user = action.payload.success ? action.payload.user : null; // Store the user information
     });
 
-    // Handle the rejected state of loginUser
-    builder.addCase(loginUser.rejected, (state, action) => {
+    // Handle the rejected state of logOutUser
+    builder.addCase(logOutUser.rejected, (state, action) => {
       state.isLoading = false;
       state.isAuthenticated = false;
       state.user = null;
