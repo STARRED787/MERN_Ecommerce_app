@@ -22,6 +22,7 @@ function FormSignIn({ buttonText }) {
       try {
         const data = await dispatch(loginUser(values)).unwrap();
         console.log("Login response:", data); // Add this line to inspect the data
+
         if (data?.success) {
           toast.success(data?.message || "Login successful!");
         } else {
