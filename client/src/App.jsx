@@ -19,20 +19,15 @@ import { ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
-import { Skeleton } from "./components/ui/skeleton";
 
 function App() {
-  const { user, isAuthenticated, isLoading } = useSelector(
-    (state) => state.auth
-  );
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   //trigger cheAuth action on component mount
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
-
-  if (isLoading) return <Skeleton className="bg-black w-full h-[600px]" />;
 
   console.log(isAuthenticated, user);
 
