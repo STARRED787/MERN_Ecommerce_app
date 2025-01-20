@@ -47,6 +47,7 @@ export const loginUser = createAsyncThunk(
 export const logOutUser = createAsyncThunk("/auth/logout", async () => {
   const response = await axios.post(
     "http://localhost:5000/api/auth/logout",
+    {},
 
     { withCredentials: true }
   );
@@ -98,6 +99,7 @@ const authSlice = createSlice({
       state.isLoading = false; // Set loading state to false
       state.isAuthenticated = true; // Mark the user as authenticated
       state.user = action.payload; // Store the user information
+      state.registrationSuccess = action.payload.success; // Optional flag for registration success
     });
 
     // Handle the rejected state of registerUser

@@ -30,6 +30,10 @@ function CheckAuth({ isAuthenticated, user, children }) {
     return <Navigate to="/auth/signin" replace />;
   }
 
+  // Add a condition to prevent redirecting authenticated users if they just registered
+  if (isAuthenticated && location.pathname.includes("/auth/signup")) {
+    return <Navigate to="/auth/signin" replace />;
+  }
   /**
    * Redirect authenticated users away from the sign-in or sign-up pages.
    * - If the user is an admin, redirect them to the admin dashboard.

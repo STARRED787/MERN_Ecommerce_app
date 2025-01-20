@@ -37,7 +37,9 @@ function FormSignUp({ buttonText }) {
             position: "top-center",
             autoClose: 3000,
           });
-          setTimeout(() => navigate("/auth/signin"), 2900);
+
+          // Navigate to signin immediately after toast
+          navigate("/auth/signin");
         }
       } catch (error) {
         console.error("Registration failed:", error);
