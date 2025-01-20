@@ -26,7 +26,7 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// Async thunk to Login a user (sign-up functionality)
+// Async thunk to Login a user (sign-in functionality)
 export const loginUser = createAsyncThunk(
   "/auth/signin",
   async (formData, { rejectWithValue }) => {
@@ -42,6 +42,16 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+
+// Async thunk to Login a user (sign-in functionality)
+export const logOutUser = createAsyncThunk("/auth/logout", async () => {
+  const response = await axios.post(
+    "http://localhost:5000/api/auth/logout",
+
+    { withCredentials: true }
+  );
+  return response.data; // Ensure this data contains the `success` property
+});
 
 // Async thunk to chech a user
 export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
@@ -75,7 +85,7 @@ const authSlice = createSlice({
     },
   },
 
-  //register
+  //***register***//
   // Extra reducers to handle the lifecycle of async actions
   extraReducers: (builder) => {
     // Handle the pending state of registerUser
@@ -98,7 +108,7 @@ const authSlice = createSlice({
       state.error = action.payload?.message || "Not Registerd user "; // Save error message
     });
 
-    //Login
+    //***Login***//
     // Handle the pending state of loginUser
     builder.addCase(loginUser.pending, (state) => {
       state.isLoading = true; // Set loading state to true
@@ -119,7 +129,28 @@ const authSlice = createSlice({
       state.error = action.payload?.message || "Not Registered user"; // Show error message for unregistered users
     });
 
-    //checkAuth
+    //***LogOut***//
+    // Handle the pending state of loginUser
+    builder.addCase(loginUser.pending, (state) => {
+      state.isLoading = true; // Set loading state to true
+    });
+
+    // Handle the fulfilled state of loginUser
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      state.isLoading = true; // Set loading state to false
+      state.isAuthenticated = action.payload.success; // Mark the user as authenticated
+      state.user = action.payload.success ? action.payload.user : null; // Store the user information
+    });
+
+    // Handle the rejected state of loginUser
+    builder.addCase(loginUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = action.payload?.message || "Not Registered user"; // Show error message for unregistered users
+    });
+
+    //***checkAuth***//
     // Handle the pending state of authCheck
     builder.addCase(checkAuth.pending, (state) => {
       state.isLoading = true; // Set loading state to true
