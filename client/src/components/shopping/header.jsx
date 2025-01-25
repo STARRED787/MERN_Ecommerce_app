@@ -1,4 +1,12 @@
-import { HousePlug, Menu, ShoppingCart } from "lucide-react";
+import {
+  CircleUser,
+  Cog,
+  HousePlug,
+  LogOutIcon,
+  Menu,
+  ShieldCheck,
+  ShoppingCart,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
@@ -45,18 +53,26 @@ function HeaderRightContent() {
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" className=" w-21 bg-slate-900">
+
+          <DropdownMenuContent
+            side="right"
+            className=" w-21 bg-slate-900 font-semibold"
+          >
             <DropdownMenuLabel className="text-gray-400">
-              Logged{" "}
-              <span className="font-bold text-white">{user.username}</span>
+              <span className="font-bold text-white text-center flex items-center justify-center gap-2">
+                <ShieldCheck className="text-center justify-center" />
+                {user.username}
+              </span>
             </DropdownMenuLabel>
             <DropdownMenuItem asChild>
               <Link to="/profile" className="hover:text-white">
+                <CircleUser />
                 Profile
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link to="/settings" className="hover:text-white">
+                <Cog />
                 Settings
               </Link>
             </DropdownMenuItem>
@@ -68,6 +84,7 @@ function HeaderRightContent() {
                 }}
                 className="hover:text-red-500 w-full"
               >
+                <LogOutIcon />
                 Logout
               </button>
             </DropdownMenuItem>
