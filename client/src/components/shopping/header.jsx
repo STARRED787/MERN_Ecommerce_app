@@ -3,16 +3,7 @@ import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { useSelector } from "react-redux";
-
-// Header menu items
-export const shopHeaderMenu = [
-  { id: "home", label: "Home", path: "/shop/home" },
-  { id: "games", label: "Games", path: "/shop/listing" },
-  { id: "laptops", label: "Laptops", path: "/shop/listing" },
-  { id: "movies", label: "Movies", path: "/shop/listing" },
-  { id: "phones", label: "Phones", path: "/shop/listing" },
-  { id: "desktops", label: "Desktops", path: "/shop/listing" },
-];
+import { shopHeaderMenu } from "@/config";
 
 // Generate menu items
 function MenuItems() {
@@ -20,7 +11,7 @@ function MenuItems() {
     <Link
       key={item.id}
       to={item.path}
-      className="block py-2 px-4 text-white hover:bg-slate-800"
+      className="block py-2 px-4 text-white hover:bg-slate-800 hover:rounded-sm hover:text-slate-500 font-bold"
     >
       {item.label}
     </Link>
@@ -67,17 +58,10 @@ function ShoppingHeader() {
         {/* Authentication Options */}
         <div className="hidden lg:block">
           {isAuthenticated ? (
-            <Button variant="outline" className="text-white hover:bg-slate-700">
-              Logout
-            </Button>
+            <Button className="text-white hover:bg-slate-700 ">Logout</Button>
           ) : (
             <Link to="/login">
-              <Button
-                variant="outline"
-                className="text-white hover:bg-slate-700"
-              >
-                Login
-              </Button>
+              <Button className="text-white hover:bg-slate-700">Login</Button>
             </Link>
           )}
         </div>
