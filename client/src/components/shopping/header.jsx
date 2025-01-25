@@ -18,6 +18,11 @@ function MenuItems() {
   ));
 }
 
+function HeaderRightContent() {
+  return (
+    <div className="flex lg:items-center lg:flex-row flex-col gap-4"></div>
+  );
+}
 function ShoppingHeader() {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
