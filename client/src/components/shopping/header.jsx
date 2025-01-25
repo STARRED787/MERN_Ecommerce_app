@@ -91,7 +91,7 @@ function HeaderRightContent() {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Link to="/login">
+        <Link to="/auth/signin">
           <Button variant="outline" className="bg-slate-800 hover:bg-slate-700">
             Login
           </Button>
