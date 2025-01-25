@@ -1,5 +1,5 @@
 .env
 dist/
-
+support/
 !my-folder/node_modules/
 .codegpt
