@@ -8,6 +8,7 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import { Avatar } from "../ui/avatar";
 
 // Generate menu items
 function MenuItems() {
@@ -30,7 +31,9 @@ function HeaderRightContent() {
         <span className="sr-only">user Cart</span>
       </Button>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild></DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
+          <Avatar></Avatar>
+        </DropdownMenuTrigger>
       </DropdownMenu>
     </div>
   );
@@ -75,12 +78,10 @@ function ShoppingHeader() {
         {/* Authentication Options */}
         <div className="hidden lg:block">
           {isAuthenticated ? (
-            <Button className="text-white hover:bg-slate-700 ">Logout</Button>
-          ) : (
-            <Link to="/login">
-              <Button className="text-white hover:bg-slate-700">Login</Button>
-            </Link>
-          )}
+            <div>
+              <HeaderRightContent />
+            </div>
+          ) : null}
         </div>
       </div>
     </header>
