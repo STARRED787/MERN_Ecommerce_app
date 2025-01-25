@@ -1,5 +1,7 @@
 import { HousePlug } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Sheet, SheetTrigger } from "../ui/sheet";
+import { Button } from "../ui/button";
 
 function ShoppingHeader() {
   return (
@@ -10,6 +12,13 @@ function ShoppingHeader() {
           <HousePlug className="h6 w-6" />
           <span className="font-bold">Ecommerce </span>
         </Link>
+        <Sheet>
+          <SheetTrigger>
+            <Button>
+              <span className="sr-only">Toggale Header Menu</span>
+            </Button>
+          </SheetTrigger>
+        </Sheet>
       </div>
     </header>
   );
