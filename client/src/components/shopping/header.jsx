@@ -1,6 +1,6 @@
-import { HousePlug } from "lucide-react";
+import { HousePlug, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Sheet, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 
 function ShoppingHeader() {
@@ -14,11 +14,21 @@ function ShoppingHeader() {
         </Link>
         <Sheet>
           <SheetTrigger>
-            <Button variant="outline" size="icon" className="lg:hidden">
+            <Button
+              variant="outline"
+              size="icon"
+              className="lg:hidden bg-border-500"
+            >
+              <Menu className="h-6 w-6" />
               <span className="sr-only">Toggale Header Menu</span>
             </Button>
+            <SheetContent
+              side="left"
+              className="w-full max-w-xs"
+            ></SheetContent>
           </SheetTrigger>
         </Sheet>
+        <div className="hidden lg:block"></div>
       </div>
     </header>
   );
