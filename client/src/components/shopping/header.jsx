@@ -6,9 +6,10 @@ import { useSelector } from "react-redux";
 import { shopHeaderMenu } from "@/config";
 import {
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { Avatar } from "../ui/avatar";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 // Generate menu items
 function MenuItems() {
@@ -32,7 +33,12 @@ function HeaderRightContent() {
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar></Avatar>
+          <Avatar className="bg-black">
+            <AvatarFallback className="bg-black text-white font-extrabold">
+              E350
+            </AvatarFallback>
+          </Avatar>
+          <DropdownMenuContent side="right"></DropdownMenuContent>
         </DropdownMenuTrigger>
       </DropdownMenu>
     </div>
