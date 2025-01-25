@@ -19,17 +19,30 @@ import { ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
+import { Skeleton } from "./components/ui/skeleton";
 
 function App() {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, isLoading } = useSelector(
+    (state) => state.auth
+  ); // Assume `isLoading` is part of the Redux state
   const dispatch = useDispatch();
 
-  //trigger cheAuth action on component mount
+  // Trigger `checkAuth` action on component mount
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
   console.log(isAuthenticated, user);
+
+  // Skeleton Loader
+  if (isLoading) {
+    return (
+      <div>
+        <Skeleton height={40} width={200} style={{ marginBottom: "1rem" }} />
+        <Skeleton count={3} />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">

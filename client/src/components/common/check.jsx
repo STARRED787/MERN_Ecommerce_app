@@ -1,77 +1,57 @@
 import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
-// CheckAuth component handles route access control based on authentication and user roles.
 function CheckAuth({ isAuthenticated, user, children }) {
-  // Define prop types for validation to ensure proper usage of the component.
   CheckAuth.propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired, // Indicates if the user is logged in.
+    isAuthenticated: PropTypes.bool.isRequired,
     user: PropTypes.shape({
       role: PropTypes.string, // The role of the user (e.g., "admin" or "user").
     }),
-    children: PropTypes.node.isRequired, // The child components (routes) to render.
+    children: PropTypes.node.isRequired,
   };
 
-  // Get the current route information using `useLocation`.
   const location = useLocation();
   console.log(location.pathname);
 
-  /**
-   * Redirect unauthenticated users to the sign-in page.
-   * Exception: Allow access to `/auth/signin` and `/auth/signup` routes.
-   */
+  // Redirect unauthenticated users to the sign-in page
   if (
     !isAuthenticated &&
-    !(
-      location.pathname.includes("/auth/signin") ||
-      location.pathname.includes("/auth/signup")
-    )
+    !["/auth/signin", "/auth/signup"].includes(location.pathname)
   ) {
     return <Navigate to="/auth/signin" replace />;
   }
 
-  /**
-   * Redirect authenticated users away from the sign-in or sign-up pages.
-   * - If the user is an admin, redirect them to the admin dashboard.
-   * - If the user is not an admin, redirect them to the shop home page.
-   */
+  // Prevent authenticated users from accessing sign-in or sign-up pages
   if (
     isAuthenticated &&
-    (location.pathname.includes("/auth/signin") ||
-      location.pathname.includes("/auth/signup"))
+    ["/auth/signin", "/auth/signup"].includes(location.pathname)
   ) {
-    if (user?.role === "admin") {
-      return <Navigate to="/admin/dashboard" replace />;
-    } else {
-      return <Navigate to="/shop/home" replace />;
-    }
+    return user?.role === "admin" ? (
+      <Navigate to="/admin/dashboard" replace />
+    ) : (
+      <Navigate to="/shop/home" replace />
+    );
   }
 
-  /**
-   * Restrict access to admin pages for non-admin users.
-   * - Redirect them to the unauthorized access page (`/unauth`).
-   */
+  // Restrict access to admin pages for non-admin users
   if (
     isAuthenticated &&
     user?.role !== "admin" &&
-    location.pathname.includes("/admin")
+    location.pathname.startsWith("/admin")
   ) {
     return <Navigate to="/unauth" replace />;
   }
 
-  /**
-   * Restrict access to shop pages for admin users.
-   * - Redirect them back to the admin dashboard.
-   */
+  // Restrict access to shop pages for admin users
   if (
     isAuthenticated &&
     user?.role === "admin" &&
-    location.pathname.includes("/shop")
+    location.pathname.startsWith("/shop")
   ) {
     return <Navigate to="/unauth" replace />;
   }
 
-  // If no conditions are triggered, render the child components (protected routes).
+  // Render the child components if no redirection conditions are met
   return <>{children}</>;
 }
 

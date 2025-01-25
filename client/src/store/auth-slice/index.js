@@ -109,25 +109,23 @@ const authSlice = createSlice({
       state.error = action.payload?.message || "Not Registerd user "; // Save error message
     });
 
-    //***Login***//
-    // Handle the pending state of loginUser
+    // ***Login*** //
     builder.addCase(loginUser.pending, (state) => {
-      state.isLoading = true; // Set loading state to true
+      state.isLoading = true; // Set loading state to true while the request is in progress
     });
 
-    // Handle the fulfilled state of loginUser
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.isLoading = true; // Set loading state to false
+      state.isLoading = false; // Set loading state to false after successful login
       state.isAuthenticated = action.payload.success; // Mark the user as authenticated
-      state.user = action.payload.success ? action.payload.user : null; // Store the user information
+      state.user = action.payload.success ? action.payload.user : null; // Store user information if login is successful
+      state.error = null; // Clear any previous error
     });
 
-    // Handle the rejected state of loginUser
     builder.addCase(loginUser.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isAuthenticated = false;
-      state.user = null;
-      state.error = action.payload?.message || "Not Registered user"; // Show error message for unregistered users
+      state.isLoading = false; // Set loading state to false after failure
+      state.isAuthenticated = false; // Mark the user as not authenticated
+      state.user = null; // Clear any stored user information
+      state.error = action.payload?.message || "Not Registered user"; // Set error message
     });
 
     //***LogOut***//
