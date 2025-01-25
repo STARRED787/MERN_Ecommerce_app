@@ -14,7 +14,7 @@ function ShoppingHeader() {
         </Link>
         <Sheet>
           <SheetTrigger>
-            <Button>
+            <Button variant="outline" size="icon" className="lg:hidden">
               <span className="sr-only">Toggale Header Menu</span>
             </Button>
           </SheetTrigger>
