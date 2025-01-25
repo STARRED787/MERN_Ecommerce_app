@@ -2,8 +2,10 @@ import { HousePlug, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
+import { useSelector } from "react-redux";
 
 function ShoppingHeader() {
+  const { isAuthenticated } = useSelector((state) => state.auth);
   return (
     <header className="border-bottom sticky top-0 z-40 w-full bg-slate-900">
       <div className="flex h-16 items-center justify-between px-4 sm:px-8 lg:px-16 xl:px-24 text-white">
@@ -28,7 +30,9 @@ function ShoppingHeader() {
             ></SheetContent>
           </SheetTrigger>
         </Sheet>
-        <div className="hidden lg:block"></div>
+        <div className="hidden lg:block">
+          {isAuthenticated ? <div></div> : null}
+        </div>
       </div>
     </header>
   );
