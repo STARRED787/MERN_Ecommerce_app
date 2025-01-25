@@ -1,9 +1,13 @@
-import { HousePlug, Menu } from "lucide-react";
+import { HousePlug, Menu, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { useSelector } from "react-redux";
 import { shopHeaderMenu } from "@/config";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 
 // Generate menu items
 function MenuItems() {
@@ -20,7 +24,15 @@ function MenuItems() {
 
 function HeaderRightContent() {
   return (
-    <div className="flex lg:items-center lg:flex-row flex-col gap-4"></div>
+    <div className="flex lg:items-center lg:flex-row flex-col gap-4">
+      <Button variant="icon" className="bg-slate-800 hover:bg-slate-700">
+        <ShoppingCart />
+        <span className="sr-only">user Cart</span>
+      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild></DropdownMenuTrigger>
+      </DropdownMenu>
+    </div>
   );
 }
 function ShoppingHeader() {
