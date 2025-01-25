@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
+import { DropdownMenuItem, DropdownMenuLabel } from "../ui/dropdown-menu";
 
 // Generate menu items
 function MenuItems() {
@@ -25,22 +26,60 @@ function MenuItems() {
 }
 
 function HeaderRightContent() {
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-      <Button variant="icon" className="bg-slate-800 hover:bg-slate-700">
-        <ShoppingCart />
-        <span className="sr-only">user Cart</span>
+      {/* Cart Button */}
+      <Button variant="outline" className="bg-slate-800 hover:bg-slate-700">
+        <ShoppingCart className="h-5 w-5" />
+        <span className="sr-only">User Cart</span>
       </Button>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black">
-            <AvatarFallback className="bg-black text-white font-extrabold">
-              E350
-            </AvatarFallback>
-          </Avatar>
-          <DropdownMenuContent side="right"></DropdownMenuContent>
-        </DropdownMenuTrigger>
-      </DropdownMenu>
+
+      {/* User Avatar with Dropdown Menu */}
+      {user ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Avatar className="bg-black cursor-pointer">
+              <AvatarFallback className="bg-black text-white font-extrabold">
+                {user.username[0]?.toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="right" className=" w-21 bg-slate-900">
+            <DropdownMenuLabel className="text-gray-400">
+              Logged{" "}
+              <span className="font-bold text-white">{user.username}</span>
+            </DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+              <Link to="/profile" className="hover:text-white">
+                Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/settings" className="hover:text-white">
+                Settings
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <button
+                onClick={() => {
+                  // Add logout logic here
+                  console.log("Logout clicked");
+                }}
+                className="hover:text-red-500 w-full"
+              >
+                Logout
+              </button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <Link to="/login">
+          <Button variant="outline" className="bg-slate-800 hover:bg-slate-700">
+            Login
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }
@@ -61,7 +100,6 @@ function ShoppingHeader() {
           <SheetTrigger>
             <Button
               variant="outline"
-              size="icon"
               className="lg:hidden bg-slate-800 hover:bg-slate-700"
             >
               <Menu className="h-6 w-6" />
@@ -77,7 +115,7 @@ function ShoppingHeader() {
         </Sheet>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex gap-8">
+        <div className="hidden lg:flex gap-2">
           <MenuItems />
         </div>
 
